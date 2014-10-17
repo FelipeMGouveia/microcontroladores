@@ -1,0 +1,45 @@
+MACRO ASSEMBLER TETRIS                                     10/17/14 21:47:41 PAGE     1
+
+
+DOS MACRO ASSEMBLER MA51 V06.16.13.326
+OBJECT MODULE PLACED IN C:\PROJECTS\8051\COMMONS\TETRIS.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\8051\COMMONS\TETRIS.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+
+LOC     OBJ           LINE    SOURCE
+------                   1     CODE
+                         2     ;Recomendo utilizarmos o login do ecomp como inicial de cada rótulo para não
+                         3     ;ter o risco de termos rótulos duplicados.
+                         4     FMG_TETRIS_MAIN: 
+0000    7410             5         MOV A, #10H
+0002    7410             6         MOV A, #10H
+0004    7410             7         MOV A, #10H
+0006    7410             8         MOV A, #10H
+
+*** WARNING #87 IN LINE 8 OF C:\Projects\8051\commons\tetris.asm : MISSING 'END' STATEMENT
+MACRO ASSEMBLER TETRIS                                     10/17/14 21:47:41 PAGE     0
+
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
+
+FMG_TETRIS_MAIN. .  C ADDR   0000H   R  SEG=?PR?TETRIS          4# 
+?PR?TETRIS . . . .  C SEG    0008H      REL=UNIT                1# 
+TETRIS . . . . . .  N NUMB   -----
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      8    ----
+   XDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+REGISTER BANK(S) USED : 0 
+
+ASSEMBLY COMPLETE.   1 WARNING(S)   0 ERROR(S)

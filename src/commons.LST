@@ -1,0 +1,156 @@
+MACRO ASSEMBLER COMMONS                                    10/17/14 21:48:26 PAGE     1
+
+
+DOS MACRO ASSEMBLER MA51 V06.16.13.326
+OBJECT MODULE PLACED IN C:\PROJECTS\8051\COMMONS\COMMONS.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\8051\COMMONS\COMMONS.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+
+LOC     OBJ           LINE    SOURCE
+                         1     $INCLUDE(REG52.INC) ;Utilizando reg52 para termos acesso ao terceiro timer caso necessário
+                       106     
+                       107     ;Podemos dividir o códgigo de cada um em um asm separado, para evitar problema
+                       108     ;com nomenclatura sugiro termos esses arquivos pré-definidos.
+                       109     $INCLUDE (TETRIS.ASM)
+                       119     
+                       120     CODE AT 0
+0000    020000   F     121         LJMP INIT
+                       122     
+------                 123     CODE
+                       124     INIT:  ;Inicialização das interrupções, do display e do que mais for necessário
+0009    120000   F     125         LCALL TIMER_INIT
+000C    120000   F     126         LCALL LCD_INIT
+000F    020000   F     127         LJMP MAIN 
+                       128         
+------                 129     CODE ;ROTINA para inicialização do LCD, deve ser chamada por um CALL
+                       130     LCD_INIT: 
+0012    22             131         RET;
+                       132     
+------                 133     CODE ;ROTINA para inicialização do Timer, de ser chamado por um CALL
+                       134     TIMER_INIT: 
+0013    22             135         RET;
+                       136     
+------                 137     CODE ;Entrada principal onde será exibido o código de menu para seleção do jogo
+                       138     MAIN:  
+0014    120000   F     139         LCALL FMG_TETRIS_MAIN
+                       140         END
+MACRO ASSEMBLER COMMONS                                    10/17/14 21:48:26 PAGE     0
+
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
+
+RCAP2H . . . . . .  D ADDR   00CBH   A                          33# 
+DPL. . . . . . . .  D ADDR   0082H   A                          16# 
+P0 . . . . . . . .  D ADDR   0080H   A                          8# 
+P1 . . . . . . . .  D ADDR   0090H   A                          9# 
+CP_RL2 . . . . . .  B ADDR   00C8H.0 A                          105# 
+EXEN2. . . . . . .  B ADDR   00C8H.3 A                          102# 
+B. . . . . . . . .  D ADDR   00F0H   A                          14# 
+P2 . . . . . . . .  D ADDR   00A0H   A                          10# 
+T2EX . . . . . . .  B ADDR   0090H.1 A                          95# 
+PS . . . . . . . .  B ADDR   00B8H.4 A                          65# 
+SP . . . . . . . .  D ADDR   0081H   A                          15# 
+P3 . . . . . . . .  D ADDR   00B0H   A                          11# 
+T0 . . . . . . . .  B ADDR   00B0H.4 A                          74# 
+AC . . . . . . . .  B ADDR   00D0H.6 A                          41# 
+RCAP2L . . . . . .  D ADDR   00CAH   A                          32# 
+MAIN . . . . . . .  C ADDR   0014H   R  SEG=?PR?COMMONS         127 138# 
+REN. . . . . . . .  B ADDR   0098H.4 A                          83# 
+T1 . . . . . . . .  B ADDR   00B0H.5 A                          73# 
+OV . . . . . . . .  B ADDR   00D0H.2 A                          45# 
+LCD_INIT . . . . .  C ADDR   0012H   R  SEG=?PR?COMMONS         126 130# 
+T2 . . . . . . . .  B ADDR   0090H.0 A                          96# 
+EA . . . . . . . .  B ADDR   00A8H.7 A                          58# 
+T2CON. . . . . . .  D ADDR   00C8H   A                          31# 
+ACC. . . . . . . .  D ADDR   00E0H   A                          13# 
+C_T2 . . . . . . .  B ADDR   00C8H.1 A                          104# 
+WR . . . . . . . .  B ADDR   00B0H.6 A                          72# 
+ET0. . . . . . . .  B ADDR   00A8H.1 A                          62# 
+ET1. . . . . . . .  B ADDR   00A8H.3 A                          60# 
+TF0. . . . . . . .  B ADDR   0088H.5 A                          51# 
+ET2. . . . . . . .  B ADDR   00A8H.5 A                          91# 
+TF1. . . . . . . .  B ADDR   0088H.7 A                          49# 
+RCLK . . . . . . .  B ADDR   00C8H.5 A                          100# 
+TF2. . . . . . . .  B ADDR   00C8H.7 A                          98# 
+RB8. . . . . . . .  B ADDR   0098H.2 A                          85# 
+TH0. . . . . . . .  D ADDR   008CH   A                          23# 
+EX0. . . . . . . .  B ADDR   00A8H.0 A                          63# 
+IT0. . . . . . . .  B ADDR   0088H.0 A                          56# 
+TH1. . . . . . . .  D ADDR   008DH   A                          24# 
+TCLK . . . . . . .  B ADDR   00C8H.4 A                          101# 
+TB8. . . . . . . .  B ADDR   0098H.3 A                          84# 
+RXD. . . . . . . .  B ADDR   00B0H.0 A                          78# 
+EX1. . . . . . . .  B ADDR   00A8H.2 A                          61# 
+IT1. . . . . . . .  B ADDR   0088H.2 A                          54# 
+TH2. . . . . . . .  D ADDR   00CDH   A                          35# 
+IE . . . . . . . .  D ADDR   00A8H   A                          25# 
+SM0. . . . . . . .  B ADDR   0098H.7 A                          80# 
+TXD. . . . . . . .  B ADDR   00B0H.1 A                          77# 
+P. . . . . . . . .  B ADDR   00D0H.0 A                          47# 
+SBUF . . . . . . .  D ADDR   0099H   A                          28# 
+TL0. . . . . . . .  D ADDR   008AH   A                          21# 
+PCON . . . . . . .  D ADDR   0087H   A                          18# 
+SM1. . . . . . . .  B ADDR   0098H.6 A                          81# 
+TL1. . . . . . . .  D ADDR   008BH   A                          22# 
+SM2. . . . . . . .  B ADDR   0098H.5 A                          82# 
+TL2. . . . . . . .  D ADDR   00CCH   A                          34# 
+SCON . . . . . . .  D ADDR   0098H   A                          27# 
+TIMER_INIT . . . .  C ADDR   0013H   R  SEG=?PR?COMMONS         125 134# 
+INIT . . . . . . .  C ADDR   0009H   R  SEG=?PR?COMMONS         121 124# 
+PT0. . . . . . . .  B ADDR   00B8H.1 A                          68# 
+MACRO ASSEMBLER COMMONS                                    10/17/14 21:48:26 PAGE     1
+
+
+DOS MACRO ASSEMBLER MA51 V06.16.13.326
+OBJECT MODULE PLACED IN C:\PROJECTS\8051\COMMONS\COMMONS.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\8051\COMMONS\COMMONS.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+
+LOC     OBJ           LINE    SOURCE
+TMOD . . . . . . .  D ADDR   0089H   A                          20# 
+TCON . . . . . . .  D ADDR   0088H   A                          19# 
+EXF2 . . . . . . .  B ADDR   00C8H.6 A                          99# 
+PT1. . . . . . . .  B ADDR   00B8H.3 A                          66# 
+RS0. . . . . . . .  B ADDR   00D0H.3 A                          44# 
+PT2. . . . . . . .  B ADDR   00B8H.5 A                          93# 
+RD . . . . . . . .  B ADDR   00B0H.7 A                          71# 
+TR0. . . . . . . .  B ADDR   0088H.4 A                          52# 
+RS1. . . . . . . .  B ADDR   00D0H.4 A                          43# 
+F0 . . . . . . . .  B ADDR   00D0H.5 A                          42# 
+TR1. . . . . . . .  B ADDR   0088H.6 A                          50# 
+F1 . . . . . . . .  B ADDR   00D0H.1 A                          46# 
+FMG_TETRIS_MAIN. .  C ADDR   0000H   R  SEG=?PR?COMMONS         113# 139 
+TR2. . . . . . . .  B ADDR   00C8H.2 A                          103# 
+PX0. . . . . . . .  B ADDR   00B8H.0 A                          69# 
+ES . . . . . . . .  B ADDR   00A8H.4 A                          59# 
+PX1. . . . . . . .  B ADDR   00B8H.2 A                          67# 
+IP . . . . . . . .  D ADDR   00B8H   A                          26# 
+PSW. . . . . . . .  D ADDR   00D0H   A                          12# 
+RI . . . . . . . .  B ADDR   0098H.0 A                          87# 
+INT0 . . . . . . .  B ADDR   00B0H.2 A                          76# 
+?PR?COMMONS. . . .  C SEG    0017H      REL=UNIT                110# 123 129 133 
+                                                                137 
+INT1 . . . . . . .  B ADDR   00B0H.3 A                          75# 
+CY . . . . . . . .  B ADDR   00D0H.7 A                          40# 
+DPH. . . . . . . .  D ADDR   0083H   A                          17# 
+TI . . . . . . . .  B ADDR   0098H.1 A                          86# 
+IE0. . . . . . . .  B ADDR   0088H.1 A                          55# 
+IE1. . . . . . . .  B ADDR   0088H.3 A                          53# 
+COMMONS. . . . . .  N NUMB   -----
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     26    ----
+   XDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+REGISTER BANK(S) USED : 0 
+
+ASSEMBLY COMPLETE.   0 WARNING(S)   0 ERROR(S)

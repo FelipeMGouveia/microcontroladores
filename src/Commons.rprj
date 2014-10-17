@@ -1,0 +1,4 @@
+
+<Project Header="Project 'Commons'" Path=".\Commons.rprj" Project="Yes" OutputFile="" sate="96" ActiveApp="Commons" >
+	<ApplicationBuild Header="Commons" Extern=".\Commons.rapp" Path=".\Commons.rapp" OutputFile=".\Commons.aof" sate="98" />
+</Project>
