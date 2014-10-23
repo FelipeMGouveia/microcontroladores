@@ -1,17 +1,17 @@
-LX51 CODE BANKING LINKER/LOCATOR V06.16.13.326                                 10/17/14  21:48:26
+LX51 CODE BANKING LINKER/LOCATOR V06.16.13.326                                 10/22/14  23:50:02
 MS-DOS LX51 CODE BANKING LINKER/LOCATOR V06.16.13.326,  INVOKED BY:
-C:\Raisonance\Ride\Bin\LX51.EXE C:\Projects\8051\commons\commons.obj TO(C:\Projects\8051\commons\&
-Commons.aof) LIBPATH(C:\Raisonance\Ride\Lib\51) GENERATEDEPFILE MAP IX RS(256) RSI(128) CSIZE(655&
-36) XSIZE(65536) DEFN(XSTACKLEN,256) DEFN(TIM1_INIT,E8h) CO(0) DT(0) ID(0) XD(0) BI(0) ABSCODEOFF&
-S(0) XMLM(No,C:\Projects\8051\commons\Commons-modules.Standard.xml) XMLF(No,8000,C:\Projects\8051&
-\commons\Commons-flash.Standard.xml) 
+C:\Raisonance\Ride\Bin\LX51.EXE C:\Projects\microcontroladores\src\commons.obj TO(C:\Projects\mic&
+rocontroladores\src\Commons.aof) LIBPATH(C:\Raisonance\Ride\Lib\51) GENERATEDEPFILE MAP IX RS(256&
+) RSI(128) CSIZE(65536) XSIZE(65536) DEFN(XSTACKLEN,256) DEFN(TIM1_INIT,E8h) CO(0) DT(0) ID(0) XD&
+(0) BI(0) ABSCODEOFFS(0) XMLM(No,C:\Projects\microcontroladores\src\Commons-modules.Standard.xml)&
+ XMLF(No,8000,C:\Projects\microcontroladores\src\Commons-flash.Standard.xml) 
 
 
 INPUT MODULES INCLUDED
-  C:\PROJECTS\8051\COMMONS\COMMONS.OBJ(COMMONS)
+  C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.OBJ(COMMONS)
 
 
-LINK MAP OF MODULE: C:\PROJECTS\8051\COMMONS\COMMONS.AOF (COMMONS)
+LINK MAP OF MODULE: C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF (COMMONS)
 
     TYPE     BASE       LENGTH    RELOCATION     SEGMENT NAME
     ----     ----       ------    ----------     ------------
@@ -21,37 +21,41 @@ LINK MAP OF MODULE: C:\PROJECTS\8051\COMMONS\COMMONS.AOF (COMMONS)
 
     * * * * * * *   CODE          M E M O R Y   * * * * * * *
     CODE     0000H      0003H     ABSOLUTE       
-    CODE     0003H      0017H     UNIT           ?PR?COMMONS
+    CODE     0003H      00ACH     UNIT           ?PR?COMMONS
 
 EXECUTABLE SUMMARY:
 -------------------
     Total INTERNAL RAM storage requirement:  0008H (8)
     Total EXTERNAL RAM storage requirement:  0000H (0)
-    Total     CODE     storage requirement:  001AH (26)
+    Total     CODE     storage requirement:  00AFH (175)
 Note:  Summary does not include dynamic stack requirements
 
 
-REFERENCE MAP OF MODULE: C:\PROJECTS\8051\COMMONS\COMMONS.AOF (COMMONS)
+REFERENCE MAP OF MODULE: C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF (COMMONS)
 
 SEGMENT                           BI_GROUP            DT_GROUP             ID_GROUP             XD_GROUP
   +--> CALLED SEGMENT          START    LENGTH     START    LENGTH     START    LENGTH     START    LENGTH
 --------------------------------------------------------------------------------------
 
-SYMBOL TABLE FOR C:\PROJECTS\8051\COMMONS\COMMONS.AOF(COMMONS)
----------------------------------------------------------------
+SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(COMMONS)
+-------------------------------------------------------------------------
 
     VALUE              TYPE               NAME
     -----              ----               ----
 
 	-------            MODULE             COMMONS
+	C:0035H            SYMBOL             LCD_DRAW
+	C:0072H            SYMBOL             BIG_DELAY
 	D:00CBH            SYMBOL             RCAP2H
 	D:0082H            SYMBOL             DPL
 	D:0080H            SYMBOL             P0
 	D:0090H            SYMBOL             P1
+	C:0078H            SYMBOL             INIT_DELAY
 	B:00C8H            SYMBOL             CP_RL2
 	B:00CBH            SYMBOL             EXEN2
 	D:00F0H            SYMBOL             B
 	D:00A0H            SYMBOL             P2
+	C:0046H            SYMBOL             LCD_SEND_SERIAL_DATA_NOT_ZERO
 	B:0091H            SYMBOL             T2EX
 	B:00BCH            SYMBOL             PS
 	D:0081H            SYMBOL             SP
@@ -59,16 +63,17 @@ SYMBOL TABLE FOR C:\PROJECTS\8051\COMMONS\COMMONS.AOF(COMMONS)
 	B:00B4H            SYMBOL             T0
 	B:00D6H            SYMBOL             AC
 	D:00CAH            SYMBOL             RCAP2L
-	C:0017H            SYMBOL             MAIN
+	C:00A2H            SYMBOL             MAIN
 	B:009CH            SYMBOL             REN
 	B:00B5H            SYMBOL             T1
 	B:00D2H            SYMBOL             OV
-	C:0015H            SYMBOL             LCD_INIT
+	C:0003H            SYMBOL             LCD_INIT
 	B:0090H            SYMBOL             T2
 	B:00AFH            SYMBOL             EA
 	D:00C8H            SYMBOL             T2CON
 	D:00E0H            SYMBOL             ACC
 	B:00C9H            SYMBOL             C_T2
+	C:003DH            SYMBOL             LCD_SEND_SERIAL_DATA_INTERNAL_LOOP
 	B:00B6H            SYMBOL             WR
 	B:00A9H            SYMBOL             ET0
 	B:00ABH            SYMBOL             ET1
@@ -99,15 +104,20 @@ SYMBOL TABLE FOR C:\PROJECTS\8051\COMMONS\COMMONS.AOF(COMMONS)
 	D:008BH            SYMBOL             TL1
 	B:009DH            SYMBOL             SM2
 	D:00CCH            SYMBOL             TL2
+	C:0076H            SYMBOL             INIT_DELAY_2
 	D:0098H            SYMBOL             SCON
-	C:0016H            SYMBOL             TIMER_INIT
-	C:000CH            SYMBOL             INIT
+	C:0094H            SYMBOL             TIMER_INIT
+	C:0088H            SYMBOL             INIT
+	C:0074H            SYMBOL             INIT_DELAY_3
+	C:0039H            SYMBOL             LCD_SEND_SERIAL_DATA
 	B:00B9H            SYMBOL             PT0
 	D:0089H            SYMBOL             TMOD
 	D:0088H            SYMBOL             TCON
+	C:0060H            SYMBOL             LCD_SEND_DATA
 	B:00CEH            SYMBOL             EXF2
 	B:00BBH            SYMBOL             PT1
 	B:00D3H            SYMBOL             RS0
+	C:0048H            SYMBOL             LCD_SERIAL_END_IF
 	B:00BDH            SYMBOL             PT2
 	B:00B7H            SYMBOL             RD
 	B:008CH            SYMBOL             TR0
@@ -115,33 +125,104 @@ SYMBOL TABLE FOR C:\PROJECTS\8051\COMMONS\COMMONS.AOF(COMMONS)
 	B:00D5H            SYMBOL             F0
 	B:008EH            SYMBOL             TR1
 	B:00D1H            SYMBOL             F1
-	C:0003H            SYMBOL             FMG_TETRIS_MAIN
+	C:007FH            SYMBOL             FMG_TETRIS_MAIN
 	B:00CAH            SYMBOL             TR2
 	B:00B8H            SYMBOL             PX0
 	B:00ACH            SYMBOL             ES
 	B:00BAH            SYMBOL             PX1
 	D:00B8H            SYMBOL             IP
+	C:004EH            SYMBOL             LCD_SEND_COMMAND
 	D:00D0H            SYMBOL             PSW
 	B:0098H            SYMBOL             RI
 	B:00B2H            SYMBOL             INT0
 	B:00B3H            SYMBOL             INT1
 	B:00D7H            SYMBOL             CY
 	D:0083H            SYMBOL             DPH
+	C:0095H            SYMBOL             TIMER0_INTERRUPT
 	B:0099H            SYMBOL             TI
+	C:00A4H            SYMBOL             LOOP_MAIN
 	B:0089H            SYMBOL             IE0
 	B:008BH            SYMBOL             IE1
-	C:0000H            LINE#              8
-	C:0003H            LINE#              5
-	C:0005H            LINE#              6
-	C:0007H            LINE#              7
-	C:0009H            LINE#              8
-	C:000BH            LINE#              9
-	C:000CH            LINE#              12
-	C:000FH            LINE#              13
-	C:0012H            LINE#              14
-	C:0015H            LINE#              18
-	C:0016H            LINE#              22
-	C:0017H            LINE#              26
+	C:0000H            LINE#              9
+	C:0003H            LINE#              13
+	C:0005H            LINE#              14
+	C:0007H            LINE#              16
+	C:000AH            LINE#              20
+	C:000DH            LINE#              21
+	C:0010H            LINE#              23
+	C:0013H            LINE#              24
+	C:0016H            LINE#              26
+	C:0019H            LINE#              27
+	C:001CH            LINE#              29
+	C:001FH            LINE#              30
+	C:0022H            LINE#              32
+	C:0025H            LINE#              33
+	C:0028H            LINE#              35
+	C:002BH            LINE#              36
+	C:002EH            LINE#              38
+	C:0031H            LINE#              39
+	C:0034H            LINE#              40
+	C:0035H            LINE#              44
+	C:0038H            LINE#              45
+	C:0039H            LINE#              49
+	C:003BH            LINE#              50
+	C:003DH            LINE#              52
+	C:003FH            LINE#              53
+	C:0042H            LINE#              54
+	C:0044H            LINE#              55
+	C:0046H            LINE#              57
+	C:0048H            LINE#              59
+	C:004AH            LINE#              60
+	C:004BH            LINE#              61
+	C:004DH            LINE#              62
+	C:004EH            LINE#              67
+	C:0050H            LINE#              68
+	C:0052H            LINE#              69
+	C:0054H            LINE#              70
+	C:0056H            LINE#              71
+	C:0059H            LINE#              72
+	C:005BH            LINE#              74
+	C:005DH            LINE#              75
+	C:005FH            LINE#              76
+	C:0060H            LINE#              80
+	C:0062H            LINE#              81
+	C:0064H            LINE#              82
+	C:0066H            LINE#              83
+	C:0068H            LINE#              84
+	C:006BH            LINE#              85
+	C:006DH            LINE#              87
+	C:006FH            LINE#              88
+	C:0071H            LINE#              89
+	C:0072H            LINE#              93
+	C:0074H            LINE#              95
+	C:0076H            LINE#              97
+	C:0078H            LINE#              99
+	C:007AH            LINE#              100
+	C:007CH            LINE#              101
+	C:007EH            LINE#              102
+	C:007FH            LINE#              5
+	C:0081H            LINE#              6
+	C:0083H            LINE#              7
+	C:0085H            LINE#              8
+	C:0087H            LINE#              9
+	C:0088H            LINE#              13
+	C:008BH            LINE#              14
+	C:008EH            LINE#              15
+	C:0091H            LINE#              16
+	C:0094H            LINE#              20
+	C:0095H            LINE#              24
+	C:0097H            LINE#              25
+	C:0099H            LINE#              27
+	C:009BH            LINE#              28
+	C:009DH            LINE#              31
+	C:009FH            LINE#              32
+	C:00A1H            LINE#              33
+	C:00A2H            LINE#              37
+	C:00A4H            LINE#              39
+	C:00A6H            LINE#              40
+	C:00A7H            LINE#              41
+	C:00AAH            LINE#              42
+	C:00ACH            LINE#              43
 	-------            ENDMOD             COMMONS
 
 ----------------------

@@ -1,19 +1,21 @@
 
 <Debug>
 	<Commons>
-		<CodeView TopRow="7" Focus="11" >
+		<CodeView TopRow="57" Focus="79" >
 			<CodeReport>
-				<0>81</0>
-				<1>89</1>
-				<2>48</2>
-				<3>269</3>
-				<4>49</4>
-				<5>103</5>
-																																																																																				
+				<0>61</0>
+				<1>68</1>
+				<2>36</2>
+				<3>208</3>
+				<4>37</4>
+				<5>83</5>
+																																										
 			</CodeReport>
-																																																												
+																														
 		</CodeView>
-																																				
+		<DataView Focus="32" TopRow="0" NbPerLine="12" />
+		<BitView Focus="7" TopRow="0" NbPerLine="14" />
+																		
 	</Commons>
 	<Flags>
 		<Report>
@@ -37,7 +39,8 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\commons.asm" Line="21" Index="0" focus="1" />
+		<View File=".\commons.asm" Line="15" Index="0" focus="1" />
+		<View File=".\LCD.asm" Line="60" Index="1" />
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
@@ -74,6 +77,9 @@
 			<GrepReplaceWhatValue/>
 		</GrepReplaceWhat>
 	</Grep>
-	<FindStrings/>
+	<FindStrings>
+		<Find>LCD_SEND_SERIAL_DATA</Find>
+		<Find>LCD_SEND_COMMAND</Find>
+	</FindStrings>
 	<ReplaceStrings/>
 </Debug>
