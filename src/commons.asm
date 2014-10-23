@@ -34,10 +34,15 @@ TIMER0_INTERRUPT:
 
 code ;Entrada principal onde será exibido o código de menu para seleção do jogo
 MAIN: 
-    MOV A, #01010101b
+    ;Banco 2
+    SETB RS1
+    CLR RS0
+    MOV R1, #001h
+    MOV R2, #001h
 LOOP_MAIN:
+    MOV A, #01010101b
+    LCALL LCD_XY
     MOV lcd_bus, A
-    RR A
     LCALL LCD_DRAW
     SJMP LOOP_MAIN
     LCALL FMG_TETRIS_MAIN
