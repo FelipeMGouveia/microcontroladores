@@ -1,4 +1,4 @@
-MACRO ASSEMBLER COMMONS                                    10/23/14 07:55:38 PAGE     1
+MACRO ASSEMBLER COMMONS                                    11/02/14 00:29:45 PAGE     1
 
 
 DOS MACRO ASSEMBLER MA51 V06.16.13.326
@@ -12,50 +12,50 @@ LOC     OBJ           LINE    SOURCE
                        279     ;Podemos dividir o códgigo de cada um em um asm separado, para evitar problema
                        280     ;com nomenclatura sugiro termos esses arquivos pré-definidos.
                        281     $INCLUDE (TETRIS.ASM)
-                       291     
-                       292     CODE AT 0
-0000    020000   F     293         LJMP INIT
-                       294     
-------                 295     CODE
-                       296     INIT:  ;Inicialização das interrupções, do display e do que mais for necessário
-00CD    758160         297         MOV SP, #60H ; Move o stack pointer para o endereço 60h
-00D0    120000   F     298         LCALL TIMER_INIT
-00D3    120000   F     299         LCALL LCD_INIT
-00D6    020000   F     300         LJMP MAIN 
-                       301         
-------                 302     CODE ;ROTINA para inicialização do Timer, de ser chamado por um CALL
-                       303     TIMER_INIT: 
-00D9    22             304         RET;
-                       305     
-------                 306     CODE ;ROTINA para tratamento da interrupção do timer0
-                       307     TIMER0_INTERRUPT: 
-00DA    C0E0           308         PUSH ACC ;Acumulador para pilha
-00DC    C0D0           309         PUSH PSW ;Guardar a infromação do banco de registradores que está sendo utilizado    
-                       310         ;Utilizar página 1 para interrupção do timer 1 (timer do jogo)
-00DE    D2D3           311         SETB RS0
-00E0    C2D4           312         CLR RS1
-                       313         
-                       314         ;Volta os registradores PSW e ACC respectivamente
-00E2    D0D0           315         POP PSW
-00E4    D0E0           316         POP ACC
-00E6    22             317         RET;
-                       318     
-------                 319     CODE ;Entrada principal onde será exibido o código de menu para seleção do jogo
-                       320     MAIN:  
-                       321         ;Banco 2
-00E7    D2D4           322         SETB RS1
-00E9    C2D3           323         CLR RS0
-00EB    7901           324         MOV R1, #001H
-00ED    7A01           325         MOV R2, #001H
-                       326     LOOP_MAIN: 
-00EF    7455           327         MOV A, #01010101B
-00F1    120000   F     328         LCALL LCD_XY
-00F4    F8             329     MOV R0 , A 
-00F5    120000   F     330         LCALL LCD_DRAW
-00F8    80F5           331         SJMP LOOP_MAIN
-00FA    120000   F     332         LCALL FMG_TETRIS_MAIN
-                       333     END
-MACRO ASSEMBLER COMMONS                                    10/23/14 07:55:38 PAGE     0
+                       494     
+                       495     CODE AT 0
+0000    020000   F     496         LJMP INIT
+                       497     
+------                 498     CODE
+                       499     INIT:  ;Inicialização das interrupções, do display e do que mais for necessário
+0215    758160         500         MOV SP, #60H ; Move o stack pointer para o endereço 60h
+0218    120000   F     501         LCALL TIMER_INIT
+021B    120000   F     502         LCALL LCD_INIT
+021E    020000   F     503         LJMP MAIN 
+                       504         
+------                 505     CODE ;ROTINA para inicialização do Timer, de ser chamado por um CALL
+                       506     TIMER_INIT: 
+0221    22             507         RET;
+                       508     
+------                 509     CODE ;ROTINA para tratamento da interrupção do timer0
+                       510     TIMER0_INTERRUPT: 
+0222    C0E0           511         PUSH ACC ;Acumulador para pilha
+0224    C0D0           512         PUSH PSW ;Guardar a infromação do banco de registradores que está sendo utilizado    
+                       513         ;Utilizar página 1 para interrupção do timer 1 (timer do jogo)
+0226    D2D3           514         SETB RS0
+0228    C2D4           515         CLR RS1
+                       516         
+                       517         ;Volta os registradores PSW e ACC respectivamente
+022A    D0D0           518         POP PSW
+022C    D0E0           519         POP ACC
+022E    22             520         RET;
+                       521     
+------                 522     CODE ;Entrada principal onde será exibido o código de menu para seleção do jogo
+                       523     MAIN:  
+                       524         ;Banco 2
+022F    D2D4           525         SETB RS1
+0231    C2D3           526         CLR RS0
+0233    7901           527         MOV R1, #001H
+0235    7A01           528         MOV R2, #001H
+                       529     LOOP_MAIN: 
+0237    7455           530         MOV A, #01010101B
+0239    120000   F     531         LCALL LCD_XY
+023C    F8             532     MOV R0 , A 
+023D    120000   F     533         LCALL LCD_DRAW
+0240    80F5           534         SJMP LOOP_MAIN
+0242    120000   F     535         LCALL FMG_TETRIS_MAIN
+                       536     END
+MACRO ASSEMBLER COMMONS                                    11/02/14 00:29:45 PAGE     0
 
 
 SYMBOL TABLE LISTING
@@ -64,7 +64,10 @@ SYMBOL TABLE LISTING
 
 N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
 
-LCD_DRAW . . . . .  C ADDR   003AH   R  SEG=?PR?COMMONS         171# 330 
+LCD_DRAW . . . . .  C ADDR   003AH   R  SEG=?PR?COMMONS         171# 353 355 372 
+                                                                374 402 405 428 430 
+                                                                458 461 484 486 533 
+                                                                
 BIG_DELAY. . . . .  C ADDR   00B7H   R  SEG=?PR?COMMONS         140 268# 
 RCAP2H . . . . . .  D ADDR   00CBH   A                          33# 
 DPL. . . . . . . .  D ADDR   0082H   A                          16# 
@@ -75,34 +78,53 @@ CP_RL2 . . . . . .  B ADDR   00C8H.0 A                          105#
 EXEN2. . . . . . .  B ADDR   00C8H.3 A                          102# 
 B. . . . . . . . .  D ADDR   00F0H   A                          14# 
 P2 . . . . . . . .  D ADDR   00A0H   A                          10# 
-LCD_XY . . . . . .  C ADDR   007EH   R  SEG=?PR?COMMONS         224# 328 
+LCD_XY . . . . . .  C ADDR   007EH   R  SEG=?PR?COMMONS         224# 331 382 409 
+                                                                438 465 531 
 LCD_SEND_SERIAL_D~  C ADDR   004AH   R  SEG=?PR?COMMONS         181 184# 
 T2EX . . . . . . .  B ADDR   0090H.1 A                          95# 
 PS . . . . . . . .  B ADDR   00B8H.4 A                          65# 
-SP . . . . . . . .  D ADDR   0081H   A                          15# 297 
+SP . . . . . . . .  D ADDR   0081H   A                          15# 500 
 P3 . . . . . . . .  D ADDR   00B0H   A                          11# 112 113 
 T0 . . . . . . . .  B ADDR   00B0H.4 A                          74# 
 AC . . . . . . . .  B ADDR   00D0H.6 A                          41# 
 RCAP2L . . . . . .  D ADDR   00CAH   A                          32# 
-MAIN . . . . . . .  C ADDR   00E7H   R  SEG=?PR?COMMONS         300 320# 
+MAIN . . . . . . .  C ADDR   022FH   R  SEG=?PR?COMMONS         503 523# 
 REN. . . . . . . .  B ADDR   0098H.4 A                          83# 
 T1 . . . . . . . .  B ADDR   00B0H.5 A                          73# 
 OV . . . . . . . .  B ADDR   00D0H.2 A                          45# 
-LCD_INIT . . . . .  C ADDR   0000H   R  SEG=?PR?COMMONS         132# 299 
+FMG_DRAW_SCREEN. .  C ADDR   010FH   R  SEG=?PR?COMMONS         321 325# 
+LCD_INIT . . . . .  C ADDR   0000H   R  SEG=?PR?COMMONS         132# 502 
 T2 . . . . . . . .  B ADDR   0090H.0 A                          96# 
 EA . . . . . . . .  B ADDR   00A8H.7 A                          58# 
 T2CON. . . . . . .  D ADDR   00C8H   A                          31# 
 ACC. . . . . . . .  D ADDR   00E0H   A                          13# 133 167 181 195 
                                                                 205 211 221 225 242 
-                                                                247 264 308 316 
+                                                                247 264 340 341 342 
+                                                                343 344 345 346 347 
+                                                                348 349 350 359 360 
+                                                                361 362 363 364 365 
+                                                                366 367 368 369 389 
+                                                                390 391 392 393 394 
+                                                                395 396 397 398 399 
+                                                                415 416 417 418 419 
+                                                                420 421 422 423 424 
+                                                                425 445 446 447 448 
+                                                                449 450 451 452 453 
+                                                                454 455 471 472 473 
+                                                                474 475 476 477 478 
+                                                                479 480 481 511 519 
+                                                                
 C_T2 . . . . . . .  B ADDR   00C8H.1 A                          104# 
 LCD_SEND_SERIAL_D~  C ADDR   0041H   R  SEG=?PR?COMMONS         179# 189 
 WR . . . . . . . .  B ADDR   00B0H.6 A                          72# 
 ET0. . . . . . . .  B ADDR   00A8H.1 A                          62# 
-LCD_X. . . . . . .  ? ADDR   0000H   A                          116# 237 251 
+LCD_X. . . . . . .  ? ADDR   0000H   A                          116# 237 251 329 
+                                                                380 407 436 463 
 ET1. . . . . . . .  B ADDR   00A8H.3 A                          60# 
 TF0. . . . . . . .  B ADDR   0088H.5 A                          51# 
-LCD_Y. . . . . . .  ? ADDR   0000H   A                          117# 232 252 
+FMG_NUMBERS_FONT .  C ADDR   00C4H   R  SEG=?PR?COMMONS         287# 
+LCD_Y. . . . . . .  ? ADDR   0000H   A                          117# 232 252 330 
+                                                                381 408 437 464 
 ET2. . . . . . . .  B ADDR   00A8H.5 A                          91# 
 TF1. . . . . . . .  B ADDR   0088H.7 A                          49# 
 LCD_CLK. . . . . .  B ADDR   00B0H.1 A                          112# 180 187 
@@ -121,11 +143,9 @@ EX1. . . . . . . .  B ADDR   00A8H.2 A                          61#
 IT1. . . . . . . .  B ADDR   0088H.2 A                          54# 
 TH2. . . . . . . .  D ADDR   00CDH   A                          35# 
 IE . . . . . . . .  D ADDR   00A8H   A                          25# 
-SM0. . . . . . . .  B ADDR   0098H.7 A                          80# 
-TXD. . . . . . . .  B ADDR   00B0H.1 A                          77# 
-P. . . . . . . . .  B ADDR   00D0H.0 A                          47# 
-SBUF . . . . . . .  D ADDR   0099H   A                          28# 
-MACRO ASSEMBLER COMMONS                                    10/23/14 07:55:38 PAGE     1
+FMG_LOOP_LINHA_2 .  C ADDR   016DH   R  SEG=?PR?COMMONS         384# 435 
+FMG_LOOP_LINHA_3 .  C ADDR   01C5H   R  SEG=?PR?COMMONS         440# 491 
+MACRO ASSEMBLER COMMONS                                    11/02/14 00:29:45 PAGE     1
 
 
 DOS MACRO ASSEMBLER MA51 V06.16.13.326
@@ -133,16 +153,21 @@ OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.OBJ
 ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
 
 LOC     OBJ           LINE    SOURCE
+SM0. . . . . . . .  B ADDR   0098H.7 A                          80# 
+TXD. . . . . . . .  B ADDR   00B0H.1 A                          77# 
+P. . . . . . . . .  B ADDR   00D0H.0 A                          47# 
+SBUF . . . . . . .  D ADDR   0099H   A                          28# 
 TL0. . . . . . . .  D ADDR   008AH   A                          21# 
 PCON . . . . . . .  D ADDR   0087H   A                          18# 
 SM1. . . . . . . .  B ADDR   0098H.6 A                          81# 
 TL1. . . . . . . .  D ADDR   008BH   A                          22# 
+FMG_PIECES . . . .  C ADDR   00E2H   R  SEG=?PR?COMMONS         301# 
 SM2. . . . . . . .  B ADDR   0098H.5 A                          82# 
 TL2. . . . . . . .  D ADDR   00CCH   A                          34# 
 INIT_DELAY_2 . . .  C ADDR   00BBH   R  SEG=?PR?COMMONS         272# 276 
 SCON . . . . . . .  D ADDR   0098H   A                          27# 
-TIMER_INIT . . . .  C ADDR   00D9H   R  SEG=?PR?COMMONS         298 303# 
-INIT . . . . . . .  C ADDR   00CDH   R  SEG=?PR?COMMONS         293 296# 
+TIMER_INIT . . . .  C ADDR   0221H   R  SEG=?PR?COMMONS         501 506# 
+INIT . . . . . . .  C ADDR   0215H   R  SEG=?PR?COMMONS         496 499# 
 INIT_DELAY_3 . . .  C ADDR   00B9H   R  SEG=?PR?COMMONS         270# 277 
 LCD_SEND_SERIAL_D~  C ADDR   003EH   R  SEG=?PR?COMMONS         176# 201 217 
 PT0. . . . . . . .  B ADDR   00B8H.1 A                          68# 
@@ -154,21 +179,22 @@ LCD_RESET. . . . .  B ADDR   0090H.5 A                          110# 137
 EXF2 . . . . . . .  B ADDR   00C8H.6 A                          99# 
 PT1. . . . . . . .  B ADDR   00B8H.3 A                          66# 
 RS0. . . . . . . .  B ADDR   00D0H.3 A                          44# 136 198 214 228 
-                                                                250 311 323 
+                                                                250 328 514 526 
+FMG_LOOP_LINHA_SU~  C ADDR   011EH   R  SEG=?PR?COMMONS         335# 378 
 LCD_SERIAL_END_IF.  C ADDR   004CH   R  SEG=?PR?COMMONS         183 186# 
 PT2. . . . . . . .  B ADDR   00B8H.5 A                          93# 
 RD . . . . . . . .  B ADDR   00B0H.7 A                          71# 
 TR0. . . . . . . .  B ADDR   0088H.4 A                          52# 
 RS1. . . . . . . .  B ADDR   00D0H.4 A                          43# 135 197 213 227 
-                                                                249 312 322 
+                                                                249 327 515 525 
 F0 . . . . . . . .  B ADDR   00D0H.5 A                          42# 
 TR1. . . . . . . .  B ADDR   0088H.6 A                          50# 
 F1 . . . . . . . .  B ADDR   00D0H.1 A                          46# 
-FMG_TETRIS_MAIN. .  C ADDR   00C4H   R  SEG=?PR?COMMONS         285# 332 
+FMG_TETRIS_MAIN. .  C ADDR   0108H   R  SEG=?PR?COMMONS         319# 535 
 TR2. . . . . . . .  B ADDR   00C8H.2 A                          103# 
 PX0. . . . . . . .  B ADDR   00B8H.0 A                          69# 
 ES . . . . . . . .  B ADDR   00A8H.4 A                          59# 
-LCD_CLEAR. . . . .  C ADDR   0099H   R  SEG=?PR?COMMONS         165 246# 
+LCD_CLEAR. . . . .  C ADDR   0099H   R  SEG=?PR?COMMONS         165 246# 320 
 LCD_DC . . . . . .  B ADDR   0090H.7 A                          111# 199 215 
 PX1. . . . . . . .  B ADDR   00B8H.2 A                          67# 
 IP . . . . . . . .  D ADDR   00B8H   A                          26# 
@@ -179,30 +205,37 @@ LCD_CE . . . . . .  B ADDR   0090H.6 A                          109# 138 200 202
                                                                 216 218 
 PSW. . . . . . . .  D ADDR   00D0H   A                          12# 134 166 196 204 
                                                                 212 220 226 241 248 
-                                                                263 309 315 
+                                                                263 512 518 
 LCD_CLEAR_INTERNA~  C ADDR   00A9H   R  SEG=?PR?COMMONS         258# 261 
 RI . . . . . . . .  B ADDR   0098H.0 A                          87# 
 INT0 . . . . . . .  B ADDR   00B0H.2 A                          76# 
-?PR?COMMONS. . . .  C SEG    00FDH      REL=UNIT                131# 170 175 192 
-                                                                208 223 245 267 282 
-                                                                295 302 306 319 
+?PR?COMMONS. . . .  C SEG    0245H      REL=UNIT                131# 170 175 192 
+                                                                208 223 245 267 285 
+                                                                288 316 498 505 509 
+                                                                522 
 LCD_BUS. . . . . .  ? ADDR   0000H   A                          115# 144 147 150 
                                                                 153 156 159 162 178 
-                                                                234 239 259 329 
+                                                                234 239 259 352 354 
+                                                                371 373 401 404 427 
+                                                                429 457 460 483 485 
+                                                                532 
 INT1 . . . . . . .  B ADDR   00B0H.3 A                          75# 
 CY . . . . . . . .  B ADDR   00D0H.7 A                          40# 
 DPH. . . . . . . .  D ADDR   0083H   A                          17# 
-TIMER0_INTERRUPT .  C ADDR   00DAH   R  SEG=?PR?COMMONS         307# 
+TIMER0_INTERRUPT .  C ADDR   0222H   R  SEG=?PR?COMMONS         510# 
 TI . . . . . . . .  B ADDR   0098H.1 A                          86# 
-LOOP_MAIN. . . . .  C ADDR   00EFH   R  SEG=?PR?COMMONS         326# 331 
+LOOP_MAIN. . . . .  C ADDR   0237H   R  SEG=?PR?COMMONS         529# 534 
 IE0. . . . . . . .  B ADDR   0088H.1 A                          55# 
+FMG_GRID . . . . .  N NUMB   0020h                              283# 332 
+MACRO ASSEMBLER COMMONS                                    11/02/14 00:29:45 PAGE     2
+
 IE1. . . . . . . .  B ADDR   0088H.3 A                          53# 
 COMMONS. . . . . .  N NUMB   -----
 
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    256    ----
+   CODE SIZE        =    584    ----
    XDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
