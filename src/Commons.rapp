@@ -23,6 +23,17 @@
 			</Config>
 		</Options>
 	</NodeASM>
+	<NodeASM Path=".\Random.asm" Header="Random.asm" Marker="0" OutputFile=".\Random.obj" sate="0" >
+		<Options>
+			<Config Header="Standard" >
+				<Set Header="NodeASM" >
+					<Section Header="Build" >
+						<Property Header="Exclude" Value="Yes" Removable="1" />
+					</Section>
+				</Set>
+			</Config>
+		</Options>
+	</NodeASM>
 	<Options>
 		<Config Header="Standard" >
 			<Set Header="ApplicationBuild" >

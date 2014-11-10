@@ -1,22 +1,48 @@
-MACRO ASSEMBLER TETRIS                                     10/17/14 21:47:41 PAGE     1
+MACRO ASSEMBLER TETRIS                                     10/23/14 23:14:22 PAGE     1
 
 
 DOS MACRO ASSEMBLER MA51 V06.16.13.326
-OBJECT MODULE PLACED IN C:\PROJECTS\8051\COMMONS\TETRIS.OBJ
-ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\8051\COMMONS\TETRIS.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\TETRIS.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\TETRIS.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
 
 LOC     OBJ           LINE    SOURCE
 ------                   1     CODE
-                         2     ;Recomendo utilizarmos o login do ecomp como inicial de cada rótulo para não
-                         3     ;ter o risco de termos rótulos duplicados.
-                         4     FMG_TETRIS_MAIN: 
-0000    7410             5         MOV A, #10H
-0002    7410             6         MOV A, #10H
-0004    7410             7         MOV A, #10H
-0006    7410             8         MOV A, #10H
+                         2         ;Fonte numérica 3x8
+0000    091F0109         3         FMG_NUMBERS_FONT:  DB 009H, 01FH, 001H, 009H, 013H, 01DH, 011H, 015H, 00AH, 01CH, 004H, 01FH, 01CH, 015H, 012H, 01FH, 015H, 017H, 010H, 017H, 018H, 01FH, 015H, 01FH, 01CH, 014H, 01FH, 01FH, 011H, 01FH
+0004    131D1115
+0008    0A1C041F
+000C    1C15121F
+0010    15171017
+0014    181F151F
+0018    1C141F1F
+001C    111F
+------                   4     CODE
+                         5         ;Cada peça é definida por um par de bytes onde os bits mais significativos representam 
+                         6         ;a coluna impares(3 e 1), e os menos significativos representam as colunas pares (2 e 0)
+                         7         ;As peças são centralziadas, quando não for possível serão alinhadas a esquerda e abaixo.
+                         8         ;Ordem das peças:
+                         9         ;   I, O, S, Z
+001E    0FF06666        10         FMG_PIECES:  DB 00FH, 0F0H, 066H, 066H, 006H, 006H, 026H, 040H, 006H, 030H, 046H, 020H, 003H, 060H
+0022    06062640
+0026    06304620
+002A    0360
+------                  11     CODE
+                        12     ;Inicializar o sistema
+                        13     ; 
+                        14     FMG_TETRIS_MAIN: 
+002C    120000   F      15         LCALL LCD_CLEAR
 
-*** WARNING #87 IN LINE 8 OF C:\Projects\8051\commons\tetris.asm : MISSING 'END' STATEMENT
-MACRO ASSEMBLER TETRIS                                     10/17/14 21:47:41 PAGE     0
+*** ERROR #46 IN LINE 15 OF C:\Projects\microcontroladores\src\tetris.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_CLEAR'
+002F    120000   F      16         LCALL FMG_DRAW_SCREEN
+0032    22              17         RET
+                        18         
+                        19     ;Desenha o tabuleiro na tela
+                        20     FMG_DRAW_SCREEN: 
+0033    22              21         RET
+                        22         
+
+*** WARNING #87 IN LINE 22 OF C:\Projects\microcontroladores\src\tetris.asm : MISSING 'END' STATEMENT
+MACRO ASSEMBLER TETRIS                                     10/23/14 23:14:22 PAGE     0
 
 
 SYMBOL TABLE LISTING
@@ -25,14 +51,18 @@ SYMBOL TABLE LISTING
 
 N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
 
-FMG_TETRIS_MAIN. .  C ADDR   0000H   R  SEG=?PR?TETRIS          4# 
-?PR?TETRIS . . . .  C SEG    0008H      REL=UNIT                1# 
+FMG_DRAW_SCREEN. .  C ADDR   0033H   R  SEG=?PR?TETRIS          16 20# 
+FMG_NUMBERS_FONT .  C ADDR   0000H   R  SEG=?PR?TETRIS          3# 
+FMG_PIECES . . . .  C ADDR   001EH   R  SEG=?PR?TETRIS          10# 
+FMG_TETRIS_MAIN. .  C ADDR   002CH   R  SEG=?PR?TETRIS          14# 
+LCD_CLEAR. . . . .  ? ADDR   0000H   A                          15 
+?PR?TETRIS . . . .  C SEG    0034H      REL=UNIT                1# 4 11 
 TETRIS . . . . . .  N NUMB   -----
 
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =      8    ----
+   CODE SIZE        =     52    ----
    XDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
@@ -42,4 +72,4 @@ END OF MODULE INFORMATION.
 
 REGISTER BANK(S) USED : 0 
 
-ASSEMBLY COMPLETE.   1 WARNING(S)   0 ERROR(S)
+ASSEMBLY COMPLETE.   1 WARNING(S)   1 ERROR(S)

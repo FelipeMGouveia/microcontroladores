@@ -27,4 +27,11 @@ Em termos de funções as seguintes devem ser utilizadas:
 
 Obs: O LCD aparentemente avalia o canal de dados na borda de subida.
 
+Random
+------
+Existem dois geradores de números aleatórios no sistema, o primeiro é um gerador de 8bits e o segundo de 16 bits.
+Para a utilização do gerador de 8bits é necessário chamar a rotina RAND8 e o resultado do mesmo fica armazenado no acumulador
+(registrados A/ACC). O gerador de 16 bits é chamado pela rotina RAND16, e tem o seu resultado armazenano no acumulador
+(registrador A/ACC) para os bits menos significativos e no registrabor auxiliar B para os bits mais significativos.
+Os geradores de número aleatórios estão localizados nas posições de memória 020h para o de 8bits e 021h, 022h para o de 16 bits.
 

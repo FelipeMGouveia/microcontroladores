@@ -1,0 +1,453 @@
+REG52                                                                                                                   PAGE 1
+                         1     ;----------------------------------------------
+****WARNING:Noinstructionfoundataddress0x00.ConsiderusageofappropriateORGdirectivetoclarifycorrectcodeplacement.
+                         2     ; 8052 Processor Declarations
+                         3     ; Copyright (c) Raisonance SA, 1987-2003
+                         4     ;----------------------------------------------
+                         5
+                         6     ; BYTE Registers
+  0080                   7     P0      DATA    80H
+****ERROR:Tryingtooverwriteconstant:p0
+  0090                   8     P1      DATA    90H
+****ERROR:Tryingtooverwriteconstant:p1
+  00A0                   9     P2      DATA    0A0H
+****ERROR:Tryingtooverwriteconstant:p2
+  00B0                  10     P3      DATA    0B0H
+****ERROR:Tryingtooverwriteconstant:p3
+  00D0                  11     PSW     DATA    0D0H
+****ERROR:Tryingtooverwriteconstant:psw
+  00E0                  12     ACC     DATA    0E0H
+****ERROR:Tryingtooverwriteconstant:acc
+  00F0                  13     B       DATA    0F0H
+****ERROR:Tryingtooverwriteconstant:b
+  0081                  14     SP      DATA    81H
+****ERROR:Tryingtooverwriteconstant:sp
+  0082                  15     DPL     DATA    82H
+****ERROR:Tryingtooverwriteconstant:dpl
+  0083                  16     DPH     DATA    83H
+****ERROR:Tryingtooverwriteconstant:dph
+  0087                  17     PCON    DATA    87H
+****ERROR:Tryingtooverwriteconstant:pcon
+  0088                  18     TCON    DATA    88H
+****ERROR:Tryingtooverwriteconstant:tcon
+  0089                  19     TMOD    DATA    89H
+****ERROR:Tryingtooverwriteconstant:tmod
+  008A                  20     TL0     DATA    8AH
+****ERROR:Tryingtooverwriteconstant:tl0
+  008B                  21     TL1     DATA    8BH
+****ERROR:Tryingtooverwriteconstant:tl1
+  008C                  22     TH0     DATA    8CH
+****ERROR:Tryingtooverwriteconstant:th0
+  008D                  23     TH1     DATA    8DH
+****ERROR:Tryingtooverwriteconstant:th1
+  00A8                  24     IE      DATA    0A8H
+****ERROR:Tryingtooverwriteconstant:ie
+  00B8                  25     IP      DATA    0B8H
+****ERROR:Tryingtooverwriteconstant:ip
+  0098                  26     SCON    DATA    98H
+****ERROR:Tryingtooverwriteconstant:scon
+  0099                  27     SBUF    DATA    99H
+****ERROR:Tryingtooverwriteconstant:sbuf
+                        28
+                        29     ; 8052 Extensions
+  00C8                  30     T2CON   DATA    0C8H
+****ERROR:Tryingtooverwriteconstant:t2con
+  00CA                  31     RCAP2L  DATA    0CAH
+****ERROR:Tryingtooverwriteconstant:rcap2l
+  00CB                  32     RCAP2H  DATA    0CBH
+****ERROR:Tryingtooverwriteconstant:rcap2h
+  00CC                  33     TL2     DATA    0CCH
+****ERROR:Tryingtooverwriteconstant:tl2
+  00CD                  34     TH2     DATA    0CDH
+****ERROR:Tryingtooverwriteconstant:th2
+                        35
+                        36
+                        37     ; BIT Registers
+                        38     ; PSW
+  00D7                  39     CY      BIT     0D7H
+****ERROR:Tryingtooverwriteconstant:cy
+  00D6                  40     AC      BIT     0D6H
+****ERROR:Tryingtooverwriteconstant:ac
+  00D5                  41     F0      BIT     0D5H
+****ERROR:Tryingtooverwriteconstant:f0
+  00D4                  42     RS1     BIT     0D4H
+****ERROR:Tryingtooverwriteconstant:rs1
+  00D3                  43     RS0     BIT     0D3H
+****ERROR:Tryingtooverwriteconstant:rs0
+  00D2                  44     OV      BIT     0D2H
+****ERROR:Tryingtooverwriteconstant:ov
+  00D1                  45     F1      BIT     0D1H
+  00D0                  46     P       BIT     0D0H
+****ERROR:Tryingtooverwriteconstant:p
+                        47     ; TCON
+  008F                  48     TF1     BIT     8FH
+****ERROR:Tryingtooverwriteconstant:tf1
+  008E                  49     TR1     BIT     8EH
+****ERROR:Tryingtooverwriteconstant:tr1
+  008D                  50     TF0     BIT     8DH
+****ERROR:Tryingtooverwriteconstant:tf0
+  008C                  51     TR0     BIT     8CH
+****ERROR:Tryingtooverwriteconstant:tr0
+  008B                  52     IE1     BIT     8BH
+****ERROR:Tryingtooverwriteconstant:ie1
+  008A                  53     IT1     BIT     8AH
+****ERROR:Tryingtooverwriteconstant:it1
+  0089                  54     IE0     BIT     89H
+****ERROR:Tryingtooverwriteconstant:ie0
+  0088                  55     IT0     BIT     88H
+****ERROR:Tryingtooverwriteconstant:it0
+                        56     ; IE
+  00AF                  57     EA      BIT     0AFH
+****ERROR:Tryingtooverwriteconstant:ea
+  00AC                  58     ES      BIT     0ACH
+****ERROR:Tryingtooverwriteconstant:es
+  00AB                  59     ET1     BIT     0ABH
+****ERROR:Tryingtooverwriteconstant:et1
+  00AA                  60     EX1     BIT     0AAH
+****ERROR:Tryingtooverwriteconstant:ex1
+  00A9                  61     ET0     BIT     0A9H
+****ERROR:Tryingtooverwriteconstant:et0
+  00A8                  62     EX0     BIT     0A8H
+****ERROR:Tryingtooverwriteconstant:ex0
+                        63     ; IP
+  00BC                  64     PS      BIT     0BCH
+****ERROR:Tryingtooverwriteconstant:ps
+  00BB                  65     PT1     BIT     0BBH
+****ERROR:Tryingtooverwriteconstant:pt1
+  00BA                  66     PX1     BIT     0BAH
+****ERROR:Tryingtooverwriteconstant:px1
+  00B9                  67     PT0     BIT     0B9H
+****ERROR:Tryingtooverwriteconstant:pt0
+  00B8                  68     PX0     BIT     0B8H
+****ERROR:Tryingtooverwriteconstant:px0
+                        69     ; P3
+  00B7                  70     RD      BIT     0B7H
+****ERROR:Tryingtooverwriteconstant:rd
+  00B6                  71     WR      BIT     0B6H
+****ERROR:Tryingtooverwriteconstant:wr
+  00B5                  72     T1      BIT     0B5H
+****ERROR:Tryingtooverwriteconstant:t1
+  00B4                  73     T0      BIT     0B4H
+****ERROR:Tryingtooverwriteconstant:t0
+  00B3                  74     INT1    BIT     0B3H
+****ERROR:Tryingtooverwriteconstant:int1
+  00B2                  75     INT0    BIT     0B2H
+****ERROR:Tryingtooverwriteconstant:int0
+  00B1                  76     TXD     BIT     0B1H
+****ERROR:Tryingtooverwriteconstant:txd
+  00B0                  77     RXD     BIT     0B0H
+****ERROR:Tryingtooverwriteconstant:rxd
+                        78     ; SCON
+  009F                  79     SM0     BIT     9FH
+****ERROR:Tryingtooverwriteconstant:sm0
+  009E                  80     SM1     BIT     9EH
+****ERROR:Tryingtooverwriteconstant:sm1
+  009D                  81     SM2     BIT     9DH
+****ERROR:Tryingtooverwriteconstant:sm2
+  009C                  82     REN     BIT     9CH
+****ERROR:Tryingtooverwriteconstant:ren
+  009B                  83     TB8     BIT     9BH
+****ERROR:Tryingtooverwriteconstant:tb8
+  009A                  84     RB8     BIT     9AH
+****ERROR:Tryingtooverwriteconstant:rb8
+  0099                  85     TI      BIT     99H
+****ERROR:Tryingtooverwriteconstant:ti
+  0098                  86     RI      BIT     98H
+****ERROR:Tryingtooverwriteconstant:ri
+                        87
+                        88     ; 8052 Extensions
+                        89     ; IE
+  00AD                  90     ET2     BIT     0ADH
+****ERROR:Tryingtooverwriteconstant:et2
+                        91     ; IP
+  00BD                  92     PT2     BIT     0BDH
+****ERROR:Tryingtooverwriteconstant:pt2
+                        93     ; P1
+  0091                  94     T2EX    BIT     91H
+  0090                  95     T2      BIT     90H
+                        96     ; T2CON
+  00CF                  97     TF2     BIT     0CFH
+****ERROR:Tryingtooverwriteconstant:tf2
+  00CE                  98     EXF2    BIT     0CEH
+****ERROR:Tryingtooverwriteconstant:exf2
+  00CD                  99     RCLK    BIT     0CDH
+****ERROR:Tryingtooverwriteconstant:rclk
+  00CC                 100     TCLK    BIT     0CCH
+****ERROR:Tryingtooverwriteconstant:tclk
+  00CB                 101     EXEN2   BIT     0CBH
+****ERROR:Tryingtooverwriteconstant:exen2
+  00CA                 102     TR2     BIT     0CAH
+****ERROR:Tryingtooverwriteconstant:tr2
+  00C9                 103     C_T2    BIT     0C9H
+  00C8                 104     CP_RL2  BIT     0C8H
+                       105
+****WARNING:Missing`END'directive
+ASSEMBLY COMPLETE, NO ERRORS FOUND, 78 WARNINGS
+
+
+ERROR SUMMARY:
+Line 1, WARNING:Noinstructionfoundataddress0x00.ConsiderusageofappropriateORGdirectivetoclarifycorrectcodeplacement.
+Line 8, ERROR:Tryingtooverwriteconstant:p0
+Line 10, ERROR:Tryingtooverwriteconstant:p1
+Line 12, ERROR:Tryingtooverwriteconstant:p2
+Line 14, ERROR:Tryingtooverwriteconstant:p3
+Line 16, ERROR:Tryingtooverwriteconstant:psw
+Line 18, ERROR:Tryingtooverwriteconstant:acc
+Line 20, ERROR:Tryingtooverwriteconstant:b
+Line 22, ERROR:Tryingtooverwriteconstant:sp
+Line 24, ERROR:Tryingtooverwriteconstant:dpl
+Line 26, ERROR:Tryingtooverwriteconstant:dph
+Line 28, ERROR:Tryingtooverwriteconstant:pcon
+Line 30, ERROR:Tryingtooverwriteconstant:tcon
+Line 32, ERROR:Tryingtooverwriteconstant:tmod
+Line 34, ERROR:Tryingtooverwriteconstant:tl0
+Line 36, ERROR:Tryingtooverwriteconstant:tl1
+Line 38, ERROR:Tryingtooverwriteconstant:th0
+Line 40, ERROR:Tryingtooverwriteconstant:th1
+Line 42, ERROR:Tryingtooverwriteconstant:ie
+Line 44, ERROR:Tryingtooverwriteconstant:ip
+Line 46, ERROR:Tryingtooverwriteconstant:scon
+Line 48, ERROR:Tryingtooverwriteconstant:sbuf
+Line 52, ERROR:Tryingtooverwriteconstant:t2con
+Line 54, ERROR:Tryingtooverwriteconstant:rcap2l
+Line 56, ERROR:Tryingtooverwriteconstant:rcap2h
+Line 58, ERROR:Tryingtooverwriteconstant:tl2
+Line 60, ERROR:Tryingtooverwriteconstant:th2
+Line 66, ERROR:Tryingtooverwriteconstant:cy
+Line 68, ERROR:Tryingtooverwriteconstant:ac
+Line 70, ERROR:Tryingtooverwriteconstant:f0
+Line 72, ERROR:Tryingtooverwriteconstant:rs1
+Line 74, ERROR:Tryingtooverwriteconstant:rs0
+Line 76, ERROR:Tryingtooverwriteconstant:ov
+Line 79, ERROR:Tryingtooverwriteconstant:p
+Line 82, ERROR:Tryingtooverwriteconstant:tf1
+Line 84, ERROR:Tryingtooverwriteconstant:tr1
+Line 86, ERROR:Tryingtooverwriteconstant:tf0
+Line 88, ERROR:Tryingtooverwriteconstant:tr0
+Line 90, ERROR:Tryingtooverwriteconstant:ie1
+Line 92, ERROR:Tryingtooverwriteconstant:it1
+Line 94, ERROR:Tryingtooverwriteconstant:ie0
+Line 96, ERROR:Tryingtooverwriteconstant:it0
+Line 99, ERROR:Tryingtooverwriteconstant:ea
+Line 101, ERROR:Tryingtooverwriteconstant:es
+Line 103, ERROR:Tryingtooverwriteconstant:et1
+Line 105, ERROR:Tryingtooverwriteconstant:ex1
+Line 107, ERROR:Tryingtooverwriteconstant:et0
+Line 109, ERROR:Tryingtooverwriteconstant:ex0
+Line 112, ERROR:Tryingtooverwriteconstant:ps
+Line 114, ERROR:Tryingtooverwriteconstant:pt1
+Line 116, ERROR:Tryingtooverwriteconstant:px1
+Line 118, ERROR:Tryingtooverwriteconstant:pt0
+Line 120, ERROR:Tryingtooverwriteconstant:px0
+Line 123, ERROR:Tryingtooverwriteconstant:rd
+Line 125, ERROR:Tryingtooverwriteconstant:wr
+Line 127, ERROR:Tryingtooverwriteconstant:t1
+Line 129, ERROR:Tryingtooverwriteconstant:t0
+Line 131, ERROR:Tryingtooverwriteconstant:int1
+Line 133, ERROR:Tryingtooverwriteconstant:int0
+Line 135, ERROR:Tryingtooverwriteconstant:txd
+Line 137, ERROR:Tryingtooverwriteconstant:rxd
+Line 140, ERROR:Tryingtooverwriteconstant:sm0
+Line 142, ERROR:Tryingtooverwriteconstant:sm1
+Line 144, ERROR:Tryingtooverwriteconstant:sm2
+Line 146, ERROR:Tryingtooverwriteconstant:ren
+Line 148, ERROR:Tryingtooverwriteconstant:tb8
+Line 150, ERROR:Tryingtooverwriteconstant:rb8
+Line 152, ERROR:Tryingtooverwriteconstant:ti
+Line 154, ERROR:Tryingtooverwriteconstant:ri
+Line 159, ERROR:Tryingtooverwriteconstant:et2
+Line 162, ERROR:Tryingtooverwriteconstant:pt2
+Line 168, ERROR:Tryingtooverwriteconstant:tf2
+Line 170, ERROR:Tryingtooverwriteconstant:exf2
+Line 172, ERROR:Tryingtooverwriteconstant:rclk
+Line 174, ERROR:Tryingtooverwriteconstant:tclk
+Line 176, ERROR:Tryingtooverwriteconstant:exen2
+Line 178, ERROR:Tryingtooverwriteconstant:tr2
+Line 182, WARNING:Missing`END'directive
+
+SYMBOL TABLE:
+??MCU_8051_IDE . . . . . . . . . . .  N  NUMB  8051H  NOT USED
+??VERSION. . . . . . . . . . . . . .  N  NUMB  0149H  NOT USED
+AC . . . . . . . . . . . . . . . . .  B  ADDR  00D6H  NOT USED
+ACC. . . . . . . . . . . . . . . . .  D  ADDR  00E0H  NOT USED
+ACSR . . . . . . . . . . . . . . . .  D  ADDR  0097H  NOT USED
+ADCF . . . . . . . . . . . . . . . .  D  ADDR  00F6H  NOT USED
+ADCLK. . . . . . . . . . . . . . . .  D  ADDR  00F2H  NOT USED
+ADCON. . . . . . . . . . . . . . . .  D  ADDR  00F3H  NOT USED
+ADDH . . . . . . . . . . . . . . . .  D  ADDR  00F5H  NOT USED
+ADDL . . . . . . . . . . . . . . . .  D  ADDR  00F4H  NOT USED
+AUXR . . . . . . . . . . . . . . . .  D  ADDR  008EH  NOT USED
+AUXR1. . . . . . . . . . . . . . . .  D  ADDR  00A2H  NOT USED
+B. . . . . . . . . . . . . . . . . .  D  ADDR  00F0H  NOT USED
+BDRCON . . . . . . . . . . . . . . .  D  ADDR  009BH  NOT USED
+BDRCON_1 . . . . . . . . . . . . . .  D  ADDR  009CH  NOT USED
+BRL. . . . . . . . . . . . . . . . .  D  ADDR  009AH  NOT USED
+CCAP0H . . . . . . . . . . . . . . .  D  ADDR  00FAH  NOT USED
+CCAP0L . . . . . . . . . . . . . . .  D  ADDR  00EAH  NOT USED
+CCAP1H . . . . . . . . . . . . . . .  D  ADDR  00FBH  NOT USED
+CCAP1L . . . . . . . . . . . . . . .  D  ADDR  00EBH  NOT USED
+CCAP2H . . . . . . . . . . . . . . .  D  ADDR  00FCH  NOT USED
+CCAP3H . . . . . . . . . . . . . . .  D  ADDR  00FDH  NOT USED
+CCAP4H . . . . . . . . . . . . . . .  D  ADDR  00FEH  NOT USED
+CCAPL2H. . . . . . . . . . . . . . .  D  ADDR  00FCH  NOT USED
+CCAPL2L. . . . . . . . . . . . . . .  D  ADDR  00ECH  NOT USED
+CCAPL3H. . . . . . . . . . . . . . .  D  ADDR  00FDH  NOT USED
+CCAPL3L. . . . . . . . . . . . . . .  D  ADDR  00EDH  NOT USED
+CCAPL4H. . . . . . . . . . . . . . .  D  ADDR  00FEH  NOT USED
+CCAPL4L. . . . . . . . . . . . . . .  D  ADDR  00EEH  NOT USED
+CCAPM0 . . . . . . . . . . . . . . .  D  ADDR  00DAH  NOT USED
+CCAPM1 . . . . . . . . . . . . . . .  D  ADDR  00DBH  NOT USED
+CCAPM2 . . . . . . . . . . . . . . .  D  ADDR  00DCH  NOT USED
+CCAPM3 . . . . . . . . . . . . . . .  D  ADDR  00DDH  NOT USED
+CCAPM4 . . . . . . . . . . . . . . .  D  ADDR  00DEH  NOT USED
+CCF0 . . . . . . . . . . . . . . . .  B  ADDR  00D8H  NOT USED
+CCF1 . . . . . . . . . . . . . . . .  B  ADDR  00D9H  NOT USED
+CCF2 . . . . . . . . . . . . . . . .  B  ADDR  00DAH  NOT USED
+CCF3 . . . . . . . . . . . . . . . .  B  ADDR  00DBH  NOT USED
+CCF4 . . . . . . . . . . . . . . . .  B  ADDR  00DCH  NOT USED
+CCON . . . . . . . . . . . . . . . .  D  ADDR  00D8H  NOT USED
+CFINT. . . . . . . . . . . . . . . .  C  ADDR  0033H  NOT USED
+CH . . . . . . . . . . . . . . . . .  D  ADDR  00F9H  NOT USED
+CKCON. . . . . . . . . . . . . . . .  D  ADDR  008FH  NOT USED
+CKCON0 . . . . . . . . . . . . . . .  D  ADDR  008FH  NOT USED
+CKRL . . . . . . . . . . . . . . . .  D  ADDR  0097H  NOT USED
+CKSEL. . . . . . . . . . . . . . . .  D  ADDR  0085H  NOT USED
+CL . . . . . . . . . . . . . . . . .  D  ADDR  00E9H  NOT USED
+CLKREG . . . . . . . . . . . . . . .  D  ADDR  008FH  NOT USED
+CMOD . . . . . . . . . . . . . . . .  D  ADDR  00D9H  NOT USED
+CPRL2. . . . . . . . . . . . . . . .  B  ADDR  00C8H  NOT USED
+CP_RL2 . . . . . . . . . . . . . . .  B  ADDR  00C8H  NOT USED
+CR . . . . . . . . . . . . . . . . .  B  ADDR  00DEH  NOT USED
+CT2. . . . . . . . . . . . . . . . .  B  ADDR  00C9H  NOT USED
+CY . . . . . . . . . . . . . . . . .  B  ADDR  00D7H  NOT USED
+C_T2 . . . . . . . . . . . . . . . .  B  ADDR  00C9H  NOT USED
+DP0H . . . . . . . . . . . . . . . .  D  ADDR  0083H  NOT USED
+DP0L . . . . . . . . . . . . . . . .  D  ADDR  0082H  NOT USED
+DP1H . . . . . . . . . . . . . . . .  D  ADDR  0085H  NOT USED
+DP1L . . . . . . . . . . . . . . . .  D  ADDR  0084H  NOT USED
+DPH. . . . . . . . . . . . . . . . .  D  ADDR  0083H  NOT USED
+DPL. . . . . . . . . . . . . . . . .  D  ADDR  0082H  NOT USED
+EA . . . . . . . . . . . . . . . . .  B  ADDR  00AFH  NOT USED
+EC . . . . . . . . . . . . . . . . .  B  ADDR  00AEH  NOT USED
+EECON. . . . . . . . . . . . . . . .  D  ADDR  0096H  NOT USED
+ES . . . . . . . . . . . . . . . . .  B  ADDR  00ACH  NOT USED
+ET0. . . . . . . . . . . . . . . . .  B  ADDR  00A9H  NOT USED
+ET1. . . . . . . . . . . . . . . . .  B  ADDR  00ABH  NOT USED
+ET2. . . . . . . . . . . . . . . . .  B  ADDR  00ADH  NOT USED
+EX0. . . . . . . . . . . . . . . . .  B  ADDR  00A8H  NOT USED
+EX1. . . . . . . . . . . . . . . . .  B  ADDR  00AAH  NOT USED
+EXEN2. . . . . . . . . . . . . . . .  B  ADDR  00CBH  NOT USED
+EXF2 . . . . . . . . . . . . . . . .  B  ADDR  00CEH  NOT USED
+EXTI0. . . . . . . . . . . . . . . .  C  ADDR  0003H  NOT USED
+EXTI1. . . . . . . . . . . . . . . .  C  ADDR  0013H  NOT USED
+F0 . . . . . . . . . . . . . . . . .  B  ADDR  00D5H  NOT USED
+F1 . . . . . . . . . . . . . . . . .  B  ADDR  00D1H  NOT USED
+FE . . . . . . . . . . . . . . . . .  B  ADDR  009FH  NOT USED
+IE . . . . . . . . . . . . . . . . .  D  ADDR  00A8H  NOT USED
+IE0. . . . . . . . . . . . . . . . .  B  ADDR  0089H  NOT USED
+IE1. . . . . . . . . . . . . . . . .  B  ADDR  008BH  NOT USED
+INT0 . . . . . . . . . . . . . . . .  B  ADDR  00B2H  NOT USED
+INT1 . . . . . . . . . . . . . . . .  B  ADDR  00B3H  NOT USED
+IP . . . . . . . . . . . . . . . . .  D  ADDR  00B8H  NOT USED
+IPH. . . . . . . . . . . . . . . . .  D  ADDR  00B7H  NOT USED
+IPH0 . . . . . . . . . . . . . . . .  D  ADDR  00B7H  NOT USED
+IPH1 . . . . . . . . . . . . . . . .  D  ADDR  00B3H  NOT USED
+IPL0 . . . . . . . . . . . . . . . .  D  ADDR  00B8H  NOT USED
+IPL1 . . . . . . . . . . . . . . . .  D  ADDR  00B2H  NOT USED
+IT0. . . . . . . . . . . . . . . . .  B  ADDR  0088H  NOT USED
+IT1. . . . . . . . . . . . . . . . .  B  ADDR  008AH  NOT USED
+KBE. . . . . . . . . . . . . . . . .  D  ADDR  009DH  NOT USED
+KBF. . . . . . . . . . . . . . . . .  D  ADDR  009EH  NOT USED
+KBLS . . . . . . . . . . . . . . . .  D  ADDR  009CH  NOT USED
+OSCCON . . . . . . . . . . . . . . .  D  ADDR  0086H  NOT USED
+OV . . . . . . . . . . . . . . . . .  B  ADDR  00D2H  NOT USED
+P. . . . . . . . . . . . . . . . . .  B  ADDR  00D0H  NOT USED
+P0 . . . . . . . . . . . . . . . . .  D  ADDR  0080H  NOT USED
+P1 . . . . . . . . . . . . . . . . .  D  ADDR  0090H  NOT USED
+P1M1 . . . . . . . . . . . . . . . .  D  ADDR  00D4H  NOT USED
+P1M2 . . . . . . . . . . . . . . . .  D  ADDR  00E2H  NOT USED
+P2 . . . . . . . . . . . . . . . . .  D  ADDR  00A0H  NOT USED
+P3 . . . . . . . . . . . . . . . . .  D  ADDR  00B0H  NOT USED
+P3M1 . . . . . . . . . . . . . . . .  D  ADDR  00D5H  NOT USED
+P3M2 . . . . . . . . . . . . . . . .  D  ADDR  00E3H  NOT USED
+P4 . . . . . . . . . . . . . . . . .  D  ADDR  00C0H  NOT USED
+P4M1 . . . . . . . . . . . . . . . .  D  ADDR  00D6H  NOT USED
+P4M2 . . . . . . . . . . . . . . . .  D  ADDR  00E4H  NOT USED
+P5 . . . . . . . . . . . . . . . . .  D  ADDR  00E8H  NOT USED
+PC . . . . . . . . . . . . . . . . .  B  ADDR  00BEH  NOT USED
+PCON . . . . . . . . . . . . . . . .  D  ADDR  0087H  NOT USED
+PPCL . . . . . . . . . . . . . . . .  B  ADDR  00BEH  NOT USED
+PS . . . . . . . . . . . . . . . . .  B  ADDR  00BCH  NOT USED
+PSL. . . . . . . . . . . . . . . . .  B  ADDR  00BCH  NOT USED
+PSW. . . . . . . . . . . . . . . . .  D  ADDR  00D0H  NOT USED
+PT0. . . . . . . . . . . . . . . . .  B  ADDR  00B9H  NOT USED
+PT0L . . . . . . . . . . . . . . . .  B  ADDR  00B9H  NOT USED
+PT1. . . . . . . . . . . . . . . . .  B  ADDR  00BBH  NOT USED
+PT1L . . . . . . . . . . . . . . . .  B  ADDR  00BBH  NOT USED
+PT2. . . . . . . . . . . . . . . . .  B  ADDR  00BDH  NOT USED
+PT2L . . . . . . . . . . . . . . . .  B  ADDR  00BDH  NOT USED
+PX0. . . . . . . . . . . . . . . . .  B  ADDR  00B8H  NOT USED
+PX0L . . . . . . . . . . . . . . . .  B  ADDR  00B8H  NOT USED
+PX1. . . . . . . . . . . . . . . . .  B  ADDR  00BAH  NOT USED
+PX1L . . . . . . . . . . . . . . . .  B  ADDR  00BAH  NOT USED
+RB8. . . . . . . . . . . . . . . . .  B  ADDR  009AH  NOT USED
+RCAP2H . . . . . . . . . . . . . . .  D  ADDR  00CBH  NOT USED
+RCAP2L . . . . . . . . . . . . . . .  D  ADDR  00CAH  NOT USED
+RCLK . . . . . . . . . . . . . . . .  B  ADDR  00CDH  NOT USED
+RD . . . . . . . . . . . . . . . . .  B  ADDR  00B7H  NOT USED
+REN. . . . . . . . . . . . . . . . .  B  ADDR  009CH  NOT USED
+RESET. . . . . . . . . . . . . . . .  C  ADDR  0000H  NOT USED
+RI . . . . . . . . . . . . . . . . .  B  ADDR  0098H  NOT USED
+RS0. . . . . . . . . . . . . . . . .  B  ADDR  00D3H  NOT USED
+RS1. . . . . . . . . . . . . . . . .  B  ADDR  00D4H  NOT USED
+RXD. . . . . . . . . . . . . . . . .  B  ADDR  00B0H  NOT USED
+SADDR. . . . . . . . . . . . . . . .  D  ADDR  00A9H  NOT USED
+SADDR_0. . . . . . . . . . . . . . .  D  ADDR  00A9H  NOT USED
+SADDR_1. . . . . . . . . . . . . . .  D  ADDR  00AAH  NOT USED
+SADEN. . . . . . . . . . . . . . . .  D  ADDR  00B9H  NOT USED
+SADEN_0. . . . . . . . . . . . . . .  D  ADDR  00B9H  NOT USED
+SADEN_1. . . . . . . . . . . . . . .  D  ADDR  00BAH  NOT USED
+SBUF . . . . . . . . . . . . . . . .  D  ADDR  0099H  NOT USED
+SCON . . . . . . . . . . . . . . . .  D  ADDR  0098H  NOT USED
+SINT . . . . . . . . . . . . . . . .  C  ADDR  0023H  NOT USED
+SM0. . . . . . . . . . . . . . . . .  B  ADDR  009FH  NOT USED
+SM1. . . . . . . . . . . . . . . . .  B  ADDR  009EH  NOT USED
+SM2. . . . . . . . . . . . . . . . .  B  ADDR  009DH  NOT USED
+SP . . . . . . . . . . . . . . . . .  D  ADDR  0081H  NOT USED
+SPCON. . . . . . . . . . . . . . . .  D  ADDR  00C3H  NOT USED
+SPCR . . . . . . . . . . . . . . . .  D  ADDR  00D5H  NOT USED
+SPDAT. . . . . . . . . . . . . . . .  D  ADDR  00C5H  NOT USED
+SPDR . . . . . . . . . . . . . . . .  D  ADDR  0086H  NOT USED
+SPSR . . . . . . . . . . . . . . . .  D  ADDR  00AAH  NOT USED
+SPSTA. . . . . . . . . . . . . . . .  D  ADDR  00C4H  NOT USED
+T0 . . . . . . . . . . . . . . . . .  B  ADDR  00B4H  NOT USED
+T1 . . . . . . . . . . . . . . . . .  B  ADDR  00B5H  NOT USED
+T2 . . . . . . . . . . . . . . . . .  B  ADDR  0090H  NOT USED
+T2CON. . . . . . . . . . . . . . . .  D  ADDR  00C8H  NOT USED
+T2EX . . . . . . . . . . . . . . . .  B  ADDR  0091H  NOT USED
+T2MOD. . . . . . . . . . . . . . . .  D  ADDR  00C9H  NOT USED
+TB8. . . . . . . . . . . . . . . . .  B  ADDR  009BH  NOT USED
+TCLK . . . . . . . . . . . . . . . .  B  ADDR  00CCH  NOT USED
+TCON . . . . . . . . . . . . . . . .  D  ADDR  0088H  NOT USED
+TF0. . . . . . . . . . . . . . . . .  B  ADDR  008DH  NOT USED
+TF1. . . . . . . . . . . . . . . . .  B  ADDR  008FH  NOT USED
+TF2. . . . . . . . . . . . . . . . .  B  ADDR  00CFH  NOT USED
+TH0. . . . . . . . . . . . . . . . .  D  ADDR  008CH  NOT USED
+TH1. . . . . . . . . . . . . . . . .  D  ADDR  008DH  NOT USED
+TH2. . . . . . . . . . . . . . . . .  D  ADDR  00CDH  NOT USED
+TI . . . . . . . . . . . . . . . . .  B  ADDR  0099H  NOT USED
+TIMER0 . . . . . . . . . . . . . . .  C  ADDR  000BH  NOT USED
+TIMER1 . . . . . . . . . . . . . . .  C  ADDR  001BH  NOT USED
+TIMER2 . . . . . . . . . . . . . . .  C  ADDR  002BH  NOT USED
+TL0. . . . . . . . . . . . . . . . .  D  ADDR  008AH  NOT USED
+TL1. . . . . . . . . . . . . . . . .  D  ADDR  008BH  NOT USED
+TL2. . . . . . . . . . . . . . . . .  D  ADDR  00CCH  NOT USED
+TMOD . . . . . . . . . . . . . . . .  D  ADDR  0089H  NOT USED
+TR0. . . . . . . . . . . . . . . . .  B  ADDR  008CH  NOT USED
+TR1. . . . . . . . . . . . . . . . .  B  ADDR  008EH  NOT USED
+TR2. . . . . . . . . . . . . . . . .  B  ADDR  00CAH  NOT USED
+TXD. . . . . . . . . . . . . . . . .  B  ADDR  00B1H  NOT USED
+WDTCON . . . . . . . . . . . . . . .  D  ADDR  00A7H  NOT USED
+WDTPRG . . . . . . . . . . . . . . .  D  ADDR  00A7H  NOT USED
+WDTRST . . . . . . . . . . . . . . .  D  ADDR  00A6H  NOT USED
+WR . . . . . . . . . . . . . . . . .  B  ADDR  00B6H  NOT USED

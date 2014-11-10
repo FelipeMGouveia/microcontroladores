@@ -40,7 +40,7 @@ LCD_INIT:
     MOV lcd_bus, #0C2h  
     LCALL LCD_SEND_COMMAND
     
-    MOV lcd_bus, #013h 
+    MOV lcd_bus, #011h 
     LCALL LCD_SEND_COMMAND
     
     MOV lcd_bus, #020h 
@@ -49,13 +49,14 @@ LCD_INIT:
     MOV lcd_bus, #009h 
     LCALL LCD_SEND_COMMAND
     
+    LCALL LCD_CLEAR
+    
     MOV lcd_bus, #008h 
     LCALL LCD_SEND_COMMAND
     
     MOV lcd_bus, #00Ch 
     LCALL LCD_SEND_COMMAND
     
-    LCALL LCD_CLEAR
     POP PSW
     POP ACC
     ret

@@ -1,22 +1,21 @@
 
 <Debug>
 	<Commons>
-		<SfrView Focus="208" TopRow="128" NbPerLine="12" />
-		<DataView Focus="32" TopRow="0" NbPerLine="12" />
-		<BitView Focus="7" TopRow="0" NbPerLine="14" />
-		<CodeView TopRow="205" Focus="215" >
+		<CodeView Focus="132" TopRow="90" NbPerLine="10" />
+		<CodeView TopRow="0" Focus="0" >
 			<CodeReport>
-				<0>61</0>
-				<1>68</1>
-				<2>36</2>
-				<3>208</3>
-				<4>37</4>
-				<5>83</5>
-																																																								
+				<0>80</0>
+				<1>88</1>
+				<2>48</2>
+				<3>264</3>
+				<4>48</4>
+				<5>100</5>
+														
 			</CodeReport>
-																																								
+										
 		</CodeView>
-																								
+		<DataView Focus="37" TopRow="0" NbPerLine="12" />
+						
 	</Commons>
 	<Flags>
 		<Report>
@@ -35,7 +34,8 @@
 							
 			</Def>
 			<Rows>
-				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:43" File="commons.asm" Path="C:\Projects\microcontroladores\src\commons.asm" />
+				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:47" File="commons.asm" Path="C:\Projects\microcontroladores\src\commons.asm" />
+				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:121" File="commons.asm" Path="C:\Projects\microcontroladores\src\commons.asm" />
 							
 			</Rows>
 					
@@ -43,9 +43,10 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\commons.asm" Line="48" Index="0" />
-		<View File=".\LCD.asm" Line="17" Index="1" />
-		<View File=".\tetris.asm" Line="51" Index="2" focus="1" />
+		<View File=".\commons.asm" Line="117" Index="0" focus="1" />
+		<View File=".\LCD.asm" Line="1" Index="1" />
+		<View File=".\tetris.asm" Line="1" Index="2" />
+		<View File=".\Random.asm" Line="1" Index="3" />
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
@@ -83,6 +84,14 @@
 		</GrepReplaceWhat>
 	</Grep>
 	<FindStrings>
+		<Find>rando</Find>
+		<Find>lcd_X</Find>
+		<Find>FMG_DRAW_SCREEN</Find>
+		<Find>FMG_CLEAR_MEMORY</Find>
+		<Find>LCD_CLEAR</Find>
+		<Find>CLEAR</Find>
+		<Find>#021h</Find>
+		<Find>#017h</Find>
 		<Find>RS0</Find>
 		<Find>RS2</Find>
 		<Find>USING</Find>
