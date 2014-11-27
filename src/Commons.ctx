@@ -1,6 +1,7 @@
 
 <Debug>
 	<Commons>
+		<DataView Focus="37" TopRow="0" NbPerLine="12" />
 		<CodeView Focus="132" TopRow="90" NbPerLine="10" />
 		<CodeView TopRow="0" Focus="0" >
 			<CodeReport>
@@ -10,12 +11,12 @@
 				<3>264</3>
 				<4>48</4>
 				<5>100</5>
-														
+																																																																																				
 			</CodeReport>
-										
+																																																												
 		</CodeView>
-		<DataView Focus="37" TopRow="0" NbPerLine="12" />
-						
+		<XdataView Focus="0" TopRow="0" NbPerLine="12" />
+																																				
 	</Commons>
 	<Flags>
 		<Report>
@@ -35,7 +36,6 @@
 			</Def>
 			<Rows>
 				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:47" File="commons.asm" Path="C:\Projects\microcontroladores\src\commons.asm" />
-				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:121" File="commons.asm" Path="C:\Projects\microcontroladores\src\commons.asm" />
 							
 			</Rows>
 					
@@ -43,10 +43,10 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\commons.asm" Line="117" Index="0" focus="1" />
-		<View File=".\LCD.asm" Line="1" Index="1" />
-		<View File=".\tetris.asm" Line="1" Index="2" />
-		<View File=".\Random.asm" Line="1" Index="3" />
+		<View File=".\commons.asm" Line="13" Index="0" />
+		<View File=".\LCD.asm" Line="9" Index="1" />
+		<View File=".\tetris.asm" Line="152" Index="2" focus="1" />
+		<View File=".\Random.asm" Line="10" Index="3" />
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
@@ -84,6 +84,9 @@
 		</GrepReplaceWhat>
 	</Grep>
 	<FindStrings>
+		<Find>DPL</Find>
+		<Find>fmg_piece_id_2</Find>
+		<Find>fmg_piece_id_0</Find>
 		<Find>rando</Find>
 		<Find>lcd_X</Find>
 		<Find>FMG_DRAW_SCREEN</Find>

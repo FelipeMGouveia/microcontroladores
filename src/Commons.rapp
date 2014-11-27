@@ -1,5 +1,5 @@
 
-<ApplicationBuild Header="Commons" Extern=".\Commons.rapp" Path=".\Commons.rapp" OutputFile=".\Commons.aof" sate="98" >
+<ApplicationBuild Header="Commons" Extern=".\Commons.rapp" Path=".\Commons.rapp" OutputFile=".\Commons.aof" sate="96" >
 	<NodeASM Path=".\commons.asm" Header="commons.asm" Marker="-1" OutputFile=".\commons.obj" sate="0" />
 	<NodeASM Path=".\tetris.asm" Header="tetris.asm" Marker="0" OutputFile=".\tetris.obj" sate="0" >
 		<Options>
@@ -52,4 +52,17 @@
 			</Set>
 		</Config>
 	</Options>
+	<Group Header="Tetris" Marker="-1" OutputFile="" sate="96" >
+		<NodeASM Path=".\Tetris\common.asm" Header="common.asm" Marker="0" OutputFile=".\common.obj" sate="2" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+	</Group>
 </ApplicationBuild>

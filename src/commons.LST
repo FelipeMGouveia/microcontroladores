@@ -1,4 +1,4 @@
-MACRO ASSEMBLER COMMONS                                    11/10/14 11:21:58 PAGE     1
+MACRO ASSEMBLER COMMONS                                    11/27/14 10:43:06 PAGE     1
 
 
 DOS MACRO ASSEMBLER MA51 V06.16.13.326
@@ -12,49 +12,49 @@ LOC     OBJ           LINE    SOURCE
                        159     $INCLUDE(LCD.ASM)
                        332     
                        333     $INCLUDE (TETRIS.ASM)
-                       787     
-                       788     CODE AT 0
-0000    020000   F     789         LJMP INIT
-                       790         
-------                 791     CODE
-                       792     INIT:  
-039B    758160         793         MOV SP, #60H 
-039E    120000   F     794         LCALL TIMER_INIT
-03A1    120000   F     795         LCALL LCD_INIT
-03A4    020000   F     796         LJMP MAIN 
-                       797         
-------                 798     CODE
-                       799     TIMER_INIT: 
-03A7    22             800         RET;
-                       801     
-------                 802     CODE
-                       803     TIMER0_INTERRUPT: 
-03A8    C0E0           804         PUSH ACC 
-03AA    C0D0           805         PUSH PSW 
-                       806         
-03AC    D2D3           807         SETB RS0
-03AE    C2D4           808         CLR RS1
-                       809         
-                       810         
-03B0    D0D0           811         POP PSW
-03B2    D0E0           812         POP ACC
-03B4    22             813         RET;
-                       814     
-------                 815     CODE
-                       816     MAIN:  
-                       817         ;Banco 2
-03B5    D2D4           818         SETB RS1
-03B7    C2D3           819         CLR RS0
-03B9    7901           820         MOV R1, #001H
-03BB    7A01           821         MOV R2, #001H
-                       822         
-                       823     
-03BD    7900           824     MOV R1 , # 000H 
-03BF    7A00           825     MOV R2 , # 000H 
-03C1    120000   F     826         LCALL LCD_XY
-03C4    120000   F     827         LCALL FMG_TETRIS_MAIN
-                       828     END
-MACRO ASSEMBLER COMMONS                                    11/10/14 11:21:58 PAGE     0
+                      1016     
+                      1017     CODE AT 0
+0000    020000   F    1018         LJMP INIT
+                      1019         
+------                1020     CODE
+                      1021     INIT:  
+04BB    758190        1022         MOV SP, #90H 
+04BE    120000   F    1023         LCALL TIMER_INIT
+04C1    120000   F    1024         LCALL LCD_INIT
+04C4    020000   F    1025         LJMP MAIN 
+                      1026         
+------                1027     CODE
+                      1028     TIMER_INIT: 
+04C7    22            1029         RET;
+                      1030     
+------                1031     CODE
+                      1032     TIMER0_INTERRUPT: 
+04C8    C0E0          1033         PUSH ACC 
+04CA    C0D0          1034         PUSH PSW 
+                      1035         
+04CC    D2D3          1036         SETB RS0
+04CE    C2D4          1037         CLR RS1
+                      1038         
+                      1039         
+04D0    D0D0          1040         POP PSW
+04D2    D0E0          1041         POP ACC
+04D4    22            1042         RET;
+                      1043     
+------                1044     CODE
+                      1045     MAIN:  
+                      1046         ;Banco 2
+04D5    D2D4          1047         SETB RS1
+04D7    C2D3          1048         CLR RS0
+04D9    7901          1049         MOV R1, #001H
+04DB    7A01          1050         MOV R2, #001H
+                      1051         
+                      1052     
+04DD    7900          1053     MOV R1 , # 000H 
+04DF    7A00          1054     MOV R2 , # 000H 
+04E1    120000   F    1055         LCALL LCD_XY
+04E4    120000   F    1056         LCALL FMG_TETRIS_MAIN
+                      1057     END
+MACRO ASSEMBLER COMMONS                                    11/27/14 10:43:06 PAGE     0
 
 
 SYMBOL TABLE LISTING
@@ -63,102 +63,103 @@ SYMBOL TABLE LISTING
 
 N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
 
-FMG_PIECES_O . . .  C ADDR   011CH   R  SEG=?PR?COMMONS         376# 551 
-LCD_DRAW . . . . .  C ADDR   006FH   R  SEG=?PR?COMMONS         224# 427 432 436 
-                                                                446 448 468 470 489 
-                                                                491 497 499 505 510 
-                                                                513 639 641 660 662 
-                                                                700 703 730 732 767 
-                                                                783 
+FMG_GET_REGION_SW~  C ADDR   0216H   R  SEG=?PR?COMMONS         544 569# 
+FMG_PIECES_O . . .  C ADDR   011CH   R  SEG=?PR?COMMONS         386# 780 
+LCD_DRAW . . . . .  C ADDR   006FH   R  SEG=?PR?COMMONS         224# 656 661 665 
+                                                                675 677 697 699 718 
+                                                                720 726 728 734 739 
+                                                                742 868 870 889 891 
+                                                                929 932 959 961 996 
+                                                                1012 
 BIG_DELAY. . . . .  C ADDR   00ECH   R  SEG=?PR?COMMONS         192 321# 
 RCAP2H . . . . . .  D ADDR   00CBH   A                          33# 
-DPL. . . . . . . .  D ADDR   0082H   A                          16# 577 
+DPL. . . . . . . .  D ADDR   0082H   A                          16# 459 471 806 
 P0 . . . . . . . .  D ADDR   0080H   A                          8# 
+FMG_GET_REGION_SW~  C ADDR   021FH   R  SEG=?PR?COMMONS         545 575# 
+FMG_UPDATE_STATE_~  C ADDR   01C0H   R  SEG=?PR?COMMONS         500 504# 
 P1 . . . . . . . .  D ADDR   0090H   A                          9# 161 162 163 
+FMG_GET_REGION_SW~  C ADDR   0228H   R  SEG=?PR?COMMONS         546 581# 
 INIT_DELAY . . . .  C ADDR   00F2H   R  SEG=?PR?COMMONS         327# 328 
 CP_RL2 . . . . . .  B ADDR   00C8H.0 A                          105# 
 EXEN2. . . . . . .  B ADDR   00C8H.3 A                          102# 
-B. . . . . . . . .  D ADDR   00F0H   A                          14# 153 157 537 539 
-                                                                579 582 584 
+B. . . . . . . . .  D ADDR   00F0H   A                          14# 153 157 440 535 
+                                                                589 598 766 768 808 
+                                                                811 813 
 P2 . . . . . . . .  D ADDR   00A0H   A                          10# 
-LCD_XY . . . . . .  C ADDR   00B3H   R  SEG=?PR?COMMONS         277# 425 443 503 
-                                                                618 671 681 711 760 
-                                                                773 778 826 
+FMG_GET_REGION_SW~  C ADDR   0231H   R  SEG=?PR?COMMONS         551 556 562 568 574 
+                                                                580 586 587# 
+LCD_XY . . . . . .  C ADDR   00B3H   R  SEG=?PR?COMMONS         277# 654 672 732 
+                                                                847 900 910 940 989 
+                                                                1002 1007 1055 
 LCD_SEND_SERIAL_D~  C ADDR   007FH   R  SEG=?PR?COMMONS         234 237# 
 T2EX . . . . . . .  B ADDR   0090H.1 A                          95# 
 PS . . . . . . . .  B ADDR   00B8H.4 A                          65# 
-SP . . . . . . . .  D ADDR   0081H   A                          15# 793 
+SP . . . . . . . .  D ADDR   0081H   A                          15# 1022 
 P3 . . . . . . . .  D ADDR   00B0H   A                          11# 164 165 
-FMG_DRAW_BORDER. .  C ADDR   0365H   R  SEG=?PR?COMMONS         406 753# 
-FMG_PIECES_S . . .  C ADDR   011FH   R  SEG=?PR?COMMONS         378# 554 
+FMG_GET_REGION_SW~  C ADDR   024AH   R  SEG=?PR?COMMONS         604 605# 
+FMG_DRAW_BORDER. .  C ADDR   0485H   R  SEG=?PR?COMMONS         415 982# 
+FMG_PIECES_S . . .  C ADDR   011FH   R  SEG=?PR?COMMONS         388# 783 
 T0 . . . . . . . .  B ADDR   00B0H.4 A                          74# 
 AC . . . . . . . .  B ADDR   00D0H.6 A                          41# 
 RCAP2L . . . . . .  D ADDR   00CAH   A                          32# 
-MAIN . . . . . . .  C ADDR   03B5H   R  SEG=?PR?COMMONS         796 816# 
-FMG_PIECES_T . . .  C ADDR   013BH   R  SEG=?PR?COMMONS         386# 566 
+MAIN . . . . . . .  C ADDR   04D5H   R  SEG=?PR?COMMONS         1025 1045# 
+FMG_GET_REGION_SW~  C ADDR   0253H   R  SEG=?PR?COMMONS         603 612# 
+FMG_GET_REGION_SW~  C ADDR   01E1H   R  SEG=?PR?COMMONS         537 539# 
+FMG_PIECES_T . . .  C ADDR   013BH   R  SEG=?PR?COMMONS         396# 795 
 REN. . . . . . . .  B ADDR   0098H.4 A                          83# 
 T1 . . . . . . . .  B ADDR   00B0H.5 A                          73# 
 OV . . . . . . . .  B ADDR   00D0H.2 A                          45# 
-FMG_SELECT_PIECE_I  C ADDR   0258H   R  SEG=?PR?COMMONS         543 568# 
-FMG_DRAW_NEXT_PIE~  C ADDR   0192H   R  SEG=?PR?COMMONS         450# 494 
-FMG_DRAW_SCREEN. .  C ADDR   028CH   R  SEG=?PR?COMMONS         407 611# 
-FMG_PIECE_H. . . .  N NUMB   0002h                              348# 519 
-LCD_INIT . . . . .  C ADDR   0035H   R  SEG=?PR?COMMONS         184# 795 
+FMG_SELECT_PIECE_I  C ADDR   0378H   R  SEG=?PR?COMMONS         772 797# 
+FMG_DRAW_NEXT_PIE~  C ADDR   02B2H   R  SEG=?PR?COMMONS         679# 723 
+FMG_UPDATE_STATE_~  C ADDR   0180H   R  SEG=?PR?COMMONS         445 449# 
+FMG_DRAW_SCREEN. .  C ADDR   03ACH   R  SEG=?PR?COMMONS         416 431 840# 
+FMG_PIECE_H. . . .  N NUMB   0002h                              349# 458 470 748 
+                                                                
+LCD_INIT . . . . .  C ADDR   0035H   R  SEG=?PR?COMMONS         184# 1024 
 T2 . . . . . . . .  B ADDR   0090H.0 A                          96# 
 EA . . . . . . . .  B ADDR   00A8H.7 A                          58# 
 T2CON. . . . . . .  D ADDR   00C8H   A                          31# 
-FMG_SELECT_PIECE_J  C ADDR   024EH   R  SEG=?PR?COMMONS         548 562# 
-FMG_SELECT_NEW_PI~  C ADDR   0218H   R  SEG=?PR?COMMONS         410 412 535# 
+FMG_SELECT_PIECE_J  C ADDR   036EH   R  SEG=?PR?COMMONS         777 791# 
+FMG_SELECT_NEW_PI~  C ADDR   0338H   R  SEG=?PR?COMMONS         419 421 764# 
 ACC. . . . . . . .  D ADDR   00E0H   A                          13# 148 185 220 234 
                                                                 248 258 264 274 278 
-                                                                295 300 317 453 455 
-                                                                456 457 458 459 460 
-                                                                461 462 463 464 465 
-                                                                467 469 474 476 477 
-                                                                478 479 480 481 482 
-                                                                483 484 485 486 488 
-                                                                490 624 626 627 628 
-                                                                629 630 631 632 633 
-                                                                634 635 636 638 640 
-                                                                645 647 648 649 650 
-                                                                651 652 653 654 655 
-                                                                656 657 659 661 685 
-                                                                687 688 689 690 691 
-                                                                692 693 694 695 696 
-                                                                697 699 702 715 717 
-                                                                718 719 720 721 722 
-                                                                723 724 725 726 727 
-                                                                729 731 804 812 
+                                                                295 300 317 521 523 
+                                                                634 636 682 684 685 
+                                                                686 687 688 689 690 
+                                                                691 692 693 694 696 
+                                                                698 703 705 706 707 
+                                                                708 709 710 711 712 
+                                                                713 714 715 717 719 
+                                                                853 855 856 857 858 
+                                                                859 860 861 862 863 
+                                                                864 865 867 869 874 
+                                                                876 877 878 879 880 
+                                                                881 882 883 884 885 
+                                                                886 888 890 914 916 
+                                                                917 918 919 920 921 
+                                                                922 923 924 925 926 
+                                                                928 931 944 946 947 
+                                                                948 949 950 951 952 
+                                                                953 954 955 956 958 
+                                                                960 1033 1041 
 C_T2 . . . . . . .  B ADDR   00C8H.1 A                          104# 
-FMG_SELECT_PIECE_L  C ADDR   0249H   R  SEG=?PR?COMMONS         547 559# 
+FMG_SELECT_PIECE_L  C ADDR   0369H   R  SEG=?PR?COMMONS         776 788# 
 LCD_SEND_SERIAL_D~  C ADDR   0076H   R  SEG=?PR?COMMONS         232# 242 
 WR . . . . . . . .  B ADDR   00B0H.6 A                          72# 
 ET0. . . . . . . .  B ADDR   00A8H.1 A                          62# 
-FMG_DRAW_NEXT_PIE~  C ADDR   015DH   R  SEG=?PR?COMMONS         414 419# 
-FMG_PIECE_L. . . .  N NUMB   0002h                              349# 522 
-LCD_X. . . . . . .  ? ADDR   0000H   A                          168# 290 304 423 
-                                                                441 501 616 669 679 
-                                                                706 758 769 776 824 
+FMG_UPDATE_STATE_~  C ADDR   01C9H   R  SEG=?PR?COMMONS         447 510# 
+FMG_DRAW_NEXT_PIE~  C ADDR   027DH   R  SEG=?PR?COMMONS         427 648# 
+FMG_PIECE_L. . . .  N NUMB   0002h                              350# 459 471 751 
                                                                 
+LCD_X. . . . . . .  ? ADDR   0000H   A                          168# 290 304 652 
+                                                                670 730 845 898 908 
+                                                                935 987 998 1005 
+                                                                1053 
 RAND16REG. . . . .  N NUMB   0021h                              114# 137 139 142 
                                                                 143 147 152 154 156 
                                                                 
 ET1. . . . . . . .  B ADDR   00A8H.3 A                          60# 
-TF0. . . . . . . .  B ADDR   0088H.5 A                          51# 
-FMG_PIECES_Z . . .  C ADDR   0124H   R  SEG=?PR?COMMONS         380# 557 
-FMG_NUMBERS_FONT .  C ADDR   00F9H   R  SEG=?PR?COMMONS         359# 
-LCD_Y. . . . . . .  ? ADDR   0000H   A                          169# 285 305 424 
-                                                                442 502 617 670 673 
-                                                                708 710 742 744 747 
-                                                                759 770 772 777 825 
-                                                                
-ET2. . . . . . . .  B ADDR   00A8H.5 A                          91# 
-TF1. . . . . . . .  B ADDR   0088H.7 A                          49# 
-FMG_SELECT_PIECE_O  C ADDR   023AH   R  SEG=?PR?COMMONS         544 550# 
-LCD_CLK. . . . . .  B ADDR   00B0H.1 A                          164# 233 240 
-RAND16 . . . . . .  C ADDR   0011H   R  SEG=?PR?COMMONS         136# 
-RCLK . . . . . . .  B ADDR   00C8H.5 A                          100# 
-MACRO ASSEMBLER COMMONS                                    11/10/14 11:21:58 PAGE     1
+MACRO ASSEMBLER COMMONS                                    11/27/14 10:43:06 PAGE     1
 
 
 DOS MACRO ASSEMBLER MA51 V06.16.13.326
@@ -166,14 +167,34 @@ OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.OBJ
 ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
 
 LOC     OBJ           LINE    SOURCE
+TF0. . . . . . . .  B ADDR   0088H.5 A                          51# 
+FMG_GET_REGION_LO~  C ADDR   025CH   R  SEG=?PR?COMMONS         611 618 619# 
+FMG_PIECES_Z . . .  C ADDR   0124H   R  SEG=?PR?COMMONS         390# 786 
+FMG_NUMBERS_FONT .  C ADDR   00F9H   R  SEG=?PR?COMMONS         369# 
+LCD_Y. . . . . . .  ? ADDR   0000H   A                          169# 285 305 653 
+                                                                671 731 846 899 902 
+                                                                937 939 971 973 976 
+                                                                988 999 1001 1006 
+                                                                1054 
+ET2. . . . . . . .  B ADDR   00A8H.5 A                          91# 
+TF1. . . . . . . .  B ADDR   0088H.7 A                          49# 
+FMG_SELECT_PIECE_O  C ADDR   035AH   R  SEG=?PR?COMMONS         773 779# 
+FMG_GET_REGION_SW~  C ADDR   0244H   R  SEG=?PR?COMMONS         600 602# 
+FMG_GET_REGION_LO~  C ADDR   01D6H   R  SEG=?PR?COMMONS         530# 632 
+LCD_CLK. . . . . .  B ADDR   00B0H.1 A                          164# 233 240 
+RAND16 . . . . . .  C ADDR   0011H   R  SEG=?PR?COMMONS         136# 
+RCLK . . . . . . .  B ADDR   00C8H.5 A                          100# 
 TF2. . . . . . . .  B ADDR   00C8H.7 A                          98# 
 RB8. . . . . . . .  B ADDR   0098H.2 A                          85# 
 TH0. . . . . . . .  D ADDR   008CH   A                          23# 
+FMG_GET_REGION_LO~  C ADDR   01D8H   R  SEG=?PR?COMMONS         532# 630 
+FMG_UPDATE_STATE_~  C ADDR   01B4H   R  SEG=?PR?COMMONS         493 495# 
+FMG_UPDATE_STATE_~  C ADDR   0171H   R  SEG=?PR?COMMONS         442 443# 
 LCD_DIN. . . . . .  B ADDR   00B0H.0 A                          165# 235 238 
 EX0. . . . . . . .  B ADDR   00A8H.0 A                          63# 
 IT0. . . . . . . .  B ADDR   0088H.0 A                          56# 
 TH1. . . . . . . .  D ADDR   008DH   A                          24# 
-FMG_PIECE_0. . . .  N NUMB   0002h                              351# 528 
+FMG_PIECE_0. . . .  N NUMB   0002h                              352# 757 
 RAND16B. . . . . .  C ADDR   001EH   R  SEG=?PR?COMMONS         138 140 144# 
 TCLK . . . . . . .  B ADDR   00C8H.4 A                          101# 
 TB8. . . . . . . .  B ADDR   0098H.3 A                          84# 
@@ -182,72 +203,87 @@ EX1. . . . . . . .  B ADDR   00A8H.2 A                          61#
 IT1. . . . . . . .  B ADDR   0088H.2 A                          54# 
 TH2. . . . . . . .  D ADDR   00CDH   A                          35# 
 IE . . . . . . . .  D ADDR   00A8H   A                          25# 
-FMG_LOOP_LINHA_2 .  C ADDR   02FAH   R  SEG=?PR?COMMONS         677# 746 
-FMG_SELECT_PIECE_~  C ADDR   0225H   R  SEG=?PR?COMMONS         540 542# 
-FMG_PIECE_1. . . .  N NUMB   0002h                              352# 531 
+FMG_LOOP_LINHA_2 .  C ADDR   041AH   R  SEG=?PR?COMMONS         906# 975 
+FMG_SELECT_PIECE_~  C ADDR   0345H   R  SEG=?PR?COMMONS         769 771# 
+FMG_PIECE_1. . . .  N NUMB   0002h                              353# 760 
 RAND16C. . . . . .  C ADDR   0028H   R  SEG=?PR?COMMONS         148 150# 
-FMG_LOOP_LINHA_3 .  C ADDR   02F6H   R  SEG=?PR?COMMONS         674# 748 
-FMG_SELECT_PIECE_S  C ADDR   023FH   R  SEG=?PR?COMMONS         545 553# 
-FMG_PIECE_R. . . .  N NUMB   0002h                              350# 525 
+FMG_LOOP_LINHA_3 .  C ADDR   0416H   R  SEG=?PR?COMMONS         903# 977 
+FMG_SELECT_PIECE_S  C ADDR   035FH   R  SEG=?PR?COMMONS         774 782# 
+FMG_PIECE_R. . . .  N NUMB   0002h                              351# 455 754 
 SM0. . . . . . . .  B ADDR   0098H.7 A                          80# 
 TXD. . . . . . . .  B ADDR   00B0H.1 A                          77# 
 P. . . . . . . . .  B ADDR   00D0H.0 A                          47# 127 146 
 SBUF . . . . . . .  D ADDR   0099H   A                          28# 
 TL0. . . . . . . .  D ADDR   008AH   A                          21# 
 PCON . . . . . . .  D ADDR   0087H   A                          18# 
-FMG_DRAW_BORDER_L~  C ADDR   0391H   R  SEG=?PR?COMMONS         781# 784 
-FMG_CLEAR_MEMORY_~  C ADDR   0283H   R  SEG=?PR?COMMONS         601# 606 
-FMG_SELECT_PIECE_T  C ADDR   0253H   R  SEG=?PR?COMMONS         549 565# 
+FMG_DRAW_BORDER_L~  C ADDR   04B1H   R  SEG=?PR?COMMONS         1010# 1013 
+FMG_CLEAR_MEMORY_~  C ADDR   03A3H   R  SEG=?PR?COMMONS         830# 835 
+FMG_SELECT_PIECE_T  C ADDR   0373H   R  SEG=?PR?COMMONS         778 794# 
+FMG_FIND_BIT_LOOP.  C ADDR   0279H   R  SEG=?PR?COMMONS         643# 645 
+FMG_UPDATE_STATE_~  C ADDR   01BDH   R  SEG=?PR?COMMONS         494 501 502# 
 SM1. . . . . . . .  B ADDR   0098H.6 A                          81# 
 TL1. . . . . . . .  D ADDR   008BH   A                          22# 
-FMG_PIECE_ID_H . .  N NUMB   0025h                              341# 518 576 
+FMG_GET_REGION_END  C ADDR   0271H   R  SEG=?PR?COMMONS         628 633# 
+FMG_UPDATE_STATE_~  C ADDR   01C9H   R  SEG=?PR?COMMONS         503 508 515# 
+FMG_UPDATE_STATE_~  C ADDR   01C9H   R  SEG=?PR?COMMONS         444 512# 
+FMG_PIECE_ID_H . .  N NUMB   0025h                              342# 747 805 
 SM2. . . . . . . .  B ADDR   0098H.5 A                          82# 
 TL2. . . . . . . .  D ADDR   00CCH   A                          34# 
 INIT_DELAY_2 . . .  C ADDR   00F0H   R  SEG=?PR?COMMONS         325# 329 
+MACRO ASSEMBLER COMMONS                                    11/27/14 10:43:06 PAGE     2
+
 SCON . . . . . . .  D ADDR   0098H   A                          27# 
-TIMER_INIT . . . .  C ADDR   03A7H   R  SEG=?PR?COMMONS         794 799# 
-INIT . . . . . . .  C ADDR   039BH   R  SEG=?PR?COMMONS         789 792# 
+TIMER_INIT . . . .  C ADDR   04C7H   R  SEG=?PR?COMMONS         1023 1028# 
+INIT . . . . . . .  C ADDR   04BBH   R  SEG=?PR?COMMONS         1018 1021# 
 INIT_DELAY_3 . . .  C ADDR   00EEH   R  SEG=?PR?COMMONS         323# 330 
 LCD_SEND_SERIAL_D~  C ADDR   0073H   R  SEG=?PR?COMMONS         229# 254 270 
 PT0. . . . . . . .  B ADDR   00B8H.1 A                          68# 
 TMOD . . . . . . .  D ADDR   0089H   A                          20# 
 TCON . . . . . . .  D ADDR   0088H   A                          19# 
+FMG_UPDATE_STATE_~  C ADDR   0191H   R  SEG=?PR?COMMONS         456 464# 
 LCD_CLEAR_INTERNA~  C ADDR   00DCH   R  SEG=?PR?COMMONS         309# 315 
 LCD_SEND_DATA. . .  C ADDR   009DH   R  SEG=?PR?COMMONS         225 262# 313 
 LCD_RESET. . . . .  B ADDR   0090H.5 A                          162# 189 
 EXF2 . . . . . . .  B ADDR   00C8H.6 A                          99# 
 PT1. . . . . . . .  B ADDR   00B8H.3 A                          66# 
 RS0. . . . . . . .  B ADDR   00D0H.3 A                          44# 188 251 267 281 
-                                                                303 422 615 756 807 
-                                                                819 
-FMG_LOOP_LINHA_SU~  C ADDR   029DH   R  SEG=?PR?COMMONS         621# 667 
-FMG_PIECE_ID_L . .  N NUMB   0026h                              342# 521 577 
-FMG_PIECE_X. . . .  N NUMB   0023h                              335# 
+                                                                303 651 844 985 1036 
+                                                                1048 
+FMG_LOOP_LINHA_SU~  C ADDR   03BDH   R  SEG=?PR?COMMONS         850# 896 
+FMG_PIECE_ID_L . .  N NUMB   0026h                              343# 750 806 
+FMG_PIECE_X. . . .  N NUMB   0023h                              336# 424 482 505 
+                                                                507 
 LCD_SERIAL_END_IF.  C ADDR   0081H   R  SEG=?PR?COMMONS         236 239# 
 PT2. . . . . . . .  B ADDR   00B8H.5 A                          93# 
 RD . . . . . . . .  B ADDR   00B0H.7 A                          71# 
 TR0. . . . . . . .  B ADDR   0088H.4 A                          52# 
-MACRO ASSEMBLER COMMONS                                    11/10/14 11:21:58 PAGE     2
-
 RS1. . . . . . . .  B ADDR   00D0H.4 A                          43# 187 250 266 280 
-                                                                302 421 614 755 808 
-                                                                818 
+                                                                302 650 843 984 1037 
+                                                                1047 
 F0 . . . . . . . .  B ADDR   00D0H.5 A                          42# 
-FMG_SELECT_PIECE_Z  C ADDR   0244H   R  SEG=?PR?COMMONS         546 556# 
-FMG_PIECE_Y. . . .  N NUMB   0024h                              336# 
+FMG_SELECT_PIECE_Z  C ADDR   0364H   R  SEG=?PR?COMMONS         775 785# 
+FMG_GET_REGION_LO~  C ADDR   026EH   R  SEG=?PR?COMMONS         627 631# 
+FMG_PIECE_Y. . . .  N NUMB   0024h                              337# 425 484 
 TR1. . . . . . . .  B ADDR   0088H.6 A                          50# 
 F1 . . . . . . . .  B ADDR   00D0H.1 A                          46# 
-FMG_CLEAR_MEMORY .  C ADDR   027FH   R  SEG=?PR?COMMONS         405 598# 
-FMG_TETRIS_MAIN. .  C ADDR   0144H   R  SEG=?PR?COMMONS         401# 827 
+FMG_GET_REGION_LO~  C ADDR   026BH   R  SEG=?PR?COMMONS         623 629# 
+FMG_FIND_BIT . . .  C ADDR   0278H   R  SEG=?PR?COMMONS         606 613 641# 
+FMG_CLEAR_MEMORY .  C ADDR   039FH   R  SEG=?PR?COMMONS         414 827# 
+FMG_TETRIS_MAIN. .  C ADDR   0144H   R  SEG=?PR?COMMONS         410# 1056 
+FMG_CONTROL_OLD. .  N NUMB   0031h                              357# 440 
 TR2. . . . . . . .  B ADDR   00C8H.2 A                          103# 
 PX0. . . . . . . .  B ADDR   00B8H.0 A                          69# 
 ES . . . . . . . .  B ADDR   00A8H.4 A                          59# 
-LCD_CLEAR. . . . .  C ADDR   00CEH   R  SEG=?PR?COMMONS         211 299# 402 
+FMG_UPDATE_STATE_~  C ADDR   01C9H   R  SEG=?PR?COMMONS         446 509# 
+LCD_CLEAR. . . . .  C ADDR   00CEH   R  SEG=?PR?COMMONS         211 299# 411 
 LCD_DC . . . . . .  B ADDR   0090H.7 A                          163# 252 268 
 PX1. . . . . . . .  B ADDR   00B8H.2 A                          67# 
 IP . . . . . . . .  D ADDR   00B8H   A                          26# 
-FMG_PIECES_I . . .  C ADDR   0117H   R  SEG=?PR?COMMONS         374# 570 
-FMG_PIECE_ID_0 . .  N NUMB   0028h                              344# 438 527 590 
+FMG_UPDATE_STATE_~  C ADDR   01C9H   R  SEG=?PR?COMMONS         448 513# 
+FMG_PIECES_I . . .  C ADDR   0117H   R  SEG=?PR?COMMONS         384# 799 
+FMG_CONTROL. . . .  N NUMB   0030h                              356# 439 
+FMG_STATE. . . . .  N NUMB   0002h                              355# 
+FMG_PIECE_ID_0 . .  N NUMB   0028h                              345# 667 756 819 
                                                                 
 LCD_SEND_COMMAND .  C ADDR   0087H   R  SEG=?PR?COMMONS         197 200 203 206 209 
                                                                 214 217 246# 288 
@@ -256,48 +292,59 @@ LCD_CE . . . . . .  B ADDR   0090H.6 A                          161# 190 253 255
                                                                 269 271 
 PSW. . . . . . . .  D ADDR   00D0H   A                          12# 186 219 249 257 
                                                                 265 273 279 294 301 
-                                                                316 420 613 749 754 
-                                                                785 805 811 
-FMG_PIECES_J . . .  C ADDR   0132H   R  SEG=?PR?COMMONS         384# 563 
-FMG_PIECE_ID_1 . .  N NUMB   0029h                              345# 493 530 594 
+                                                                316 649 842 978 983 
+                                                                1014 1034 1040 
+FMG_PIECES_J . . .  C ADDR   0132H   R  SEG=?PR?COMMONS         394# 792 
+FMG_PIECE_ID_1 . .  N NUMB   0029h                              346# 722 759 823 
                                                                 
 LCD_CLEAR_INTERNA~  C ADDR   00DEH   R  SEG=?PR?COMMONS         311# 314 
 RAND8REG . . . . .  N NUMB   0020h                              113# 121 124 128 
                                                                 130 
 RI . . . . . . . .  B ADDR   0098H.0 A                          87# 
 INT0 . . . . . . .  B ADDR   00B0H.2 A                          76# 
-FMG_DRAW_NEXT_PIE~  C ADDR   0171H   R  SEG=?PR?COMMONS         430# 433 
-FMG_FROM_WAIT_TO_~  C ADDR   0203H   R  SEG=?PR?COMMONS         411 517# 
-FMG_PIECE_ID_R . .  N NUMB   0027h                              343# 524 583 
+FMG_DRAW_NEXT_PIE~  C ADDR   0291H   R  SEG=?PR?COMMONS         659# 662 
+FMG_GET_REGION_SW~  C ADDR   01F6H   R  SEG=?PR?COMMONS         540 547# 
+FMG_GET_REGION . .  C ADDR   01CAH   R  SEG=?PR?COMMONS         486 519# 
+MACRO ASSEMBLER COMMONS                                    11/27/14 10:43:06 PAGE     3
+
+FMG_UPDATE_STATE_~  C ADDR   0194H   R  SEG=?PR?COMMONS         463 467# 
+FMG_UPDATE_STATE .  C ADDR   0169H   R  SEG=?PR?COMMONS         430 436# 
+FMG_FROM_WAIT_TO_~  C ADDR   0323H   R  SEG=?PR?COMMONS         420 746# 
+FMG_PIECE_ID_R . .  N NUMB   0027h                              344# 753 812 
 LCD_BUS. . . . . .  ? ADDR   0000H   A                          167# 196 199 202 
                                                                 205 208 213 216 231 
-                                                                287 292 312 426 431 
-                                                                435 445 447 467 469 
-                                                                488 490 496 498 504 
-                                                                509 512 638 640 659 
-                                                                661 699 702 729 731 
-                                                                766 782 
-?PR?COMMONS. . . .  C SEG    03C7H      REL=UNIT                119# 135 183 223 
+                                                                287 292 312 655 660 
+                                                                664 674 676 696 698 
+                                                                717 719 725 727 733 
+                                                                738 741 867 869 888 
+                                                                890 928 931 958 960 
+                                                                995 1011 
+?PR?COMMONS. . . .  C SEG    04E7H      REL=UNIT                119# 135 183 223 
                                                                 228 245 261 276 298 
-                                                                320 357 373 375 377 
-                                                                379 381 383 385 398 
-                                                                400 418 516 534 597 
-                                                                610 752 791 798 802 
-                                                                815 
+                                                                320 367 383 385 387 
+                                                                389 391 393 395 407 
+                                                                409 435 518 640 647 
+                                                                745 763 826 839 981 
+                                                                1020 1027 1031 1044 
+                                                                
 INT1 . . . . . . .  B ADDR   00B0H.3 A                          75# 
 CY . . . . . . . .  B ADDR   00D0H.7 A                          40# 
-DPH. . . . . . . .  D ADDR   0083H   A                          17# 576 
-TIMER0_INTERRUPT .  C ADDR   03A8H   R  SEG=?PR?COMMONS         803# 
-FMG_DRAW_BORDER_L~  C ADDR   0376H   R  SEG=?PR?COMMONS         765# 768 
-FMG_SELECT_NEW_PI~  C ADDR   025DH   R  SEG=?PR?COMMONS         552 555 558 561 564 
-                                                                567 571 574# 
-FMG_PIECES_L . . .  C ADDR   0129H   R  SEG=?PR?COMMONS         382# 560 
-RAND8. . . . . . .  C ADDR   0000H   R  SEG=?PR?COMMONS         120# 536 580 
+DPH. . . . . . . .  D ADDR   0083H   A                          17# 458 470 805 
+TIMER0_INTERRUPT .  C ADDR   04C8H   R  SEG=?PR?COMMONS         1032# 
+FMG_DRAW_BORDER_L~  C ADDR   0496H   R  SEG=?PR?COMMONS         994# 997 
+FMG_SELECT_NEW_PI~  C ADDR   037DH   R  SEG=?PR?COMMONS         781 784 787 790 793 
+                                                                796 800 803# 
+FMG_GET_REGION_SW~  C ADDR   01FDH   R  SEG=?PR?COMMONS         541 552# 
+FMG_PIECES_L . . .  C ADDR   0129H   R  SEG=?PR?COMMONS         392# 789 
+RAND8. . . . . . .  C ADDR   0000H   R  SEG=?PR?COMMONS         120# 765 809 
 TI . . . . . . . .  B ADDR   0098H.1 A                          86# 
-FMG_DRAW_NEXT_PIE~  C ADDR   01F6H   R  SEG=?PR?COMMONS         508# 511 
+FMG_DRAW_NEXT_PIE~  C ADDR   0316H   R  SEG=?PR?COMMONS         737# 740 
+FMG_GET_REGION_SW~  C ADDR   0204H   R  SEG=?PR?COMMONS         542 557# 
 IE0. . . . . . . .  B ADDR   0088H.1 A                          55# 
-FMG_DRAW_BORDER_L~  C ADDR   0374H   R  SEG=?PR?COMMONS         763# 774 
-FMG_GRID . . . . .  N NUMB   0040h                              355# 600 620 
+FMG_DRAW_BORDER_L~  C ADDR   0494H   R  SEG=?PR?COMMONS         992# 1003 
+FMG_GET_REGION_SW~  C ADDR   020DH   R  SEG=?PR?COMMONS         543 563# 
+FMG_GRID . . . . .  N NUMB   0040h                              365# 591 829 849 
+                                                                
 RAND8B . . . . . .  C ADDR   0007H   R  SEG=?PR?COMMONS         122 125# 
 IE1. . . . . . . .  B ADDR   0088H.3 A                          53# 
 COMMONS. . . . . .  N NUMB   -----
@@ -305,7 +352,7 @@ COMMONS. . . . . .  N NUMB   -----
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    970    ----
+   CODE SIZE        =   1258    ----
    XDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

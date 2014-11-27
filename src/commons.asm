@@ -10,7 +10,7 @@ code at 0
     
 code
 INIT: 
-    MOV SP, #60h 
+    MOV SP, #90h 
     LCALL TIMER_INIT
     LCALL LCD_INIT
     LJMP MAIN 

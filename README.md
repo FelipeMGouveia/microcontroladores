@@ -25,6 +25,9 @@ Em termos de funções as seguintes devem ser utilizadas:
 * LCD_DRAW - Desenha o byte contido em lcd_bus no LCD, após cada esccrita na tela o cursor se move para a próxima posição;
 * LCD_CLEAR - Limpa totalmente a tela do LCD;
 
+Quando se envia um byte para o lcd o mesmo é escrito de forma que o bit menos significativo seja a posição superior da coluna
+e o bit mais significativo seja a posição inferior da mesma.
+
 Obs: O LCD aparentemente avalia o canal de dados na borda de subida.
 
 Random
