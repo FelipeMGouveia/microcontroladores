@@ -1,0 +1,205 @@
+MACRO ASSEMBLER GETREGION                                  11/27/14 10:47:33 PAGE     1
+
+
+DOS MACRO ASSEMBLER MA51 V06.16.13.326
+OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\GETREGION.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\GETREGION.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+
+LOC     OBJ           LINE    SOURCE
+------                   1     CODE
+                         2         FMG_GET_REGION: 
+0000    EA               3         MOV A, R2
+0001    C000     F       4         PUSH ACC
+
+*** ERROR #46 IN LINE 4 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : UNDEFINED SYMBOL (PASS-2) 'ACC'
+0003    EB               5         MOV A, R3
+0004    C000     F       6         PUSH ACC
+
+*** ERROR #46 IN LINE 6 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : UNDEFINED SYMBOL (PASS-2) 'ACC'
+                         7         
+                         8         ;Captura a região de interseção entre a posição descrita por R4 e R5, e retorna-a em R6 e R7 os bytes correspondentes
+0006    7E00             9         MOV R6, #000H
+0008    7F00            10         MOV R7, #000H
+                        11         
+000A    7A04            12         MOV R2, #004H
+                        13         FMG_GET_REGION_LOOP_X: 
+000C    7B04            14             MOV R3, #004H
+                        15             FMG_GET_REGION_LOOP_Y: 
+                        16                 ;Cálculo do byte
+000E    ED              17                 MOV A, R5
+000F    750004   F      18                 MOV B, #004H
+
+*** ERROR #46 IN LINE 18 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : UNDEFINED SYMBOL (PASS-2) 'B'
+0012    84              19                 DIV AB
+0013    900000   F      20                 MOV DPTR, #FMG_GET_REGION_SWITCH_Y
+0016    73              21                 JMP @A+DPTR
+                        22                 FMG_GET_REGION_SWITCH_Y: 
+0017    020000   F      23                     JMP FMG_GET_REGION_SWITCH_0
+001A    020000   F      24                     JMP FMG_GET_REGION_SWITCH_1
+001D    020000   F      25                     JMP FMG_GET_REGION_SWITCH_2
+0020    020000   F      26                     JMP FMG_GET_REGION_SWITCH_3
+0023    020000   F      27                     JMP FMG_GET_REGION_SWITCH_4
+0026    020000   F      28                     JMP FMG_GET_REGION_SWITCH_5
+0029    020000   F      29                     JMP FMG_GET_REGION_SWITCH_6
+                        30                 FMG_GET_REGION_SWITCH_0: 
+002C    7800            31                     MOV R0, #000; Contador de ciclos
+002E    EC              32                     MOV A, R4; Carrega a posição que desejo ir em A
+002F    F9              33                     MOV R1, A; Posição para a qual desejo ir
+0030    020000   F      34                     JMP FMG_GET_REGION_SWITCH_END
+                        35                 FMG_GET_REGION_SWITCH_1: 
+0033    7804            36                     MOV R0, #004; Contador de ciclos
+0035    EC              37                     MOV A, R4; Carrega a posição que desejo ir em A
+0036    F9              38                     MOV R1, A; Posição para a qual desejo ir
+0037    020000   F      39                     JMP FMG_GET_REGION_SWITCH_END
+                        40                 FMG_GET_REGION_SWITCH_2: 
+003A    7800            41                     MOV R0, #000; Contador de ciclos
+003C    EC              42                     MOV A, R4; Carrega a posição que desejo ir em A
+003D    2412            43                     ADD A, #012H
+003F    F9              44                     MOV R1, A; Posição para a qual desejo ir
+0040    020000   F      45                     JMP FMG_GET_REGION_SWITCH_END
+                        46                 FMG_GET_REGION_SWITCH_3: 
+0043    7804            47                     MOV R0, #004; Contador de ciclos
+0045    EC              48                     MOV A, R4; Carrega a posição que desejo ir em A
+0046    2412            49                     ADD A, #012H
+0048    F9              50                     MOV R1, A; Posição para a qual desejo ir
+MACRO ASSEMBLER GETREGION                        11/27/14  10:47:33 PAGE     2
+                     
+0049    020000   F      51                     JMP FMG_GET_REGION_SWITCH_END
+                        52                 FMG_GET_REGION_SWITCH_4: 
+004C    7800            53                     MOV R0, #000; Contador de ciclos
+004E    EC              54                     MOV A, R4; Carrega a posição que desejo ir em A
+004F    2424            55                     ADD A, #024H
+0051    F9              56                     MOV R1, A; Posição para a qual desejo ir
+0052    020000   F      57                     JMP FMG_GET_REGION_SWITCH_END
+                        58                 FMG_GET_REGION_SWITCH_5: 
+0055    7804            59                     MOV R0, #004; Contador de ciclos
+0057    EC              60                     MOV A, R4; Carrega a posição que desejo ir em A
+0058    2424            61                     ADD A, #024H
+005A    F9              62                     MOV R1, A; Posição para a qual desejo ir
+005B    020000   F      63                     JMP FMG_GET_REGION_SWITCH_END
+                        64                 FMG_GET_REGION_SWITCH_6: 
+005E    7800            65                     MOV R0, #000; Contador de ciclos
+0060    EC              66                     MOV A, R4; Carrega a posição que desejo ir em A
+0061    2436            67                     ADD A, #036H
+0063    F9              68                     MOV R1, A; Posição para a qual desejo ir
+0064    020000   F      69                     JMP FMG_GET_REGION_SWITCH_END
+                        70                 FMG_GET_REGION_SWITCH_END: 
+0067    E8              71                     MOV A, R0
+0068    2500     F      72                     ADD A, B
+
+*** ERROR #46 IN LINE 72 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : UNDEFINED SYMBOL (PASS-2) 'B'
+006A    F8              73                     MOV R0, A; Bit que preciso
+006B    7400     F      74                     MOV A, #FMG_GRID ;localização da grade
+
+*** ERROR #46 IN LINE 74 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_GRID'
+006D    29              75                     ADD A, R1 ; Move-se para a aposição desejada
+006E    F9              76                     MOV R1, A ;Carrega o valor para R1
+006F    E7              77                     MOV A, @R1 ; Pega o byte que está na posição apontada por R1
+0070    F9              78                     MOV R1, A; Byte para busca
+                        79                     ;Definir se R6 ou R7 e então chamar o FMG_FIND_BIT
+0071    EA              80                     MOV A, R2
+0072    750002   F      81                     MOV B, #002H
+
+*** ERROR #46 IN LINE 81 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : UNDEFINED SYMBOL (PASS-2) 'B'
+0075    84              82                     DIV AB
+0076    900000   F      83                     MOV DPTR, #FMG_GET_REGION_SWITCH_1_R6_R7
+0079    73              84                     JMP @A+DPTR
+                        85                     FMG_GET_REGION_SWITCH_1_R6_R7: 
+007A    020000   F      86                         JMP FMG_GET_REGION_SWITCH_1_R7 ;Como o contador está invertido temos o R7 em 0
+007D    020000   F      87                         JMP FMG_GET_REGION_SWITCH_1_R6
+                        88                         FMG_GET_REGION_SWITCH_1_R6: 
+0080    120000   F      89                             LCALL FMG_FIND_BIT
+
+*** ERROR #46 IN LINE 89 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_FIND_BIT'
+                        90                             ;Carry contem o bit que preciso!
+0083    EE              91                             MOV A, R6
+0084    33              92                             RLC A
+0085    FE              93                             MOV R6, A
+0086    020000   F      94                             JMP FMG_GET_REGION_LOOP_END
+                        95                         FMG_GET_REGION_SWITCH_1_R7: 
+0089    120000   F      96                             LCALL FMG_FIND_BIT
+
+*** ERROR #46 IN LINE 96 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_FIND_BIT'
+                        97                             ;Carry contem o bit que preciso!
+008C    EF              98                             MOV A, R7
+008D    33              99                             RLC A
+008E    FF             100                             MOV R7, A
+008F    020000   F     101                             JMP FMG_GET_REGION_LOOP_END            
+                       102                 FMG_GET_REGION_LOOP_END: 
+0092    ED             103                     MOV A, R5
+0093    2401           104                     ADD A, #001H
+0095    FD             105                     MOV R5, A
+0096    DB00     F     106                     DJNZ R3, FMG_GET_REGION_LOOP_Y_WORKAROUND
+0098    EC             107                     MOV A, R4
+MACRO ASSEMBLER GETREGION                        11/27/14  10:47:33 PAGE     3
+                     
+0099    2401           108                     ADD A, #001H
+009B    FC             109                     MOV R4, A
+009C    DA00     F     110                 DJNZ R2, FMG_GET_REGION_LOOP_X_WORKAROUND
+009E    020000   F     111                 JMP FMG_GET_REGION_END
+                       112                 FMG_GET_REGION_LOOP_Y_WORKAROUND: 
+00A1    020000   F     113                     LJMP FMG_GET_REGION_LOOP_Y
+                       114                 FMG_GET_REGION_LOOP_X_WORKAROUND: 
+00A4    020000   F     115                     LJMP FMG_GET_REGION_LOOP_X
+                       116         FMG_GET_REGION_END: 
+00A7    D000     F     117         POP ACC
+
+*** ERROR #46 IN LINE 117 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : UNDEFINED SYMBOL (PASS-2) 'ACC'
+00A9    FB             118         MOV R3, A
+00AA    D000     F     119         POP ACC
+
+*** ERROR #46 IN LINE 119 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : UNDEFINED SYMBOL (PASS-2) 'ACC'
+00AC    FA             120         MOV R2, A
+00AD    22             121         RET
+
+*** WARNING #87 IN LINE 121 OF C:\Projects\microcontroladores\src\Tetris\GetRegion.asm : MISSING 'END' STATEMENT
+MACRO ASSEMBLER GETREGION                                  11/27/14 10:47:33 PAGE     0
+
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
+
+FMG_GET_REGION_SW~  C ADDR   004CH   R  SEG=?PR?GETREGION       27 52# 
+FMG_GET_REGION_SW~  C ADDR   0055H   R  SEG=?PR?GETREGION       28 58# 
+FMG_GET_REGION_SW~  C ADDR   005EH   R  SEG=?PR?GETREGION       29 64# 
+B. . . . . . . . .  ? ADDR   0000H   A                          18 72 81 
+FMG_GET_REGION_SW~  C ADDR   0067H   R  SEG=?PR?GETREGION       34 39 45 51 57 63 
+                                                                69 70# 
+FMG_GET_REGION_SW~  C ADDR   0080H   R  SEG=?PR?GETREGION       87 88# 
+?PR?GETREGION. . .  C SEG    00AEH      REL=UNIT                1# 
+FMG_GET_REGION_SW~  C ADDR   0089H   R  SEG=?PR?GETREGION       86 95# 
+FMG_GET_REGION_SW~  C ADDR   0017H   R  SEG=?PR?GETREGION       20 22# 
+ACC. . . . . . . .  ? ADDR   0000H   A                          4 6 117 119 
+FMG_GET_REGION_LO~  C ADDR   0092H   R  SEG=?PR?GETREGION       94 101 102# 
+FMG_GET_REGION_SW~  C ADDR   007AH   R  SEG=?PR?GETREGION       83 85# 
+FMG_GET_REGION_LO~  C ADDR   000CH   R  SEG=?PR?GETREGION       13# 115 
+FMG_GET_REGION_LO~  C ADDR   000EH   R  SEG=?PR?GETREGION       15# 113 
+FMG_GET_REGION_END  C ADDR   00A7H   R  SEG=?PR?GETREGION       111 116# 
+FMG_GET_REGION_LO~  C ADDR   00A4H   R  SEG=?PR?GETREGION       110 114# 
+FMG_GET_REGION_LO~  C ADDR   00A1H   R  SEG=?PR?GETREGION       106 112# 
+FMG_FIND_BIT . . .  ? ADDR   0000H   A                          89 96 
+FMG_GET_REGION_SW~  C ADDR   002CH   R  SEG=?PR?GETREGION       23 30# 
+FMG_GET_REGION . .  C ADDR   0000H   R  SEG=?PR?GETREGION       2# 
+FMG_GET_REGION_SW~  C ADDR   0033H   R  SEG=?PR?GETREGION       24 35# 
+FMG_GET_REGION_SW~  C ADDR   003AH   R  SEG=?PR?GETREGION       25 40# 
+FMG_GRID . . . . .  ? ADDR   0000H   A                          74 
+FMG_GET_REGION_SW~  C ADDR   0043H   R  SEG=?PR?GETREGION       26 46# 
+GETREGION. . . . .  N NUMB   -----
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    174    ----
+   XDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+REGISTER BANK(S) USED : 0 
+
+ASSEMBLY COMPLETE.   1 WARNING(S)  10 ERROR(S)

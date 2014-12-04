@@ -1,29 +1,25 @@
-;to use these pseudo-random number sequence generators, memory must be
+﻿;to use these pseudo-random number sequence generators, memory must be
 ;set aside to hold the last random number, which is used to generate the
 ;next one so that a randomly distributed (but predictable) sequence of
 ;number is generated.
-
 rand8reg SET 0x20		;one byte
 rand16reg SET 0x21		;two bytes
-
 ;generates an 8 bit pseudo-random number which is returned in Acc.
 ;one byte of memory must be available for rand8reg
-
 code
 RAND8:	
     mov	a, rand8reg
 	jnz	rand8b
 	cpl	a
 	mov	rand8reg, a
-rand8b:	
+	rand8b:	
     anl	a, #10111000b
 	mov	c, p
 	mov	a, rand8reg
 	rlc	a
 	mov	rand8reg, a
 	ret
-
-;generates a 16 bit pseudo-random number which is returned in Acc (lsb) & B (msb)
+	;generates a 16 bit pseudo-random number which is returned in Acc (lsb) & B (msb)
 ;two bytes of memory must be available for rand16reg
 code
 RAND16:	
@@ -34,13 +30,13 @@ RAND16:
 	cpl	a
 	mov	rand16reg, a
 	mov	rand16reg+1, a
-rand16b:
+	rand16b:
     anl	a, #11010000b
 	mov	c, p
 	mov	a, rand16reg
 	jnb	acc.3, rand16c
 	cpl	c
-rand16c:
+	rand16c:
     rlc	a
 	mov	rand16reg, a
 	mov	b, a
@@ -49,3 +45,4 @@ rand16c:
 	mov	rand16reg+1, a
 	xch	a, b
 	ret
+	

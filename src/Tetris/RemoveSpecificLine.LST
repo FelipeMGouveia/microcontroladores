@@ -1,0 +1,127 @@
+MACRO ASSEMBLER REMOVESPECIFICLINE                         12/02/14 09:50:53 PAGE     1
+
+
+DOS MACRO ASSEMBLER MA51 V06.16.13.326
+OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\REMOVESPECIFICLINE.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\REMOVESPECIFICLINE.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+
+LOC     OBJ           LINE    SOURCE
+------                   1     CODE
+                         2         ;Remove uma linha especifica do jogo.
+                         3         ;R0 - Começo da linha (macro)
+                         4         ;R5 - Número da linha (específica)
+                         5         ;Tentar não afetar R0, R3, R4 e R5
+                         6         FMG_REMOVE_SPECIFIC_LINE: 
+0000    C000     F       7         PUSH ACC
+
+*** ERROR #46 IN LINE 7 OF C:\Projects\microcontroladores\src\Tetris\RemoveSpecificLine.asm : UNDEFINED SYMBOL (PASS-2) 'ACC'
+0002    E9               8         MOV A, R1
+0003    C000     F       9         PUSH ACC
+
+*** ERROR #46 IN LINE 9 OF C:\Projects\microcontroladores\src\Tetris\RemoveSpecificLine.asm : UNDEFINED SYMBOL (PASS-2) 'ACC'
+                        10         
+0005    E8              11             MOV A, R0
+0006    9412            12             SUBB A, #012H
+0008    E9              13             MOV A, R1 ;R1 está com a linha acima de R0
+0009    7407            14             MOV A, #007H
+000B    C3              15             CLR C
+000C    9D              16             SUBB A, R5 ;Gerar máscara superior
+000D    FA              17             MOV R2, A
+                        18             ;Criar a máscara superior em R6 e a inferiro em R7
+000E    120000   F      19             LCALL FMG_CREATE_SUPERIOR_MASK
+0011    ED              20             MOV A, R5
+0012    FA              21             MOV R2, A
+0013    1A              22             DEC R2
+0014    120000   F      23             LCALL FMG_CREATE_INFERIOR_MASK
+                        24             
+0017    E7              25             MOV A, @R1 ; Linha superior
+                        26             JB A.0, FMG_REMOVE_SPECIFIC_LINE_SET_CARRY
+
+*** ERROR #23 IN LINE 26 OF C:\Projects\microcontroladores\src\Tetris\RemoveSpecificLine.asm : EXPRESSION TYPE DOES NOT MATCH INSTRUCTION
+                        27             JNB A.0, FMG_REMOVE_SPECIFIC_LINE_SET_NOT_CARRY
+
+*** ERROR #23 IN LINE 27 OF C:\Projects\microcontroladores\src\Tetris\RemoveSpecificLine.asm : EXPRESSION TYPE DOES NOT MATCH INSTRUCTION
+                        28             FMG_REMOVE_SPECIFIC_LINE_SET_CARRY: 
+0018    D3              29                 SETB C
+0019    020000   F      30                 JMP FMG_REMOVE_SPECIFIC_LINE_SET_CARRY_END
+                        31             FMG_REMOVE_SPECIFIC_LINE_SET_NOT_CARRY: 
+001C    C3              32                 CLR C
+001D    020000   F      33                 JMP FMG_REMOVE_SPECIFIC_LINE_SET_CARRY_END
+                        34             FMG_REMOVE_SPECIFIC_LINE_SET_CARRY_END: 
+                        35             
+0020    E6              36             MOV A, @R0
+0021    5E              37             ANL A, R6
+0022    13              38             RRC A
+0023    FE              39             MOV R6, A
+0024    E6              40             MOV A, @R0
+0025    5F              41             ANL A, R7
+0026    6E              42             XRL A, R6
+0027    F6              43             MOV @R0, A
+                        44             
+0028    D000     F      45         POP ACC
+
+*** ERROR #46 IN LINE 45 OF C:\Projects\microcontroladores\src\Tetris\RemoveSpecificLine.asm : UNDEFINED SYMBOL (PASS-2) 'ACC'
+002A    F9              46         MOV R1, A
+002B    D000     F      47         POP ACC
+
+*** ERROR #46 IN LINE 47 OF C:\Projects\microcontroladores\src\Tetris\RemoveSpecificLine.asm : UNDEFINED SYMBOL (PASS-2) 'ACC'
+002D    22              48         RET
+                        49         
+------                  50     CODE
+MACRO ASSEMBLER REMOVESPECIFICLINE               12/02/14  09:50:53 PAGE     2
+                     
+                        51         FMG_CREATE_SUPERIOR_MASK: 
+002E    7400            52         MOV A, #000H
+                        53         FMG_CREATE_SUPERIOR_MASK_LOOP: 
+0030    D3              54             SETB C
+0031    33              55             RLC A
+0032    DA00     F      56             DJNZ R2, FMG_CREATE_SUPERIOR_MASK_LOOP
+0034    FE              57         MOV R6, A
+0035    22              58         RET
+                        59         
+------                  60     CODE
+                        61         FMG_CREATE_INFERIOR_MASK: 
+0036    7400            62         MOV A, #000H
+                        63         FMG_CREATE_INFERIOR_MASK_LOOP: 
+0038    D3              64             SETB C
+0039    13              65             RRC A
+003A    DA00     F      66             DJNZ R2, FMG_CREATE_INFERIOR_MASK_LOOP
+003C    FF              67         MOV R7, A
+003D    22              68         RET
+
+*** WARNING #87 IN LINE 68 OF C:\Projects\microcontroladores\src\Tetris\RemoveSpecificLine.asm : MISSING 'END' STATEMENT
+MACRO ASSEMBLER REMOVESPECIFICLINE                         12/02/14 09:50:53 PAGE     0
+
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
+
+ACC. . . . . . . .  ? ADDR   0000H   A                          7 9 45 47 
+FMG_CREATE_SUPERI~  C ADDR   0030H   R  SEG=?PR?REMOVESPECIFI~  53# 56 
+FMG_CREATE_INFERI~  C ADDR   0038H   R  SEG=?PR?REMOVESPECIFI~  63# 66 
+FMG_REMOVE_SPECIF~  C ADDR   001CH   R  SEG=?PR?REMOVESPECIFI~  27 31# 
+FMG_CREATE_SUPERI~  C ADDR   002EH   R  SEG=?PR?REMOVESPECIFI~  19 51# 
+FMG_REMOVE_SPECIF~  C ADDR   0000H   R  SEG=?PR?REMOVESPECIFI~  6# 
+FMG_REMOVE_SPECIF~  C ADDR   0020H   R  SEG=?PR?REMOVESPECIFI~  30 33 34# 
+FMG_CREATE_INFERI~  C ADDR   0036H   R  SEG=?PR?REMOVESPECIFI~  23 61# 
+?PR?REMOVESPECIFI~  C SEG    003EH      REL=UNIT                1# 50 60 
+FMG_REMOVE_SPECIF~  C ADDR   0018H   R  SEG=?PR?REMOVESPECIFI~  26 28# 
+REMOVESPECIFICLINE  N NUMB   -----
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     62    ----
+   XDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+REGISTER BANK(S) USED : 0 
+
+ASSEMBLY COMPLETE.   1 WARNING(S)   6 ERROR(S)

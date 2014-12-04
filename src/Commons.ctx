@@ -1,8 +1,87 @@
 
 <Debug>
+	<Views>
+		<View File=".\Tetris\common.asm" Line="10" Index="0" />
+		<View File=".\Tetris\ValidateCollision.asm" Line="17" Index="1" />
+		<View File=".\Tetris\GetRegion.asm" Line="36" Index="2" />
+		<View File=".\Tetris\SetRegion.asm" Line="1" Index="3" />
+		<View File=".\Tetris\FindBit.asm" Line="4" Index="4" />
+		<View File=".\tetris.asm" Line="17" Index="5" />
+		<View File=".\Tetris\main.asm" Line="64" Index="6" />
+		<View File=".\main.asm" Line="792" Index="7" focus="1" />
+		<View File=".\Tetris\DrawScreen.asm" Line="46" Index="8" />
+																																																																																																																																																																																																																																										
+	</Views>
+	<BookMarks>
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+																																																																																																																																																																																																																																										
+	</BookMarks>
+	<Grep>
+		<GrepIncludeSub>yes</GrepIncludeSub>
+		<GrepMatchCase>no</GrepMatchCase>
+		<GrepMatchWhole>no</GrepMatchWhole>
+		<GrepRegExp>no</GrepRegExp>
+		<GrepReplaceMode>no</GrepReplaceMode>
+		<GrepFileTypes>
+			<GrepFileTypesValue>*.c;*.h</GrepFileTypesValue>
+			<GrepFileType>*.c;*.h</GrepFileType>
+																																																																																																																																																																																																																																																																																																																																																																																																						
+		</GrepFileTypes>
+		<GrepFindWhat>
+			<GrepFindWhatValue/>
+																																																																																																																																																																																																																																																																																																																																																																																																						
+		</GrepFindWhat>
+		<GrepFindWhere>
+			<GrepFindWhereValue>Application Files</GrepFindWhereValue>
+			<GrepPathStr>Application Files</GrepPathStr>
+			<GrepPathStr>Application Path</GrepPathStr>
+			<GrepPathStr>Project Files</GrepPathStr>
+																																																																																																																																																																																																																																																																																																																																																																																																						
+		</GrepFindWhere>
+		<GrepReplaceWhat>
+			<GrepReplaceWhatValue/>
+																																																																																																																																																																																																																																																																																																																																																																																																						
+		</GrepReplaceWhat>
+																																																																																																																																																																																																																																										
+	</Grep>
+	<FindStrings>
+		<Find>GET</Find>
+		<Find>FMG_TET</Find>
+		<Find>TIMER0_INTERRUPT</Find>
+		<Find>FMG</Find>
+		<Find>FMG_M</Find>
+		<Find>Main</Find>
+		<Find>DPL</Find>
+		<Find>fmg_piece_id_2</Find>
+		<Find>fmg_piece_id_0</Find>
+		<Find>rando</Find>
+		<Find>lcd_X</Find>
+		<Find>FMG_DRAW_SCREEN</Find>
+		<Find>FMG_CLEAR_MEMORY</Find>
+		<Find>LCD_CLEAR</Find>
+		<Find>CLEAR</Find>
+		<Find>#021h</Find>
+		<Find>#017h</Find>
+		<Find>RS0</Find>
+		<Find>RS2</Find>
+		<Find>USING</Find>
+																																																																																																																																																																																																																																										
+	</FindStrings>
+	<ReplaceStrings>
+		<Find>SET</Find>
+																																																																																																																																																																																																																																										
+	</ReplaceStrings>
 	<Commons>
-		<DataView Focus="37" TopRow="0" NbPerLine="12" />
-		<CodeView Focus="132" TopRow="90" NbPerLine="10" />
+		<DataView Focus="48" TopRow="0" NbPerLine="24" />
 		<CodeView TopRow="0" Focus="0" >
 			<CodeReport>
 				<0>80</0>
@@ -11,12 +90,9 @@
 				<3>264</3>
 				<4>48</4>
 				<5>100</5>
-																																																																																				
 			</CodeReport>
-																																																												
 		</CodeView>
-		<XdataView Focus="0" TopRow="0" NbPerLine="12" />
-																																				
+		<CodeView Focus="0" TopRow="0" NbPerLine="8" />
 	</Commons>
 	<Flags>
 		<Report>
@@ -32,75 +108,10 @@
 				<Col Type="PT_STRING" Header="Condition" sizeCache="DDDDDDDDDDDDDDDDDDDDDDDD" AutoSize="1" Edit="0" Sortable="0" />
 				<Col Type="PT_STRING" Header="Condexpr" sizeCache="DD" AutoSize="1" Edit="0" Sortable="0" Visible="0" />
 				<Col Type="PT_STRING" Header="Condcount" sizeCache="DD" AutoSize="1" Edit="0" Sortable="0" Visible="0" />
-							
 			</Def>
 			<Rows>
-				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:47" File="commons.asm" Path="C:\Projects\microcontroladores\src\commons.asm" />
-							
+				<Row Check="True" Kind="Breakpoint" KindID="0" Space="CODE" SpaceID="0" Condition="" Line="L:1324" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
 			</Rows>
-					
 		</Report>
-			
 	</Flags>
-	<Views>
-		<View File=".\commons.asm" Line="13" Index="0" />
-		<View File=".\LCD.asm" Line="9" Index="1" />
-		<View File=".\tetris.asm" Line="152" Index="2" focus="1" />
-		<View File=".\Random.asm" Line="10" Index="3" />
-	</Views>
-	<BookMarks>
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-	</BookMarks>
-	<Grep>
-		<GrepIncludeSub>yes</GrepIncludeSub>
-		<GrepMatchCase>no</GrepMatchCase>
-		<GrepMatchWhole>no</GrepMatchWhole>
-		<GrepRegExp>no</GrepRegExp>
-		<GrepReplaceMode>no</GrepReplaceMode>
-		<GrepFileTypes>
-			<GrepFileTypesValue>*.c;*.h</GrepFileTypesValue>
-			<GrepFileType>*.c;*.h</GrepFileType>
-		</GrepFileTypes>
-		<GrepFindWhat>
-			<GrepFindWhatValue/>
-		</GrepFindWhat>
-		<GrepFindWhere>
-			<GrepFindWhereValue>Application Files</GrepFindWhereValue>
-			<GrepPathStr>Application Files</GrepPathStr>
-			<GrepPathStr>Application Path</GrepPathStr>
-			<GrepPathStr>Project Files</GrepPathStr>
-		</GrepFindWhere>
-		<GrepReplaceWhat>
-			<GrepReplaceWhatValue/>
-		</GrepReplaceWhat>
-	</Grep>
-	<FindStrings>
-		<Find>DPL</Find>
-		<Find>fmg_piece_id_2</Find>
-		<Find>fmg_piece_id_0</Find>
-		<Find>rando</Find>
-		<Find>lcd_X</Find>
-		<Find>FMG_DRAW_SCREEN</Find>
-		<Find>FMG_CLEAR_MEMORY</Find>
-		<Find>LCD_CLEAR</Find>
-		<Find>CLEAR</Find>
-		<Find>#021h</Find>
-		<Find>#017h</Find>
-		<Find>RS0</Find>
-		<Find>RS2</Find>
-		<Find>USING</Find>
-		<Find>LCD_XY</Find>
-		<Find>LCD_SEND_SERIAL_DATA</Find>
-		<Find>LCD_SEND_COMMAND</Find>
-	</FindStrings>
-	<ReplaceStrings/>
 </Debug>

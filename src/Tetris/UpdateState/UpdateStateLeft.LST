@@ -1,0 +1,141 @@
+MACRO ASSEMBLER UPDATESTATELEFT                            11/30/14 12:58:36 PAGE     1
+
+
+DOS MACRO ASSEMBLER MA51 V06.16.13.326
+OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\UPDATESTATELEFT.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\UPDATESTATELEFT.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+
+LOC     OBJ           LINE    SOURCE
+                         1     ; Rotaciona a peça para a esquerda e testa se a rotação é possível, em caso afirmativo, rotaciona a mesma.
+                         2     ; Rotacionar a peça para esquerda:
+                         3     ; Subtrair 1 do contador de posição atual em R1 (se maior que zero, senão colocar para o valor máixmo)
+                         4     ; Carregar a nova peça nos registradores R2 e R3
+                         5     ; fmg_piece_H,L,R,0,1
+0000    E500     F       6     MOV A, FMG_PIECE_R ; Carrega a rotação atual para A
+
+*** ERROR #46 IN LINE 6 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_PIECE_R'
+0002    7000     F       7     JNZ FMG_UPDATE_STATE_LEFT_NOT_ZERO
+                         8     ;Atualização para o caso de ser zero
+0004    850000   F       9     MOV DPH, FMG_PIECE_H
+
+*** ERROR #46 IN LINE 9 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_PIECE_H'
+
+*** ERROR #46 IN LINE 9 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'DPH'
+0007    850000   F      10     MOV DPL, FMG_PIECE_L
+
+*** ERROR #46 IN LINE 10 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'DPL'
+
+*** ERROR #46 IN LINE 10 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_PIECE_L'
+000A    7400            11     MOV A, #000H
+000C    93              12     MOVC A, @A+DPTR
+000D    F9              13     MOV R1, A
+000E    020000   F      14     JMP FMG_UPDATE_STATE_LEFT_END
+                        15     FMG_UPDATE_STATE_LEFT_NOT_ZERO:  ; Atualiza para o caso de não ser zero
+0011    9501            16     SUBB A, 1
+0013    F9              17     MOV R1, A
+                        18     FMG_UPDATE_STATE_LEFT_END: 
+                        19     ;Carrega a peça para os registradores R2 e R3
+                        20     ; R1 contem a rotação da peça
+0014    850000   F      21     MOV DPH, FMG_PIECE_H
+
+*** ERROR #46 IN LINE 21 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_PIECE_H'
+
+*** ERROR #46 IN LINE 21 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'DPH'
+0017    850000   F      22     MOV DPL, FMG_PIECE_L
+
+*** ERROR #46 IN LINE 22 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'DPL'
+
+*** ERROR #46 IN LINE 22 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_PIECE_L'
+001A    E9              23     MOV A, R1
+001B    93              24     MOVC A, @A+DPTR
+                        25     ;A está com a posição da peça na memória
+001C    FA              26     MOV R2, A
+001D    E9              27     MOV A, R1
+001E    2401            28     ADD A, #001H
+0020    93              29     MOVC A, @A+DPTR
+0021    FB              30     MOV R3, A
+                        31     ;R2 possui os primeiros bytes (esquerda)
+                        32     ;R3 possui os outros bytes (direita)
+0022    E500     F      33     MOV A, FMG_PIECE_X
+
+*** ERROR #46 IN LINE 33 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_PIECE_X'
+0024    FC              34     MOV R4, A
+0025    E500     F      35     MOV A, FMG_PIECE_Y
+
+*** ERROR #46 IN LINE 35 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_PIECE_Y'
+0027    FD              36     MOV R5, A
+0028    120000   F      37     LCALL FMG_GET_REGION
+
+*** ERROR #46 IN LINE 37 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_GET_REGION'
+                        38     ;R6 e R7 contem a informação sobre a região, 
+                        39     ;só fazer o XOR e sei se a posição está ocupada (movimento inválido), ou não;
+002B    EA              40     MOV A, R2
+002C    6E              41     XRL A, R6 ; Xor entre R2 e R6
+002D    9A              42     SUBB A, R2 ; Se não ocorreu nenhuma colisão a subtração por R2 e R6 deve retornar Zero
+002E    9E              43     SUBB A, R6
+002F    6000     F      44     JZ FMG_UPDATE_STATE_LEFT_TEST_R7
+0031    020000   F      45     JMP FMG_UPDATE_STATE_LEFT_COLLISION
+                        46     FMG_UPDATE_STATE_LEFT_TEST_R7: 
+0034    EB              47         MOV A, R3
+0035    6F              48         XRL A, R7;Xor entre R2 e R6
+0036    9B              49         SUBB A, R3 ; Se não ocorreu nenhuma colisão a subtração por R3 e R7 deve retornar Zero
+0037    9F              50         SUBB A, R7    
+MACRO ASSEMBLER UPDATESTATELEFT                  11/30/14  12:58:36 PAGE     2
+                     
+0038    6000     F      51         JZ FMG_UPDATE_STATE_LEFT_NOT_COLLISION
+003A    020000   F      52         JMP FMG_UPDATE_STATE_LEFT_COLLISION
+                        53     FMG_UPDATE_STATE_LEFT_COLLISION:  ;Se tiver colisão então vá para o fim!
+003D    020000   F      54     LJMP FMG_UPDATE_STATE_END
+
+*** ERROR #46 IN LINE 54 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_UPDATE_STATE_END'
+                        55     FMG_UPDATE_STATE_LEFT_NOT_COLLISION:  ; Se não tiver colisão, atualize a posição da peça!
+0040    E500     F      56     MOV A, FMG_PIECE_X
+
+*** ERROR #46 IN LINE 56 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_PIECE_X'
+0042    9401            57     SUBB A, #001H
+0044    F500     F      58     MOV FMG_PIECE_X, A
+
+*** ERROR #46 IN LINE 58 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_PIECE_X'
+0046    020000   F      59     LJMP FMG_UPDATE_STATE_END ; Vai para o fim
+
+*** WARNING #87 IN LINE 59 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : MISSING 'END' STATEMENT
+
+*** ERROR #46 IN LINE 59 OF C:\Projects\microcontroladores\src\Tetris\UpdateState\UpdateStateLeft.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_UPDATE_STATE_END'
+MACRO ASSEMBLER UPDATESTATELEFT                            11/30/14 12:58:36 PAGE     0
+
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
+
+DPL. . . . . . . .  ? ADDR   0000H   A                          10 22 
+FMG_UPDATE_STATE_~  C ADDR   0040H   A                          51 55# 
+FMG_PIECE_H. . . .  ? ADDR   0000H   A                          9 21 
+FMG_PIECE_L. . . .  ? ADDR   0000H   A                          10 22 
+FMG_UPDATE_STATE_~  C ADDR   0034H   A                          44 46# 
+FMG_PIECE_R. . . .  ? ADDR   0000H   A                          6 
+FMG_UPDATE_STATE_~  C ADDR   003DH   A                          45 52 53# 
+FMG_UPDATE_STATE_~  ? ADDR   0000H   A                          54 59 
+FMG_UPDATE_STATE_~  C ADDR   0011H   A                          7 15# 
+FMG_PIECE_X. . . .  ? ADDR   0000H   A                          33 56 58 
+FMG_PIECE_Y. . . .  ? ADDR   0000H   A                          35 
+FMG_GET_REGION . .  ? ADDR   0000H   A                          37 
+FMG_UPDATE_STATE_~  C ADDR   0014H   A                          14 18# 
+DPH. . . . . . . .  ? ADDR   0000H   A                          9 21 
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     73    ----
+   XDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+REGISTER BANK(S) USED : 0 
+
+ASSEMBLY COMPLETE.   1 WARNING(S)  16 ERROR(S)

@@ -1,0 +1,1980 @@
+MACRO ASSEMBLER MAIN                                       12/04/14 06:55:53 PAGE     1
+
+
+DOS MACRO ASSEMBLER MA51 V06.16.13.326
+OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\MAIN.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\MAIN.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+
+LOC     OBJ           LINE    SOURCE
+                         1     $INCLUDE(REG52.INC)
+                       106     ;to use these pseudo-random number sequence generators, memory must be
+                       107     ;set aside to hold the last random number, which is used to generate the
+                       108     ;next one so that a randomly distributed (but predictable) sequence of
+                       109     ;number is generated.
+  0020                 110     RAND8REG SET 0X20		;one byte
+  0021                 111     RAND16REG SET 0X21		;two bytes
+                       112     ;generates an 8 bit pseudo-random number which is returned in Acc.
+                       113     ;one byte of memory must be available for rand8reg
+------                 114     CODE
+                       115     RAND8: 	
+0000    E520           116     MOV A , 32 
+0002    7003           117     	JNZ	RAND8B
+0004    F4             118     	CPL	A
+0005    F520           119     MOV 32 , A 
+                       120     	RAND8B: 	
+0007    54B8           121         ANL	A, #10111000B
+0009    A2D0           122     	MOV	C, P
+000B    E520           123     MOV A , 32 
+000D    33             124     	RLC	A
+000E    F520           125     MOV 32 , A 
+0010    22             126     	RET
+                       127     	;generates a 16 bit pseudo-random number which is returned in Acc (lsb) & B (msb)
+                       128     ;two bytes of memory must be available for rand16reg
+------                 129     CODE
+                       130     RAND16: 	
+0011    E521           131     MOV A , 33 
+0013    7009           132     	JNZ	RAND16B
+0015    E522           133     MOV A , 33 + 1 
+0017    7005           134     	JNZ	RAND16B
+0019    F4             135     	CPL	A
+001A    F521           136     MOV 33 , A 
+001C    F522           137     MOV 33 + 1 , A 
+                       138     	RAND16B: 
+001E    54D0           139         ANL	A, #11010000B
+0020    A2D0           140     	MOV	C, P
+0022    E521           141     MOV A , 33 
+0024    30E301         142     	JNB	ACC.3, RAND16C
+0027    B3             143     	CPL	C
+                       144     	RAND16C: 
+0028    33             145         RLC	A
+0029    F521           146     MOV 33 , A 
+002B    F5F0           147     	MOV	B, A
+002D    E522           148     MOV A , 33 + 1 
+002F    33             149     	RLC	A
+0030    F522           150     MOV 33 + 1 , A 
+0032    C5F0           151     	XCH	A, B
+0034    22             152     	RET
+                       153     	
+                       154     ;Defini��o das portas a serrem utilizadas pelo LCD
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE     2
+                     
+  0096                 155     LCD_CE    SET P1.6 ;Chip enabled
+  0095                 156     LCD_RESET SET P1.5 ;Reset
+  0097                 157     LCD_DC    SET P1.7 ;Data Comando
+  00B1                 158     LCD_CLK   SET P3.1 ;Clock
+  00B0                 159     LCD_DIN   SET P3.0 ;Data in
+                       160     
+  REG                  161     LCD_BUS   SET R0 ;Posi��o a ser utilizada pelo LCD para acesso bit-a-bit
+  REG                  162     LCD_X     SET R1 ;
+  REG                  163     LCD_Y     SET R2 ;
+                       164     
+                       165     ; O LCD utilizar� o banco de registradores 2, segundo a seguinte especifica��o:
+                       166     ; R0 - Byte/comando a ser escrito no LCD
+                       167     ; R1 - Coordenada X da fun��o LDC_XY
+                       168     ; R2 - Coordenada Y da fun��o LCD_XY
+                       169     
+                       170     ; R3 - Utilizado no LCD_CLEAR como contador (numero de linhas)
+                       171     ; R4 - Utilizado no LCD_CLEAR como contador (numero de colunas)
+                       172     
+                       173     ; R5 - utilizado internamente como contador para o delay (pode-se utilizar o timer e se livrar desse cara)
+                       174     ; R6 - utilizado internamente como contador para o delay (pode-se utilizar o timer e se livrar desse cara)
+                       175     ; R7 - utilizado internamente como contador para o envio.
+                       176     
+------                 177     CODE ;ROTINA para inicializa��o do LCD, deve ser chamada por um CALL
+                       178     LCD_INIT: 
+0035    C0E0           179         PUSH ACC ;Acumulador para pilha
+0037    C0D0           180         PUSH PSW ;Guardar a infroma��o do banco de registradores que est� sendo utilizado
+0039    D2D4           181         SETB RS1
+003B    C2D3           182         CLR RS0
+003D    D295           183     SETB 149 
+003F    D296           184     SETB 150 
+                       185         ;CLR lcd_reset
+0041    120000   F     186         LCALL BIG_DELAY
+                       187         ;SETB lcd_reset ;RESET
+                       188         
+                       189         ;Rotina de inicializa��o
+0044    7821           190     MOV R0 , # 021H 
+0046    120000   F     191         LCALL LCD_SEND_COMMAND
+                       192         
+0049    78C2           193     MOV R0 , # 0C2H 
+004B    120000   F     194         LCALL LCD_SEND_COMMAND
+                       195         
+004E    7811           196     MOV R0 , # 011H 
+0050    120000   F     197         LCALL LCD_SEND_COMMAND
+                       198         
+0053    7820           199     MOV R0 , # 020H 
+0055    120000   F     200         LCALL LCD_SEND_COMMAND
+                       201         
+0058    7809           202     MOV R0 , # 009H 
+005A    120000   F     203         LCALL LCD_SEND_COMMAND
+                       204         
+005D    120000   F     205         LCALL LCD_CLEAR
+                       206         
+0060    7808           207     MOV R0 , # 008H 
+0062    120000   F     208         LCALL LCD_SEND_COMMAND
+                       209         
+0065    780C           210     MOV R0 , # 00CH 
+0067    120000   F     211         LCALL LCD_SEND_COMMAND
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE     3
+                     
+                       212         
+006A    D0D0           213         POP PSW
+006C    D0E0           214         POP ACC
+006E    22             215         RET
+                       216     
+------                 217     CODE ;Desenha um byte na tela
+                       218     LCD_DRAW: 
+006F    120000   F     219         LCALL LCD_SEND_DATA
+0072    22             220         RET
+                       221     
+------                 222     CODE
+                       223     LCD_SEND_SERIAL_DATA:  ;Dados vem na posi��o R0, R7 serve como contador (utiliza pag2)
+0073    7F08           224         MOV R7, #008H 
+0075    E8             225     MOV A , R0 
+                       226         LCD_SEND_SERIAL_DATA_INTERNAL_LOOP: 
+0076    C2B1           227     CLR 177 
+0078    20E704         228             JB ACC.7, LCD_SEND_SERIAL_DATA_NOT_ZERO
+007B    C2B0           229     CLR 176 
+007D    8002           230                 SJMP LCD_SERIAL_END_IF
+                       231             LCD_SEND_SERIAL_DATA_NOT_ZERO: 
+007F    D2B0           232     SETB 176 
+                       233             LCD_SERIAL_END_IF: 
+0081    D2B1           234     SETB 177 
+0083    23             235             RL A
+0084    DFF0           236             DJNZ R7, LCD_SEND_SERIAL_DATA_INTERNAL_LOOP
+0086    22             237         RET
+                       238     
+------                 239     CODE
+                       240     LCD_SEND_COMMAND: 
+                       241     ; Registrador R0 deve conter o comando a ser enviado
+0087    C0E0           242         PUSH ACC ;Acumulador para pilha
+0089    C0D0           243         PUSH PSW ;Guardar a infroma��o do banco de registradores que est� sendo utilizado
+008B    D2D4           244         SETB RS1
+008D    C2D3           245         CLR RS0
+008F    C297           246     CLR 151 
+0091    C296           247     CLR 150 
+0093    120000   F     248         LCALL LCD_SEND_SERIAL_DATA
+0096    D296           249     SETB 150 
+                       250         ;Volta os registradores PSW e ACC respectivamente
+0098    D0D0           251         POP PSW
+009A    D0E0           252         POP ACC
+009C    22             253         RET
+                       254     
+------                 255     CODE
+                       256     LCD_SEND_DATA: 
+                       257     ; Registrador R0 deve conter o dado a ser enviado
+009D    C0E0           258         PUSH ACC ;Acumulador para pilha
+009F    C0D0           259         PUSH PSW ;Guardar a infroma��o do banco de registradores que est� sendo utilizado
+00A1    D2D4           260         SETB RS1
+00A3    C2D3           261         CLR RS0
+00A5    D297           262     SETB 151 
+00A7    C296           263     CLR 150 
+00A9    120000   F     264         LCALL LCD_SEND_SERIAL_DATA
+00AC    D296           265     SETB 150 
+                       266         ;Volta os registradores PSW e ACC respectivamente
+00AE    D0D0           267         POP PSW
+00B0    D0E0           268         POP ACC
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE     4
+                     
+00B2    22             269         RET
+------                 270     CODE
+                       271     LCD_XY: 
+00B3    C0E0           272         PUSH ACC ;Acumulador para pilha
+00B5    C0D0           273         PUSH PSW ;Guardar a infroma��o do banco de registradores que est� sendo utilizado
+00B7    D2D4           274         SETB RS1
+00B9    C2D3           275         CLR RS0
+                       276         ;080h X R1
+                       277         ;040h Y R2
+                       278         ;Recalcular o valor de Y (R2)
+00BB    EA             279     MOV A , R2 
+00BC    4440           280         ORL A, #040H ;Sem garantia que o valor seja v�lido
+00BE    F8             281     MOV R0 , A 
+00BF    120000   F     282         LCALL LCD_SEND_COMMAND
+                       283         ;Recalcular valor de X (R1)
+00C2    E9             284     MOV A , R1 
+00C3    4480           285         ORL A, #080H ;Sem garantia que o valor seja v�lido
+00C5    F8             286     MOV R0 , A 
+00C6    120000   F     287         LCALL LCD_SEND_COMMAND
+00C9    D0D0           288         POP PSW
+00CB    D0E0           289         POP ACC
+00CD    22             290         RET
+                       291     
+------                 292     CODE
+                       293     LCD_CLEAR: 
+00CE    C0E0           294         PUSH ACC 
+00D0    C0D0           295         PUSH PSW 
+00D2    D2D4           296         SETB RS1
+00D4    C2D3           297         CLR RS0
+00D6    7900           298     MOV R1 , # 000H 
+00D8    7A00           299     MOV R2 , # 000H 
+                       300         ; 0-83 x 0-5
+                       301         
+00DA    7B06           302         MOV R3, #006H
+                       303         LCD_CLEAR_INTERNAL_LOOP_LINE: 
+00DC    7A54           304             MOV R2, #054H
+                       305             LCD_CLEAR_INTERNAL_LOOP_COLUMN: 
+00DE    7800           306     MOV R0 , # 000H 
+00E0    120000   F     307                 LCALL LCD_SEND_DATA
+00E3    DAF9           308                 DJNZ R2, LCD_CLEAR_INTERNAL_LOOP_COLUMN
+00E5    DBF5           309                 DJNZ R3, LCD_CLEAR_INTERNAL_LOOP_LINE
+00E7    D0D0           310         POP PSW
+00E9    D0E0           311         POP ACC
+00EB    22             312         RET
+                       313     
+------                 314     CODE
+                       315     BIG_DELAY: 
+00EC    7D0A           316             MOV R5, #10D
+                       317         INIT_DELAY_3: 
+00EE    7EFF           318             MOV R6, #255D
+                       319         INIT_DELAY_2: 
+00F0    7FFF           320             MOV R7, #255D
+                       321         INIT_DELAY:     
+00F2    DFFE           322             DJNZ R7, INIT_DELAY
+00F4    DEFA           323             DJNZ R6, INIT_DELAY_2
+00F6    DDF6           324             DJNZ R5, INIT_DELAY_3
+00F8    22             325         RET
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE     5
+                     
+                       326     
+                       327     ;Posi��o da pe�a na tela (Canto superior esquerdo da mesma).
+  0023                 328     FMG_PIECE_X SET 023H
+  0024                 329     FMG_PIECE_Y SET 024H ;Y(0) implica em -4 na tela, s� a partir de Y(4) que com certeza a pe�a estar� na tela
+                       330     ;Representar as pe�as por 3 bytes, onde os 2 primeiros s�o o endere�o da pe�a na mem�ria, e o terceiro
+                       331     ;seria o valor atual da pe�a em fun��o da rota��o.
+                       332     
+                       333     ;Informa��es com rela��o a pe�a que est� na espera.
+  0025                 334     FMG_PIECE_ID_H SET 025H ;Ender�os da pe�a
+  0026                 335     FMG_PIECE_ID_L SET 026H
+  0027                 336     FMG_PIECE_ID_R SET 027H; Cada pe�a na mem�ria possui na posi��o 0 a quantidade de rota��es que a mesma possui
+  0028                 337     FMG_PIECE_ID_0 SET 028H
+  0029                 338     FMG_PIECE_ID_1 SET 029H
+                       339     
+                       340     ;Informa��es com rela��o a pe�a que est� em uso.
+  002A                 341     FMG_PIECE_H SET 02AH
+  002B                 342     FMG_PIECE_L SET 02BH
+  002C                 343     FMG_PIECE_R SET 02CH
+  002D                 344     FMG_PIECE_0 SET 02DH
+  002E                 345     FMG_PIECE_1 SET 02EH
+                       346     
+  002F                 347     FMG_STATE SET 02FH ;Estado corrente do jogo
+                       348         ;0 - Jogo em andamento
+                       349         ;1 - Colis�o (Ocorreu uma colis�o, remover linhas, verificar se o jogo continua, sortear nova pe�a e continuar o jogo).
+                       350         ;2 - Fim do jogo
+  0030                 351     FMG_CONTROL SET 030H ; Estado de controles do jogo, deve ser utilizado para os bot�es
+  0031                 352     FMG_CONTROL_OLD SET 031H ;Estado anterior, utilizado para n�o ter repeti��o de comandos
+                       353         ;0  - Nada a fazer
+                       354         ;1  - Mover para esquerda
+                       355         ;2  - Mover para direita
+                       356         ;3  - Rotacionar
+                       357         ;4  - Cair
+                       358     
+  0032                 359     FMG_TIME_TO_FALL_0 SET 032H ;Tempo at� a pr�xima queda, menos significativo
+  0033                 360     FMG_TIME_TO_FALL SET 033H ;Tempo que o fmg_time_to_fall_0 deve atingir para ocorrer a queda
+                       361     
+  0034                 362     FMG_SCORE_0 SET 034H ;Pontua��o inferior
+  0035                 363     FMG_SCORE_1 SET 035H ;Pontua��o superior
+                       364     
+                       365     ;Posi��o de mem�ria base para a grade
+  0040                 366     FMG_GRID SET 040H
+                       367     
+------                 368     CODE
+                       369         ;Fonte num�rica 3x5
+00F9    1F111F09       370         FMG_NUMBERS_FONT:  DB 01FH, 011H, 01FH, 009H, 01FH, 001H, 009H, 013H, 01DH, 011H, 015H, 00AH, 01CH, 004H, 01FH, 01CH, 015H, 012H, 01FH, 015H, 017H, 010H, 017H, 018H, 01FH, 015H, 01FH, 01CH, 014H, 01FH
+00FD    1F010913
+0101    1D11150A
+0105    1C041F1C
+0109    15121F15
+010D    17101718
+0111    1F151F1C
+0115    141F
+                       371     
+                       372         ;Cada pe�a � definida por um par de bytes onde os bits mais significativos representam 
+                       373         ;a coluna impares(3 e 1), e os menos significativos representam as colunas pares (2 e 0)
+                       374         ;As pe�as s�o centralziadas, quando n�o for poss�vel ser�o alinhadas a esquerda e abaixo.
+                       375         ;Ordem das pe�as:
+                       376         ;  I, O, S, Z, L, J, T
+                       377         ;  I:  1  2
+                       378         ;  O:  3
+                       379         ;  S:  4  5
+                       380         ;  Z:  6  7
+                       381         ;  L:  8  9 10 11
+                       382         ;  J: 12 13 14 15
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE     6
+                     
+                       383         ;  T: 16 17 18 19
+------                 384         CODE
+0117    020F0022       385         FMG_PIECES_I:  DB 002H, 00FH, 000H, 022H, 022H
+011B    22
+------                 386         CODE
+011C    010660         387         FMG_PIECES_O:  DB 001H, 006H, 060H
+------                 388         CODE
+011F    02264006       389         FMG_PIECES_S:  DB 002H, 026H, 040H, 006H, 030H
+0123    30
+------                 390         CODE
+0124    02462003       391         FMG_PIECES_Z:  DB 002H, 046H, 020H, 003H, 060H
+0128    60
+------                 392         CODE
+0129    040E2006       393         FMG_PIECES_L:  DB 004H, 00EH, 020H, 006H, 044H, 008H, 0E0H, 022H, 060H
+012D    4408E022
+0131    60
+------                 394         CODE
+0132    0402E062       395         FMG_PIECES_J:  DB 004H, 002H, 0E0H, 062H, 020H, 00EH, 080H, 044H, 060H
+0136    200E8044
+013A    60
+------                 396         CODE
+013B    04262007       397         FMG_PIECES_T:  DB 004H, 026H, 020H, 007H, 020H, 023H, 020H, 002H, 070H
+013F    20232002
+0143    70
+                       398     
+                       399     ; A grade ser� todo o espa�o localizado na posi��o de mem�ria definido entre X e Y (25 posi��es), 
+                       400     ; representado da seguinte maneira: 
+                       401     ; X00L X00H X01L X01H X02L X02H X03L X03H X04L X04H
+                       402     ; X05H X06H X07H X08H X09H X10H X11H X12H X13H X14H
+                       403     ; X05L X06L X07L X08L X09L X10L X11L X12L X13L X14L
+                       404     ; X15H X16H X17H X18H X19H X20H X21H X22H X23H X24H
+                       405     ; X15L X16L X17L X18L X19L X20L X21L X22L X23L X24L
+                       406     ; XNNH significa os 4 bits mais significativos do byte NN no vetor X (posi��o de mem�ria base).
+                       407     ; XNNL significa os 4 bits menos significativos do byte NN no vetor X (posi��o de mem�ria base).
+                       408     
+------                 409     CODE
+                       410     FMG_TETRIS_MAIN: 
+                       411         ;Configura��o do timer_0
+0144    740F           412         MOV A, #00FH
+0146    F533           413     MOV 51 , A 
+                       414         
+0148    C2AF           415         CLR EA ;Desabilita interrup��o at� configurar o(s) timer(s)
+014A    C28C           416         CLR TR0 ; Para o timer 0
+                       417     
+014C    758901         418         MOV TMOD, #001H
+                       419         
+014F    74DC           420         MOV A, #0DCH
+0151    F58A           421         MOV TL0, A
+                       422         
+0153    7411           423         MOV A, #011H
+0155    F58C           424         MOV TH0, A
+                       425         
+0157    D2A9           426         SETB ET0 ;Ativa a interrup��o do timer 0
+0159    D28C           427         SETB TR0 ;Ativa o timer 0
+015B    D2AF           428         SETB EA ;Ativa interrup��o
+                       429         
+015D    120000   F     430         LCALL LCD_CLEAR
+                       431         
+                       432         ;Inicialia��o de um novo jogo!    
+0160    120000   F     433         LCALL FMG_CLEAR_MEMORY ;Limpar mem�ria
+0163    120000   F     434         LCALL FMG_DRAW_BORDER  ;Desenhar borda do tabuleiro
+0166    120000   F     435         LCALL FMG_DRAW_SCREEN  ;Desenhar estado do tabuleiro
+                       436         
+                       437         ;Selecionar pr�xima pe�a
+0169    120000   F     438         LCALL FMG_SELECT_NEW_PIECE  ; Selecionar nova pe�a
+016C    120000   F     439         LCALL FMG_FROM_WAIT_TO_GAME ; Coloca a pe�a da espera no jogo.
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE     7
+                     
+016F    120000   F     440         LCALL FMG_SELECT_NEW_PIECE  ; Seleciona a pe�a que ficar� na espera
+                       441         
+                       442         ;Move a pe�a para a posi��o central no topo
+0172    752307         443     MOV 35 , # 007H 
+0175    75240A         444     MOV 36 , # 00AH 
+                       445         
+0178    120000   F     446         LCALL FMG_DRAW_NEXT_PIECE ; Desenha a pe�a que est� na espera
+                       447     
+                       448         ;Loop de um jogo corrente.
+                       449         ;LCALL FMG_UPDATE_STATE ; Atualiza o estado atual do jogo
+                       450         ;LCALL FMG_DRAW_SCREEN ; Desenha o jogo atual
+                       451         FMG_WAIT_ETERNAL: 
+017B    120000   F     452             LCALL FMG_DRAW_NEXT_PIECE ; Desenha a pe�a que est� na espera
+017E    120000   F     453             LCALL FMG_UPDATE_STATE ;Movimenta a pe�a atual.
+0181    120000   F     454             LCALL FMG_VALIDATE_COLLISION ; Valida se ocorreu uma colis�o
+                       455             
+0184    AC23           456     MOV R4 , 35 
+0186    AD24           457     MOV R5 , 36 
+0188    120000   F     458             LCALL FMG_GET_REGION
+018B    AA2D           459     MOV R2 , 45 
+018D    AB2E           460     MOV R3 , 46 
+018F    EA             461             MOV A, R2
+0190    6E             462             XRL A, R6
+0191    FE             463             MOV R6, A
+                       464             
+0192    EB             465             MOV A, R3
+0193    6F             466             XRL A, R7
+0194    FF             467             MOV R7, A
+0195    AC23           468     MOV R4 , 35 
+0197    AD24           469     MOV R5 , 36 
+0199    120000   F     470             LCALL FMG_SET_REGION
+                       471             
+019C    120000   F     472             LCALL FMG_DRAW_SCREEN
+                       473             
+019F    AC23           474     MOV R4 , 35 
+01A1    AD24           475     MOV R5 , 36 
+01A3    120000   F     476             LCALL FMG_GET_REGION
+01A6    AA2D           477     MOV R2 , 45 
+01A8    AB2E           478     MOV R3 , 46 
+01AA    EE             479             MOV A, R6
+01AB    9A             480             SUBB A, R2
+01AC    FE             481             MOV R6, A
+                       482             
+01AD    EF             483             MOV A, R7
+01AE    9B             484             SUBB A, R3
+01AF    FF             485             MOV R7, A
+01B0    AC23           486     MOV R4 , 35 
+01B2    AD24           487     MOV R5 , 36 
+01B4    120000   F     488             LCALL FMG_SET_REGION
+                       489             
+01B7    020000   F     490         LJMP FMG_WAIT_ETERNAL
+01BA    22             491         RET
+------                 492     CODE 
+                       493         FMG_UPDATE_STATE: 
+                       494         ;Verificar no controle se tem alguma tecla prescionada
+                       495         ;Caso tenha, fazer a rotina correspondente
+01BB    E530           496     MOV A , 48 
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE     8
+                     
+01BD    8531F0         497     MOV B , 49 
+                       498         ; Se controle for cair(normal), ent�o caia :D
+01C0    F8             499         MOV R0, A; Guarda o controle em R0
+01C1    A9F0           500         MOV R1, B; Guarda o controle antigo em R1
+                       501         
+01C3    99             502         SUBB A, R1 ; Se for 0 ent�o n�o ocorreu altera��o de controle
+01C4    600D           503         JZ FMG_UPDATE_STATE_END_WORKAROUND
+                       504         ;Atualiza o controle antigo para ser o valor atualmente em controle.
+01C6    E530           505     MOV A , 48 
+01C8    F531           506     MOV 49 , A 
+01CA    E8             507         MOV A, R0 ;Caso contr�rio restaura fmg_control
+                       508         
+01CB    75F003         509         MOV B, #003H
+01CE    A4             510         MUL AB
+                       511         
+01CF    900000   F     512         MOV DPTR, #FMG_UPDATE_STATE_SWITCH_CONTROL
+01D2    73             513         JMP @A+DPTR
+                       514         
+                       515         FMG_UPDATE_STATE_END_WORKAROUND: 
+01D3    020000   F     516             LJMP FMG_UPDATE_STATE_END
+                       517             
+                       518         FMG_UPDATE_STATE_SWITCH_CONTROL: 
+01D6    020000   F     519             JMP FMG_UPDATE_STATE_SWITCH_STATE_NOTHING
+01D9    020000   F     520             JMP FMG_UPDATE_STATE_SWITCH_STATE_LEFT
+01DC    020000   F     521             JMP FMG_UPDATE_STATE_SWITCH_STATE_RIGHT
+01DF    020000   F     522             JMP FMG_UPDATE_STATE_SWITCH_STATE_ROTATE
+01E2    020000   F     523             JMP FMG_UPDATE_STATE_SWITCH_STATE_FALL
+                       524         FMG_UPDATE_STATE_SWITCH_STATE_LEFT: 
+                       525             ;Carrega a posi��o X e Y para R4 e R5
+01E5    E523           526     MOV A , 35 
+01E7    9401           527     SUBB A, #001H
+01E9    FC             528     MOV R4, A
+01EA    E524           529     MOV A , 36 
+01EC    FD             530     MOV R5, A
+                       531     
+                       532     ;Carrega a rota��o para R1
+01ED    E52C           533     MOV A , 44 
+01EF    F9             534     MOV R1, A
+                       535     
+                       536     FMG_UPDATE_STATE_LEFT: 
+01F0    120000   F     537         LCALL FMG_UPDATE_STATE_CHECK_COLLISION
+01F3    4002           538         JC FMG_UPDATE_STATE_LEFT_VALID; Posi��o v�lida
+01F5    5006           539         JNC FMG_UPDATE_STATE_LEFT_NOT_VALID; Posi��o inv�lida
+                       540     FMG_UPDATE_STATE_LEFT_VALID: 
+                       541         ;Rota��o v�lida
+01F7    E523           542     MOV A , 35 
+01F9    9401           543         SUBB A, #001H
+01FB    F523           544     MOV 35 , A 
+                       545     FMG_UPDATE_STATE_LEFT_NOT_VALID: 
+01FD    020000   F     546         LJMP FMG_UPDATE_STATE_END
+                       547         FMG_UPDATE_STATE_SWITCH_STATE_RIGHT: 
+                       548             ;Carrega a posi��o X e Y para R4 e R5
+0200    E523           549     MOV A , 35 
+0202    2401           550     ADD A, #001H
+0204    FC             551     MOV R4, A
+0205    E524           552     MOV A , 36 
+0207    FD             553     MOV R5, A
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE     9
+                     
+                       554     
+                       555     ;Carrega a rota��o para R1
+0208    E52C           556     MOV A , 44 
+020A    F9             557     MOV R1, A
+                       558     
+                       559     FMG_UPDATE_STATE_RIGHT: 
+020B    120000   F     560         LCALL FMG_UPDATE_STATE_CHECK_COLLISION
+020E    4002           561         JC FMG_UPDATE_STATE_RIGHT_VALID; Posi��o v�lida
+0210    5006           562         JNC FMG_UPDATE_STATE_RIGHT_NOT_VALID; Posi��o inv�lida
+                       563     FMG_UPDATE_STATE_RIGHT_VALID: 
+                       564         ;Rota��o v�lida
+0212    E523           565     MOV A , 35 
+0214    2401           566         ADD A, #001H
+0216    F523           567     MOV 35 , A 
+                       568     FMG_UPDATE_STATE_RIGHT_NOT_VALID: 
+0218    020000   F     569         LJMP FMG_UPDATE_STATE_END
+                       570         FMG_UPDATE_STATE_SWITCH_STATE_ROTATE: 
+                       571             ; Rotaciona a pe�a para a esquerda e testa se a rota��o � poss�vel, em caso afirmativo, rotaciona a mesma.
+                       572     ; Rotacionar a pe�a para esquerda:
+                       573     ; Subtrair 1 do contador de posi��o atual em R1 (se maior que zero, sen�o colocar para o valor m�ixmo)
+                       574     ; Carregar a nova pe�a nos registradores R2 e R3
+                       575     ; fmg_piece_H,L,R,0,1
+                       576     ;Rotacionando
+021B    E523           577     MOV A , 35 
+021D    FC             578     MOV R4, A
+021E    E524           579     MOV A , 36 
+0220    FD             580     MOV R5, A
+0221    E52C           581     MOV A , 44 
+0223    700F           582     JNZ FMG_UPDATE_STATE_LEFT_NOT_ZERO 
+                       583         ; IF(A == 0) Rotacionar para o m�ximo (A - 1 por ser 0 based)
+                       584         ; ELSE R1 = A - 1
+                       585     ;Atualiza��o para o caso de ser zero
+0225    852A83         586     MOV DPH , 42 
+0228    852B82         587     MOV DPL , 43 
+022B    7400           588     MOV A, #000H
+022D    93             589     MOVC A, @A+DPTR
+022E    9401           590     SUBB A, #001H; Zero based
+0230    F9             591     MOV R1, A
+0231    020000   F     592     JMP FMG_UPDATE_STATE_ROTATION_LEFT
+                       593     FMG_UPDATE_STATE_LEFT_NOT_ZERO:  ; Atualiza para o caso de n�o ser zero
+0234    9501           594     SUBB A, 1
+0236    F9             595     MOV R1, A
+                       596     
+                       597     FMG_UPDATE_STATE_ROTATION_LEFT: 
+0237    120000   F     598         LCALL FMG_UPDATE_STATE_CHECK_COLLISION
+023A    4002           599         JC FMG_UPDATE_STATE_ROTATION_LEFT_VALID; Posi��o v�lida
+023C    501B           600         JNC FMG_UPDATE_STATE_ROTATION_LEFT_NOT_VALID; Posi��o inv�lida
+                       601     FMG_UPDATE_STATE_ROTATION_LEFT_VALID: 
+                       602         ;Rota��o v�lida
+023E    E9             603         MOV A, R1
+023F    F52C           604     MOV 44 , A 
+0241    852A83         605     MOV DPH , 42 
+0244    852B82         606     MOV DPL , 43 
+                       607         
+0247    E52C           608     MOV A , 44 
+0249    75F002         609         MOV B, #002H
+024C    A4             610         MUL AB
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    10
+                     
+024D    2401           611         ADD A, #001H
+024F    F9             612         MOV R1, A
+                       613         ;Coloca em id 0 e 1 qual a pe�a selecionada
+0250    93             614         MOVC A, @A+DPTR ;Representa��o da pe�a (primeiros bytes)
+0251    F528           615     MOV 40 , A 
+0253    E9             616         MOV A, R1
+0254    2401           617         ADD A, #001H ;Representa��o da pe�a (segundos bytes)
+0256    93             618         MOVC A, @A+DPTR
+0257    F529           619     MOV 41 , A 
+                       620         
+                       621     FMG_UPDATE_STATE_ROTATION_LEFT_NOT_VALID: 
+0259    020000   F     622         LJMP FMG_UPDATE_STATE_END
+                       623         
+                       624     ;;;;;;;;;;;;;;;;;;;;;;;;;;
+                       625     ;; ROTACAO PARA DIREITA ;;
+                       626     ;;;;;;;;;;;;;;;;;;;;;;;;;;
+                       627     
+                       628     ; Rotaciona a pe�a para a direita e testa se a rota��o � poss�vel, em caso afirmativo, rotaciona a mesma.
+                       629     ; Rotacionar a pe�a para direita:
+                       630     ; Adiciona 1 do contador de posi��o atual em R1 (se menor que m�ximo, sen�o colocar para zero)
+                       631     ; Carregar a nova pe�a nos registradores R2 e R3
+                       632     ; fmg_piece_H,L,R,0,1
+                       633     
+                       634     ;Rotacionando
+                       635     ;MOV A, fmg_piece_x
+                       636     ;MOV R4, A
+                       637     ;MOV A, fmg_piece_y
+                       638     ;MOV R5, A
+                       639     ;MOV DPH, fmg_piece_H
+                       640     ;MOV DPL, fmg_piece_L
+                       641     ;MOV A, #000h
+                       642     ;MOVC A, @A+DPTR;  ;Rota��o m�xima
+                       643     ;MOV R0, A ; Rota��o m�xima est� em R0
+                       644     ;MOV A, fmg_piece_R ; Carrega a rota��o atual para A
+                       645     ;ADD A, #001h ;Rotaciona A
+                       646     ;
+                       647     ;MOV B, A
+                       648     ;SUBB A, R0 ; Verifica se R0 � igual a A
+                       649     ;JNZ FMG_UPDATE_STATE_RIGHT_NOT_MAX ;Se A == B, ent�o resete A, sen�o continue
+                       650     ;    ;IF (A == B) R1 = 0 
+                       651     ;    ;ELSE R1 = A
+                       652     ;    MOV R1, #000h ; Coloca 0 em R1.
+                       653     ;    JMP FMG_UPDATE_STATE_ROTATION_RIGHT
+                       654     ;
+                       655     ;    FMG_UPDATE_STATE_RIGHT_NOT_MAX:
+                       656     ;    MOV A, B
+                       657     ;    MOV R1, A; Coloca a nova rota��o em R1.
+                       658     ;
+                       659     ;FMG_UPDATE_STATE_ROTATION_RIGHT:
+                       660     ;    LCALL FMG_UPDATE_STATE_CHECK_COLLISION
+                       661     ;    JC FMG_UPDATE_STATE_ROTATION_RIGHT_VALID; Posi��o v�lida
+                       662     ;    JNC FMG_UPDATE_STATE_ROTATION_RIGHT_NOT_VALID; Posi��o inv�lida
+                       663     ;FMG_UPDATE_STATE_ROTATION_RIGHT_VALID:
+                       664     ;    ;Rota��o v�lida
+                       665     ;    MOV A, R1
+                       666     ;    MOV fmg_piece_R, A; Atualiza a rota��o
+                       667     ;FMG_UPDATE_STATE_ROTATION_RIGHT_NOT_VALID:
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    11
+                     
+                       668     ;    LJMP FMG_UPDATE_STATE_END
+                       669         FMG_UPDATE_STATE_SWITCH_STATE_FALL: 
+                       670             ;Carrega a posi��o X e Y para R4 e R5
+025C    E523           671     MOV A , 35 
+025E    FC             672     MOV R4, A
+025F    E524           673     MOV A , 36 
+0261    2401           674     ADD A, #001H ;Cair!!!
+0263    FD             675     MOV R5, A
+                       676     
+                       677     ;Carrega a rota��o para R1
+0264    E52C           678     MOV A , 44 
+0266    F9             679     MOV R1, A
+                       680     
+                       681     FMG_UPDATE_STATE_FALL: 
+0267    120000   F     682         LCALL FMG_UPDATE_STATE_CHECK_COLLISION
+026A    4002           683         JC FMG_UPDATE_STATE_FALL_VALID; Posi��o v�lida
+026C    5009           684         JNC FMG_UPDATE_STATE_FALL_NOT_VALID; Posi��o inv�lida
+                       685     FMG_UPDATE_STATE_FALL_VALID: 
+                       686         ;Queda v�lida
+026E    E524           687     MOV A , 36 
+0270    2401           688         ADD A, #001H ;Cair!!!
+0272    F524           689     MOV 36 , A 
+0274    020000   F     690         LJMP FMG_UPDATE_STATE_END
+                       691     FMG_UPDATE_STATE_FALL_NOT_VALID: 
+0277    752F01         692     MOV 47 , # 001H 
+027A    020000   F     693         LJMP FMG_UPDATE_STATE_END
+                       694         FMG_UPDATE_STATE_SWITCH_STATE_NOTHING:  ; N�o faz nada
+                       695         FMG_UPDATE_STATE_END:  ;Fim do fluxo de atualiza��o de estado
+027D    22             696         RET
+------                 697     CODE
+                       698         ;GETa os valores de uma determinada regi�o da mem�ria
+                       699         ; R4 contem a posi��o x,
+                       700         ; R5 contem a posi��o y
+                       701         ; R6 contem a regi�o ser desenhada (esquerda)
+                       702         ; R7 contem a regi�o ser desenhada (direita)
+                       703         
+                       704         FMG_GET_REGION: 
+027E    E8             705         MOV A, R0
+027F    C0E0           706         PUSH ACC
+0281    E9             707         MOV A, R1
+0282    C0E0           708         PUSH ACC
+0284    EA             709         MOV A, R2
+0285    C0E0           710         PUSH ACC
+0287    EB             711         MOV A, R3
+0288    C0E0           712         PUSH ACC
+                       713         
+028A    ED             714         MOV A, R5
+028B    C0E0           715         PUSH ACC
+028D    7A04           716         MOV R2, #004H
+                       717         FMG_GET_REGION_LOOP_X: 
+028F    D0E0           718             POP ACC
+0291    ADE0           719             MOV R5, ACC
+0293    C0E0           720             PUSH ACC
+0295    7B04           721             MOV R3, #004H
+                       722             FMG_GET_REGION_LOOP_Y: 
+                       723                 ;C�lculo do byte
+0297    ED             724                 MOV A, R5
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    12
+                     
+0298    75F008         725                 MOV B, #008H
+029B    84             726                 DIV AB
+029C    A9F0           727                 MOV R1, B 
+029E    09             728                 INC R1; R1 contem o bit que quero modificar (+1 por causa do 0 based)
+                       729                 
+029F    75F012         730                 MOV B, #012H ; Byte = 18 * A + R4
+02A2    A4             731                 MUL AB
+02A3    2C             732                 ADD A, R4
+02A4    F8             733                 MOV R0, A 
+02A5    7440           734     MOV A , # 64 
+02A7    28             735                 ADD A, R0
+02A8    F8             736                 MOV R0, A ; R0 contem a posi��o do byte que estou querendo
+                       737                 
+                       738                 ;Definir se R6 ou R7 e ent�o chamar o FMG_FIND_BIT
+02A9    EA             739                 MOV A, R2
+02AA    14             740                 DEC A
+02AB    75F002         741                 MOV B, #002H
+02AE    84             742                 DIV AB
+                       743     
+02AF    75F003         744                 MOV B, #003H
+02B2    A4             745                 MUL AB
+02B3    900000   F     746                 MOV DPTR, #FMG_GET_REGION_SWITCH_1_R6_R7
+02B6    73             747                 JMP @A+DPTR
+                       748                 FMG_GET_REGION_SWITCH_1_R6_R7: 
+02B7    020000   F     749                     JMP FMG_GET_REGION_SWITCH_1_R7 ;Como o contador est� invertido temos o R7 em 0
+02BA    020000   F     750                     JMP FMG_GET_REGION_SWITCH_1_R6
+                       751                     FMG_GET_REGION_SWITCH_1_R6: 
+                       752                         ;Rotacionar R1 vezes o byte escolhido (RLC)
+02BD    E9             753                         MOV A, R1
+02BE    C0E0           754                         PUSH ACC
+02C0    E6             755                         MOV A, @R0
+                       756                         
+                       757                         FMG_GET_REGION_SMALL_ROTATE_R6: 
+02C1    33             758                             RLC A
+02C2    D9FD           759                             DJNZ R1, FMG_GET_REGION_SMALL_ROTATE_R6
+                       760                         
+02C4    D0E0           761                         POP ACC
+02C6    F9             762                         MOV R1, A
+02C7    EE             763                         MOV A, R6
+02C8    33             764                         RLC A
+02C9    FE             765                         MOV R6, A ; Carry contem o bit a ser introduzido no sistema
+                       766                         
+02CA    020000   F     767                         JMP FMG_GET_REGION_LOOP_END
+                       768                     FMG_GET_REGION_SWITCH_1_R7: 
+                       769                         ;Rotacionar R1 vezes o byte escolhido (RLC)
+02CD    E9             770                         MOV A, R1
+02CE    C0E0           771                         PUSH ACC
+02D0    E6             772                         MOV A, @R0
+                       773                         
+                       774                         FMG_GET_REGION_SMALL_ROTATE_R7: 
+02D1    33             775                             RLC A
+02D2    D9FD           776                             DJNZ R1, FMG_GET_REGION_SMALL_ROTATE_R7
+                       777                         
+02D4    D0E0           778                         POP ACC
+02D6    F9             779                         MOV R1, A
+02D7    EF             780                         MOV A, R7
+02D8    33             781                         RLC A
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    13
+                     
+02D9    FF             782                         MOV R7, A ; Carry contem o bit a ser introduzido no sistema
+                       783                         
+02DA    020000   F     784                         JMP FMG_GET_REGION_LOOP_END
+                       785                 FMG_GET_REGION_LOOP_END: 
+02DD    0D             786                     INC R5
+02DE    DB06           787                     DJNZ R3, FMG_GET_REGION_LOOP_Y_WORKAROUND
+02E0    0C             788                     INC R4
+02E1    DA06           789                 DJNZ R2, FMG_GET_REGION_LOOP_X_WORKAROUND
+02E3    020000   F     790                 JMP FMG_GET_REGION_END
+                       791                 FMG_GET_REGION_LOOP_Y_WORKAROUND: 
+02E6    020000   F     792                     LJMP FMG_GET_REGION_LOOP_Y
+                       793                 FMG_GET_REGION_LOOP_X_WORKAROUND: 
+02E9    020000   F     794                     LJMP FMG_GET_REGION_LOOP_X
+                       795         FMG_GET_REGION_END: 
+02EC    D0E0           796         POP ACC
+02EE    D0E0           797         POP ACC
+02F0    FB             798         MOV R3, A
+02F1    D0E0           799         POP ACC
+02F3    FA             800         MOV R2, A
+02F4    D0E0           801         POP ACC
+02F6    F9             802         MOV R1, A
+02F7    D0E0           803         POP ACC
+02F9    F8             804         MOV R0, A
+02FA    22             805         RET
+------                 806     CODE
+                       807         ;Coloca no carry o bit definido por R0, que se encontra em R1
+                       808         FMG_FIND_BIT: 
+02FB    E9             809             MOV A, R1
+                       810             FMG_FIND_BIT_LOOP: 
+02FC    13             811                 RRC A
+02FD    D8FD           812                 DJNZ R0, FMG_FIND_BIT_LOOP
+02FF    22             813         RET
+------                 814     CODE 
+                       815         FMG_DRAW_NEXT_PIECE: 
+0300    C0D0           816         PUSH PSW
+0302    D2D4           817         SETB RS1
+0304    C2D3           818         CLR RS0
+0306    7912           819     MOV R1 , # 012H 
+0308    7A00           820     MOV R2 , # 000H 
+030A    120000   F     821         LCALL LCD_XY
+030D    78C0           822     MOV R0 , # 0C0H 
+030F    120000   F     823         LCALL LCD_DRAW
+                       824         
+0312    7C0A           825         MOV R4, #00AH
+                       826         FMG_DRAW_NEXT_PIECE_TOP: 
+0314    7840           827     MOV R0 , # 040H 
+0316    120000   F     828             LCALL LCD_DRAW
+0319    DCF9           829             DJNZ R4, FMG_DRAW_NEXT_PIECE_TOP
+                       830             
+031B    78C0           831     MOV R0 , # 0C0H 
+031D    120000   F     832         LCALL LCD_DRAW
+                       833         
+0320    7B28           834     MOV R3 , # 40 
+0322    7CC0           835         MOV R4, #0C0H
+                       836         
+0324    7912           837     MOV R1 , # 012H 
+0326    7A01           838     MOV R2 , # 001H 
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    14
+                     
+0328    120000   F     839         LCALL LCD_XY
+                       840         
+032B    78FF           841     MOV R0 , # 0FFH 
+032D    120000   F     842         LCALL LCD_DRAW
+0330    7800           843     MOV R0 , # 000H 
+0332    120000   F     844         LCALL LCD_DRAW
+                       845         
+0335    7C02           846         MOV R4, #002H
+                       847         FMG_DRAW_NEXT_PIECE_INTERNAL: 
+0337    EB             848             MOV A, R3 ; Desenha a pr�xima pe�a
+0338    F9             849             MOV R1, A
+0339    87E0           850             MOV ACC, @R1
+                       851             
+033B    A2E4           852             MOV C, ACC.4
+033D    92E0           853             MOV ACC.0, C
+033F    92E1           854             MOV ACC.1, C
+0341    A2E5           855             MOV C, ACC.5
+0343    92E2           856             MOV ACC.2, C
+0345    92E3           857             MOV ACC.3, C
+0347    A2E6           858             MOV C, ACC.6
+0349    92E4           859             MOV ACC.4, C
+034B    92E5           860             MOV ACC.5, C
+034D    A2E7           861             MOV C, ACC.7
+034F    92E6           862             MOV ACC.6, C
+                       863     
+0351    A8E0           864     MOV R0 , ACC 
+0353    120000   F     865             LCALL LCD_DRAW
+0356    A8E0           866     MOV R0 , ACC 
+0358    120000   F     867             LCALL LCD_DRAW
+                       868     
+035B    EB             869             MOV A, R3; Desenha bytes inferiores
+035C    F9             870             MOV R1, A
+035D    87E0           871             MOV ACC, @R1
+                       872             
+035F    A2E3           873             MOV C, ACC.3
+0361    92E7           874             MOV ACC.7, C
+0363    92E6           875             MOV ACC.6, C
+0365    A2E2           876             MOV C, ACC.2
+0367    92E5           877             MOV ACC.5, C
+0369    92E4           878             MOV ACC.4, C
+036B    A2E1           879             MOV C, ACC.1
+036D    92E3           880             MOV ACC.3, C
+036F    92E2           881             MOV ACC.2, C
+0371    A2E0           882             MOV C, ACC.0
+0373    92E1           883             MOV ACC.1, C
+                       884     
+0375    A8E0           885     MOV R0 , ACC 
+0377    120000   F     886             LCALL LCD_DRAW
+037A    A8E0           887     MOV R0 , ACC 
+037C    120000   F     888             LCALL LCD_DRAW
+                       889             
+037F    7B29           890     MOV R3 , # 41 
+0381    DCB4           891             DJNZ R4, FMG_DRAW_NEXT_PIECE_INTERNAL
+                       892         
+0383    7800           893     MOV R0 , # 000H 
+0385    120000   F     894         LCALL LCD_DRAW
+0388    78FF           895     MOV R0 , # 0FFH 
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    15
+                     
+038A    120000   F     896         LCALL LCD_DRAW
+                       897         
+038D    7912           898     MOV R1 , # 012H 
+038F    7A02           899     MOV R2 , # 002H 
+0391    120000   F     900         LCALL LCD_XY
+0394    7803           901     MOV R0 , # 003H 
+0396    120000   F     902         LCALL LCD_DRAW
+                       903         
+0399    7C0A           904         MOV R4, #00AH
+                       905         FMG_DRAW_NEXT_PIECE_BOTTOM: 
+039B    7802           906     MOV R0 , # 002H 
+039D    120000   F     907             LCALL LCD_DRAW
+03A0    DCF9           908             DJNZ R4, FMG_DRAW_NEXT_PIECE_BOTTOM
+03A2    7803           909     MOV R0 , # 003H 
+03A4    120000   F     910         LCALL LCD_DRAW    
+03A7    D0D0           911         POP PSW
+03A9    22             912         RET
+------                 913     CODE
+                       914     FMG_FROM_WAIT_TO_GAME: 
+03AA    E525           915     MOV A , 37 
+03AC    782A           916     MOV R0 , # 42 
+03AE    F6             917         MOV @R0, A
+                       918         
+03AF    E526           919     MOV A , 38 
+03B1    782B           920     MOV R0 , # 43 
+03B3    F6             921         MOV @R0, A
+                       922         
+03B4    E527           923     MOV A , 39 
+03B6    782C           924     MOV R0 , # 44 
+03B8    F6             925         MOV @R0, A
+                       926         
+03B9    E528           927     MOV A , 40 
+03BB    782D           928     MOV R0 , # 45 
+03BD    F6             929         MOV @R0, A
+                       930         
+03BE    E529           931     MOV A , 41 
+03C0    782E           932     MOV R0 , # 46 
+03C2    F6             933         MOV @R0, A
+03C3    22             934         RET
+------                 935     CODE
+                       936     FMG_SELECT_NEW_PIECE: 
+03C4    120000   F     937         LCALL RAND8
+03C7    75F007         938         MOV B, #007H
+03CA    84             939         DIV AB; Capturando apenas as 8 possiveis pe�as (temos 7 pe�as portanto um dos valores sera desconsiderado)
+03CB    E5F0           940         MOV A, B
+03CD    75F003         941         MOV B, #003H
+03D0    A4             942         MUL AB
+03D1    900000   F     943         MOV DPTR, #FMG_SELECT_PIECE_SWITCH
+03D4    73             944         JMP @A+DPTR
+                       945         FMG_SELECT_PIECE_SWITCH: 
+03D5    020000   F     946             JMP FMG_SELECT_PIECE_I
+03D8    020000   F     947             JMP FMG_SELECT_PIECE_O
+03DB    020000   F     948             JMP FMG_SELECT_PIECE_S
+03DE    020000   F     949             JMP FMG_SELECT_PIECE_Z
+03E1    020000   F     950             JMP FMG_SELECT_PIECE_L
+03E4    020000   F     951             JMP FMG_SELECT_PIECE_J
+03E7    020000   F     952             JMP FMG_SELECT_PIECE_T
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    16
+                     
+                       953         FMG_SELECT_PIECE_O: 
+03EA    900000   F     954             MOV DPTR, #FMG_PIECES_O
+03ED    801E           955             SJMP FMG_SELECT_NEW_PIECE_END
+                       956         FMG_SELECT_PIECE_S: 
+03EF    900000   F     957             MOV DPTR, #FMG_PIECES_S
+03F2    8019           958             SJMP FMG_SELECT_NEW_PIECE_END
+                       959         FMG_SELECT_PIECE_Z: 
+03F4    900000   F     960             MOV DPTR, #FMG_PIECES_Z
+03F7    8014           961             SJMP FMG_SELECT_NEW_PIECE_END
+                       962         FMG_SELECT_PIECE_L: 
+03F9    900000   F     963             MOV DPTR, #FMG_PIECES_L
+03FC    800F           964             SJMP FMG_SELECT_NEW_PIECE_END
+                       965         FMG_SELECT_PIECE_J: 
+03FE    900000   F     966             MOV DPTR, #FMG_PIECES_J
+0401    800A           967             SJMP FMG_SELECT_NEW_PIECE_END
+                       968         FMG_SELECT_PIECE_T: 
+0403    900000   F     969             MOV DPTR, #FMG_PIECES_T
+0406    8005           970             SJMP FMG_SELECT_NEW_PIECE_END
+                       971         FMG_SELECT_PIECE_I: 
+                       972             ;Escolhe qual vai ser a pe�a
+0408    900000   F     973             MOV DPTR, #FMG_PIECES_I
+040B    8000           974             SJMP FMG_SELECT_NEW_PIECE_END
+                       975         ;Parte final da rotina, com a pe�a correta selecionada, devemos escolher qual a rota��o inidial da mesma e
+                       976         ;popular as vari�veis de ambiente com ela.
+                       977         FMG_SELECT_NEW_PIECE_END: 
+                       978             ;Salva a pe�a escolhida na mem�ria
+040D    858325         979     MOV 37 , DPH 
+0410    858226         980     MOV 38 , DPL 
+0413    7400           981             MOV A, #000H
+0415    93             982             MOVC A, @A+DPTR ; Quantidade de rota��es da pe�a
+0416    F5F0           983             MOV B, A ; Coloca em B a quantidade de rota��es da pe�a
+0418    120000   F     984             LCALL RAND8
+041B    84             985             DIV AB
+041C    E5F0           986             MOV A, B ;Escolhendo a rota��o
+041E    F527           987     MOV 39 , A 
+0420    75F002         988             MOV B, #002H
+0423    A4             989             MUL AB ; Multiplico por 2 para ir para a pe�a correta
+0424    2401           990             ADD A, #001H ;Soma 1 j� que o primeiro valor contem a quantidade de rota��es da pe�a
+0426    F9             991             MOV R1, A
+                       992             ;Coloca em id 0 e 1 qual a pe�a selecionada
+0427    93             993             MOVC A, @A+DPTR ;Representa��o da pe�a (primeiros bytes)
+0428    F528           994     MOV 40 , A 
+042A    E9             995             MOV A, R1
+042B    2401           996             ADD A, #001H ;Representa��o da pe�a (segundos bytes)
+042D    93             997             MOVC A, @A+DPTR
+042E    F529           998     MOV 41 , A 
+0430    22             999         RET
+------                1000     CODE
+                      1001     FMG_CLEAR_MEMORY: 
+0431    794C          1002         MOV R1, #04CH
+0433    7840          1003     MOV R0 , # 64 
+                      1004         
+0435    7B03          1005         MOV R3, #003H
+                      1006         
+                      1007         FMG_CLEAR_MEMORY_MAIN_LOOP: 
+0437    7A04          1008             MOV R2, #004H
+                      1009             FMG_CLEAR_MEMORY_LOOP_BORDER_LEFT: 
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    17
+                     
+0439    76FF          1010                 MOV @R0, #0FFH
+043B    08            1011                 INC R0
+043C    DAFB          1012                 DJNZ R2, FMG_CLEAR_MEMORY_LOOP_BORDER_LEFT
+043E    790A          1013             MOV R1, #00AH
+                      1014             FMG_CLEAR_MEMORY_LOOP_MIDDLE: 
+0440    7600          1015                 MOV @R0, #000H
+0442    08            1016                 INC R0
+0443    D9FB          1017                 DJNZ R1, FMG_CLEAR_MEMORY_LOOP_MIDDLE
+0445    7A04          1018             MOV R2, #004H
+                      1019             FMG_CLEAR_MEMORY_LOOP_BORDER_RIGHT: 
+0447    76FF          1020                 MOV @R0, #0FFH
+0449    08            1021                 INC R0
+044A    DAFB          1022                 DJNZ R2, FMG_CLEAR_MEMORY_LOOP_BORDER_RIGHT
+044C    DBE9          1023             DJNZ R3, FMG_CLEAR_MEMORY_MAIN_LOOP
+044E    7A12          1024         MOV R2, #012H
+                      1025         FMG_CLEAR_MEMORY_LOOP_BORDER_FLOOR: 
+0450    76FF          1026             MOV @R0, #0FFH
+0452    08            1027             INC R0
+0453    DAFB          1028             DJNZ R2, FMG_CLEAR_MEMORY_LOOP_BORDER_FLOOR
+0455    22            1029         RET
+                      1030     ;Desenha o grade na tela
+------                1031     CODE
+                      1032     FMG_DRAW_SCREEN: 
+                      1033         ;Desenhar na tela significa pegar os bytes definidos no grade e passar para a tela.
+                      1034         ;lembrando que ser� usado um fator de 2x.
+0456    C0D0          1035         PUSH PSW
+0458    D2D4          1036         SETB RS1
+045A    C2D3          1037         CLR RS0
+045C    7921          1038     MOV R1 , # 021H 
+045E    7A00          1039     MOV R2 , # 000H 
+0460    120000   F    1040         LCALL LCD_XY
+0463    7D21          1041         MOV R5, #021H
+0465    7C0A          1042         MOV R4, #00AH
+0467    7B40          1043     MOV R3 , # 64 
+0469    0B            1044         INC R3
+046A    0B            1045         INC R3
+046B    0B            1046         INC R3
+046C    0B            1047         INC R3 ; Grid + 4
+                      1048         FMG_LOOP_LINHA_SUPERIOR: 
+046D    EB            1049             MOV A, R3; Move o conte�do de R1 para o acumulador
+046E    F9            1050             MOV R1, A
+046F    87E0          1051             MOV ACC, @R1
+                      1052             
+0471    A2E0          1053             MOV C, ACC.0
+0473    92E7          1054             MOV ACC.7, C
+0475    92E6          1055             MOV ACC.6, C
+0477    A2E1          1056             MOV C, ACC.1
+0479    92E5          1057             MOV ACC.5, C
+047B    92E4          1058             MOV ACC.4, C
+047D    A2E3          1059             MOV C, ACC.3
+047F    92E1          1060             MOV ACC.1, C
+0481    92E0          1061             MOV ACC.0, C
+0483    A2E2          1062             MOV C, ACC.2
+0485    92E2          1063             MOV ACC.2, C
+0487    92E3          1064             MOV ACC.3, C
+                      1065     
+0489    A8E0          1066     MOV R0 , ACC 
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    18
+                     
+048B    120000   F    1067             LCALL LCD_DRAW
+048E    A8E0          1068     MOV R0 , ACC 
+0490    120000   F    1069             LCALL LCD_DRAW
+                      1070             
+0493    0B            1071             INC R3
+0494    0D            1072             INC R5
+0495    DCD6          1073             DJNZ R4, FMG_LOOP_LINHA_SUPERIOR
+0497    7921          1074     MOV R1 , # 021H 
+0499    7A01          1075     MOV R2 , # 001H 
+049B    120000   F    1076         LCALL LCD_XY
+049E    7E02          1077         MOV R6, #002H
+                      1078         FMG_LOOP_LINHA_3: 
+04A0    EB            1079         MOV A, R3
+04A1    2408          1080         ADD A, #008H
+04A3    FB            1081         MOV R3, A ;Deslocamento das paredes
+04A4    7C0A          1082         MOV R4, #00AH
+04A6    7D21          1083         MOV R5, #021H
+                      1084         FMG_LOOP_LINHA_2: 
+04A8    ED            1085             MOV A, R5
+04A9    F9            1086     MOV R1 , A 
+                      1087             ;MOV lcd_Y, A
+04AA    120000   F    1088             LCALL LCD_XY
+                      1089     
+04AD    EB            1090             MOV A, R3; Move o conte�do de R1 para o acumulador
+04AE    F9            1091             MOV R1, A
+04AF    87E0          1092             MOV ACC, @R1
+                      1093             
+04B1    A2E7          1094             MOV C, ACC.7
+04B3    92E0          1095             MOV ACC.0, C
+04B5    92E1          1096             MOV ACC.1, C
+04B7    A2E6          1097             MOV C, ACC.6
+04B9    92E2          1098             MOV ACC.2, C
+04BB    92E3          1099             MOV ACC.3, C
+04BD    A2E4          1100             MOV C, ACC.4
+04BF    92E6          1101             MOV ACC.6, C
+04C1    92E7          1102             MOV ACC.7, C
+04C3    A2E5          1103             MOV C, ACC.5
+04C5    92E5          1104             MOV ACC.5, C
+04C7    92E4          1105             MOV ACC.4, C
+                      1106             
+04C9    A8E0          1107     MOV R0 , ACC 
+04CB    120000   F    1108             LCALL LCD_DRAW
+                      1109     
+04CE    A8E0          1110     MOV R0 , ACC 
+04D0    120000   F    1111             LCALL LCD_DRAW
+                      1112             
+04D3    ED            1113             MOV A, R5
+04D4    F9            1114     MOV R1 , A 
+                      1115             
+04D5    EA            1116     MOV A , R2 
+04D6    2401          1117             ADD A, #001H
+04D8    FA            1118     MOV R2 , A 
+04D9    120000   F    1119             LCALL LCD_XY
+                      1120             
+04DC    EB            1121             MOV A, R3; Move o conte�do de R1 para o acumulador
+04DD    F9            1122             MOV R1, A
+04DE    87E0          1123             MOV ACC, @R1
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    19
+                     
+                      1124             
+04E0    A2E0          1125             MOV C, ACC.0
+04E2    92E7          1126             MOV ACC.7, C
+04E4    92E6          1127             MOV ACC.6, C
+04E6    A2E1          1128             MOV C, ACC.1
+04E8    92E5          1129             MOV ACC.5, C
+04EA    92E4          1130             MOV ACC.4, C
+04EC    A2E3          1131             MOV C, ACC.3
+04EE    92E1          1132             MOV ACC.1, C
+04F0    92E0          1133             MOV ACC.0, C
+04F2    A2E2          1134             MOV C, ACC.2
+04F4    92E2          1135             MOV ACC.2, C
+04F6    92E3          1136             MOV ACC.3, C
+                      1137     
+04F8    A8E0          1138     MOV R0 , ACC 
+04FA    120000   F    1139             LCALL LCD_DRAW
+04FD    A8E0          1140     MOV R0 , ACC 
+04FF    120000   F    1141             LCALL LCD_DRAW
+                      1142             
+0502    EB            1143             MOV A, R3
+0503    2401          1144             ADD A, #001H
+0505    FB            1145             MOV R3, A
+                      1146             
+0506    ED            1147             MOV A, R5
+0507    2402          1148             ADD A, #002H
+0509    FD            1149             MOV R5, A
+                      1150             
+050A    EA            1151     MOV A , R2 
+050B    9401          1152             SUBB A, #001H
+050D    FA            1153     MOV R2 , A 
+                      1154             
+050E    DC98          1155             DJNZ R4, FMG_LOOP_LINHA_2
+0510    7A03          1156     MOV R2 , # 003H 
+0512    DE8C          1157             DJNZ R6, FMG_LOOP_LINHA_3
+0514    D0D0          1158             POP PSW
+0516    22            1159         RET
+------                1160     CODE
+                      1161     FMG_DRAW_BORDER: 
+0517    C0D0          1162         PUSH PSW
+0519    D2D4          1163         SETB RS1
+051B    C2D3          1164         CLR RS0
+                      1165         
+051D    7920          1166     MOV R1 , # 020H 
+051F    7A00          1167     MOV R2 , # 000H 
+0521    120000   F    1168         LCALL LCD_XY
+                      1169         
+0524    7B05          1170         MOV R3, #005H
+                      1171         FMG_DRAW_BORDER_LOOP_EXTERNAL: 
+0526    7C16          1172             MOV R4, #016H
+                      1173             FMG_DRAW_BORDER_LOOP: 
+0528    78FF          1174     MOV R0 , # 0FFH 
+052A    120000   F    1175                 LCALL LCD_DRAW
+052D    DCF9          1176                 DJNZ R4, FMG_DRAW_BORDER_LOOP
+052F    7920          1177     MOV R1 , # 020H 
+0531    EA            1178     MOV A , R2 
+0532    2401          1179             ADD A, #001H
+0534    FA            1180     MOV R2 , A 
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    20
+                     
+0535    120000   F    1181             LCALL LCD_XY
+0538    DBEC          1182         DJNZ R3, FMG_DRAW_BORDER_LOOP_EXTERNAL
+                      1183         
+053A    7920          1184     MOV R1 , # 020H 
+053C    7A05          1185     MOV R2 , # 005H 
+053E    120000   F    1186         LCALL LCD_XY
+                      1187         
+0541    7B16          1188         MOV R3, #016H
+                      1189         FMG_DRAW_BORDER_LOOP_BOTTOM: 
+0543    7801          1190     MOV R0 , # 001H 
+0545    120000   F    1191             LCALL LCD_DRAW
+0548    DBF9          1192             DJNZ R3, FMG_DRAW_BORDER_LOOP_BOTTOM
+054A    D0D0          1193         POP PSW
+054C    22            1194         RET
+                      1195     ;Rotina para tratamento de interrup��o de tempo principal.
+                      1196     ;Deve: 
+                      1197     ;   Atualizar o status do fmg_control e fmg_control_old, de acordo com os bot�es
+                      1198     ;   Deve atualizar e checar o valor da flag fmg_time_to_fall_0 e fmg_time_to_fall_1
+------                1199     CODE
+                      1200         FMG_TIMER_0: 
+054D    C0E0          1201             PUSH ACC ;Acumulador para pilha
+054F    C0D0          1202             PUSH PSW ;Guardar a infroma��o do banco de registradores que est� sendo utilizado
+0551    E8            1203             MOV A, R0
+0552    C0E0          1204             PUSH ACC
+0554    E9            1205             MOV A, R1
+0555    C0E0          1206             PUSH ACC
+                      1207             
+0557    C28C          1208             CLR TR0
+                      1209             
+                      1210             ;Atualiza��o do tempo
+0559    E532          1211     MOV A , 50 
+055B    2401          1212             ADD A, #001H
+055D    F532          1213     MOV 50 , A 
+                      1214             
+                      1215             ;Checagem do tempo
+055F    F8            1216             MOV R0, A
+0560    E533          1217     MOV A , 51 
+0562    F9            1218             MOV R1, A
+0563    58            1219             ANL A, R0
+0564    99            1220             SUBB A, R1
+0565    6025          1221             JZ FMG_TIMER_0_FALL ;Se for para a pe�a cair, ent�o caia!
+                      1222             
+                      1223             ;Ignorando o teste dos bot�es!
+0567    7400          1224             MOV A, #000H
+0569    020000   F    1225             JMP FMG_TIMER_0_END
+                      1226             
+                      1227             ;Adimitindo que: B1(P1.0) == Up, B2(P1.1) == Down, B3(P1.2) == Left, B4(P1.3) == Right, B5(P1.4) == Not Used
+056C    209018        1228             JB P1.0, FMG_TIMER_0_ROTATE
+056F    20911A        1229             JB P1.1, FMG_TIMER_0_FALL
+0572    209208        1230             JB P1.2, FMG_TIMER_0_LEFT
+0575    20930A        1231             JB P1.3, FMG_TIMER_0_RIGHT
+0578    7400          1232             MOV A, #000H
+057A    020000   F    1233             JMP FMG_TIMER_0_END
+                      1234     
+                      1235             FMG_TIMER_0_LEFT: 
+057D    7401          1236                 MOV A, #001H
+057F    020000   F    1237                 JMP FMG_TIMER_0_END
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    21
+                     
+                      1238             FMG_TIMER_0_RIGHT: 
+0582    7402          1239                 MOV A, #002H
+0584    020000   F    1240                 JMP FMG_TIMER_0_END
+                      1241             FMG_TIMER_0_ROTATE: 
+0587    7403          1242                 MOV A, #003H
+0589    020000   F    1243                 JMP FMG_TIMER_0_END
+                      1244             FMG_TIMER_0_FALL: 
+058C    7400          1245                 MOV A, #000H
+058E    F532          1246     MOV 50 , A 
+0590    7404          1247                 MOV A, #004H
+0592    020000   F    1248                 JMP FMG_TIMER_0_END
+                      1249                 
+                      1250             FMG_TIMER_0_END: 
+0595    F530          1251     MOV 48 , A 
+                      1252            
+0597    74DC          1253             MOV A, #0DCH
+0599    F58A          1254             MOV TL0, A
+                      1255             
+059B    7411          1256             MOV A, #011H
+059D    F58C          1257             MOV TH0, A
+059F    D28C          1258             SETB TR0
+                      1259             
+05A1    D0E0          1260             POP ACC
+05A3    F9            1261             MOV R1, A
+05A4    D0E0          1262             POP ACC
+05A6    F8            1263             MOV R0, A
+05A7    D0D0          1264             POP PSW
+05A9    D0E0          1265             POP ACC
+05AB    32            1266         RETI
+                      1267     ;Valida o estado atual do jogo, este momento ocorre ap�s a detec��o de colis�es, e deve:
+                      1268     ;   Sortear pr�xima pe�a
+                      1269     ;   Remover linhas completas
+                      1270     ;   Verificar condi��o de derrota
+------                1271     CODE
+                      1272         FMG_VALIDATE_COLLISION: 
+05AC    900000   F    1273             MOV DPTR, #FMG_VALIDATE_COLLISION_SWITCH
+05AF    E52F          1274     MOV A , 47 
+05B1    75F003        1275             MOV B, #003H
+05B4    A4            1276             MUL AB
+05B5    73            1277             JMP @A+DPTR
+                      1278             FMG_VALIDATE_COLLISION_SWITCH: 
+05B6    020000   F    1279                 JMP FMG_VALIDATE_COLLISION_SWITCH_CONTINUE
+05B9    020000   F    1280                 JMP FMG_VALIDATE_COLLISION_SWITCH_COLLISION
+                      1281             
+                      1282             FMG_VALIDATE_COLLISION_SWITCH_COLLISION: 
+05BC    AC23          1283     MOV R4 , 35 
+05BE    AD24          1284     MOV R5 , 36 
+05C0    120000   F    1285                 LCALL FMG_GET_REGION
+05C3    AA2D          1286     MOV R2 , 45 
+05C5    AB2E          1287     MOV R3 , 46 
+05C7    EA            1288                 MOV A, R2
+05C8    6E            1289                 XRL A, R6
+05C9    FE            1290                 MOV R6, A
+                      1291                 
+05CA    EB            1292                 MOV A, R3
+05CB    6F            1293                 XRL A, R7
+05CC    FF            1294                 MOV R7, A
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    22
+                     
+05CD    AC23          1295     MOV R4 , 35 
+05CF    AD24          1296     MOV R5 , 36 
+05D1    120000   F    1297                 LCALL FMG_SET_REGION
+                      1298                 
+                      1299                 ;Sortear pr�xima pe�a
+05D4    120000   F    1300                 LCALL FMG_FROM_WAIT_TO_GAME ; Coloca a pe�a da espera no jogo.
+05D7    120000   F    1301                 LCALL FMG_SELECT_NEW_PIECE  ; Seleciona a pe�a que ficar� na espera
+                      1302                 
+05DA    752307        1303     MOV 35 , # 007H 
+05DD    752400        1304     MOV 36 , # 000H 
+05E0    752F00        1305     MOV 47 , # 000H 
+                      1306                 ;Remover linhas completas
+                      1307                 ;LCALL FMG_REMOVE_COMPLETE_LINES
+                      1308             
+                      1309             FMG_VALIDATE_COLLISION_SWITCH_CONTINUE: 
+05E3    22            1310         RET
+------                1311     CODE
+                      1312         FMG_REMOVE_COMPLETE_LINES: 
+                      1313             ; Capturar �ltima linha da tela
+05E4    7840          1314     MOV R0 , # 64 
+05E6    741C          1315             MOV A, #028 ; Deslocamento do come�o das linhas na mem�ria
+                      1316             
+05E8    28            1317             ADD A, R0 ; Posi��o do come�o das linhas na mem�ria
+05E9    F8            1318             MOV R0, A
+05EA    F9            1319             MOV R1, A
+05EB    7A0A          1320             MOV R2, #00AH ;Quantidade de colunas
+                      1321             
+05ED    7BFF          1322             MOV R3, #0FFH ; M�scara para teste das linhas
+                      1323             
+                      1324             FMG_REMOVE_COMPLETE_LINES_LOOP_0: 
+05EF    E7            1325                 MOV A, @R1 ; Captura o elemento que est� em R1
+05F0    5B            1326                 ANL A, R3 ; Captura quais as linhas que est�o completas
+05F1    FB            1327                 MOV R3, A
+05F2    09            1328                 INC R1
+                      1329                 
+05F3    DAFA          1330                 DJNZ R2, FMG_REMOVE_COMPLETE_LINES_LOOP_0
+                      1331             ;R3 possui as linhas completas, move-lo para A para acessar cada linha
+05F5    EB            1332             MOV A, R3
+                      1333             
+05F6    7C08          1334             MOV R4, #008H ;Quantidade de linhas a serem analizadas
+05F8    7D00          1335             MOV R5, #000H ;Controle do n�mero da linha
+                      1336             FMG_REMOVE_COMPLETE_LINES_LOOP_1: 
+05FA    13            1337                 RRC A
+                      1338                 ;Carry contem a linha a ser analizada (0 ... 7)
+05FB    5003          1339                 JNC FMG_REMOVE_COMPLETE_LINES_LOOP_1_NEXT
+05FD    120000   F    1340                 LCALL FMG_REMOVE_SPECIFIC_LINE
+                      1341                 FMG_REMOVE_COMPLETE_LINES_LOOP_1_NEXT: 
+0600    DCF8          1342                 DJNZ R4, FMG_REMOVE_COMPLETE_LINES_LOOP_1
+0602    22            1343         RET
+------                1344     CODE
+                      1345         ;Remove uma linha especifica do jogo.
+                      1346         ;R0 - Come�o da linha (macro)
+                      1347         ;R5 - N�mero da linha (espec�fica)
+                      1348         ;Tentar n�o afetar R0, R3, R4 e R5
+                      1349         FMG_REMOVE_SPECIFIC_LINE: 
+0603    C0E0          1350         PUSH ACC
+0605    E9            1351         MOV A, R1
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    23
+                     
+0606    C0E0          1352         PUSH ACC
+                      1353         
+0608    E8            1354             MOV A, R0
+0609    9412          1355             SUBB A, #012H
+060B    E9            1356             MOV A, R1 ;R1 est� com a linha acima de R0
+060C    7407          1357             MOV A, #007H
+060E    C3            1358             CLR C
+060F    9D            1359             SUBB A, R5 ;Gerar m�scara superior
+0610    FA            1360             MOV R2, A
+                      1361             ;Criar a m�scara superior em R6 e a inferiro em R7
+0611    120000   F    1362             LCALL FMG_CREATE_SUPERIOR_MASK
+0614    ED            1363             MOV A, R5
+0615    FA            1364             MOV R2, A
+0616    1A            1365             DEC R2
+0617    120000   F    1366             LCALL FMG_CREATE_INFERIOR_MASK
+                      1367             
+061A    E7            1368             MOV A, @R1 ; Linha superior
+061B    20E003        1369             JB ACC.0, FMG_REMOVE_SPECIFIC_LINE_SET_CARRY
+061E    30E004        1370             JNB ACC.0, FMG_REMOVE_SPECIFIC_LINE_SET_NOT_CARRY
+                      1371             FMG_REMOVE_SPECIFIC_LINE_SET_CARRY: 
+0621    D3            1372                 SETB C
+0622    020000   F    1373                 JMP FMG_REMOVE_SPECIFIC_LINE_SET_CARRY_END
+                      1374             FMG_REMOVE_SPECIFIC_LINE_SET_NOT_CARRY: 
+0625    C3            1375                 CLR C
+0626    020000   F    1376                 JMP FMG_REMOVE_SPECIFIC_LINE_SET_CARRY_END
+                      1377             FMG_REMOVE_SPECIFIC_LINE_SET_CARRY_END: 
+                      1378             
+0629    E6            1379             MOV A, @R0
+062A    5E            1380             ANL A, R6
+062B    13            1381             RRC A
+062C    FE            1382             MOV R6, A
+062D    E6            1383             MOV A, @R0
+062E    5F            1384             ANL A, R7
+062F    6E            1385             XRL A, R6
+0630    F6            1386             MOV @R0, A
+                      1387             
+0631    D0E0          1388         POP ACC
+0633    F9            1389         MOV R1, A
+0634    D0E0          1390         POP ACC
+0636    22            1391         RET
+                      1392         
+------                1393     CODE
+                      1394         FMG_CREATE_SUPERIOR_MASK: 
+0637    7400          1395         MOV A, #000H
+                      1396         FMG_CREATE_SUPERIOR_MASK_LOOP: 
+0639    D3            1397             SETB C
+063A    33            1398             RLC A
+063B    DAFC          1399             DJNZ R2, FMG_CREATE_SUPERIOR_MASK_LOOP
+063D    FE            1400         MOV R6, A
+063E    22            1401         RET
+                      1402         
+------                1403     CODE
+                      1404         FMG_CREATE_INFERIOR_MASK: 
+063F    7400          1405         MOV A, #000H
+                      1406         FMG_CREATE_INFERIOR_MASK_LOOP: 
+0641    D3            1407             SETB C
+0642    13            1408             RRC A
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    24
+                     
+0643    DAFC          1409             DJNZ R2, FMG_CREATE_INFERIOR_MASK_LOOP
+0645    FF            1410         MOV R7, A
+0646    22            1411         RET
+                      1412     ;Checa se uma determinada posi��o de pe�a � v�lida.
+                      1413     ; in R1 = Rota��o da pe�a a ser checada
+                      1414     ; in R4 = Posi��o X a ser checada
+                      1415     ; in R5 = Posi��o Y a ser checada
+                      1416     ; out C | 0 Posi��o/Rota��o inv�lida
+                      1417     ;       | 1 Posi��o/Rota��o v�lida
+------                1418     CODE
+                      1419         FMG_UPDATE_STATE_CHECK_COLLISION: 
+                      1420         ;Carrega a pe�a para os registradores R2 e R3
+                      1421         ; R1 contem a rota��o da pe�a
+0647    852A83        1422     MOV DPH , 42 
+064A    852B82        1423     MOV DPL , 43 
+064D    E9            1424         MOV A, R1
+064E    75F002        1425         MOV B, #002H ;Cada pe�a � representada por 2 bytes
+0651    A4            1426         MUL AB
+0652    2401          1427         ADD A, #001H ;Retira o contador de pe�as
+0654    93            1428         MOVC A, @A+DPTR
+                      1429         ;A est� com a posi��o da pe�a na mem�ria
+0655    FA            1430         MOV R2, A
+0656    E9            1431         MOV A, R1
+0657    75F002        1432         MOV B, #002H ; Cada pe�a � representada por 2 bytes
+065A    A4            1433         MUL AB
+065B    2402          1434         ADD A, #002H ; 1 para o contador e 1 para pegar o segundo byte da pe�a
+065D    93            1435         MOVC A, @A+DPTR
+065E    FB            1436         MOV R3, A
+                      1437         ;R2 possui os primeiros bytes (esquerda)
+                      1438         ;R3 possui os outros bytes (direita)
+065F    120000   F    1439         LCALL FMG_GET_REGION
+                      1440         ;R6 e R7 contem a informa��o sobre a regi�o, 
+                      1441         ;s� fazer o XOR e sei se a posi��o est� ocupada (movimento inv�lido), ou n�o;
+0662    EA            1442         MOV A, R2
+0663    6E            1443         XRL A, R6 ; Xor entre R2 e R6
+0664    9A            1444         SUBB A, R2 ; Se n�o ocorreu nenhuma colis�o a subtra��o por R2 e R6 deve retornar Zero
+0665    9E            1445         SUBB A, R6
+0666    6003          1446         JZ FMG_UPDATE_STATE_CHECK_COLLISION_TEST_R7
+0668    020000   F    1447         JMP FMG_UPDATE_STATE_CHECK_COLLISION_COLLISION
+                      1448         FMG_UPDATE_STATE_CHECK_COLLISION_TEST_R7: 
+066B    EB            1449             MOV A, R3
+066C    6F            1450             XRL A, R7;Xor entre R2 e R6
+066D    9B            1451             SUBB A, R3 ; Se n�o ocorreu nenhuma colis�o a subtra��o por R3 e R7 deve retornar Zero
+066E    9F            1452             SUBB A, R7    
+066F    6007          1453             JZ FMG_UPDATE_STATE_CHECK_COLLISION_NOT_COLLISION
+0671    020000   F    1454             JMP FMG_UPDATE_STATE_CHECK_COLLISION_COLLISION
+                      1455             FMG_UPDATE_STATE_CHECK_COLLISION_COLLISION:  ;Se tiver colis�o ent�o v� para o fim!
+0674    C3            1456                 CLR C
+0675    020000   F    1457                 JMP FMG_UPDATE_STATE_CHECK_COLLISION_END
+                      1458             FMG_UPDATE_STATE_CHECK_COLLISION_NOT_COLLISION:  ; Se n�o tiver colis�o, atualize a posi��o da pe�a!
+0678    D3            1459                 SETB C
+0679    020000   F    1460                 JMP FMG_UPDATE_STATE_CHECK_COLLISION_END
+                      1461             FMG_UPDATE_STATE_CHECK_COLLISION_END: 
+067C    22            1462         RET
+------                1463     CODE
+                      1464         ;Seta os valores de uma determinada regi�o da mem�ria
+                      1465         ; R4 contem a posi��o x,
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    25
+                     
+                      1466         ; R5 contem a posi��o y
+                      1467         ; R6 contem a regi�o ser desenhada (esquerda)
+                      1468         ; R7 contem a regi�o ser desenhada (direita)
+                      1469         
+                      1470         FMG_SET_REGION: 
+067D    E8            1471         MOV A, R0
+067E    C0E0          1472         PUSH ACC
+0680    E9            1473         MOV A, R1
+0681    C0E0          1474         PUSH ACC
+0683    EA            1475         MOV A, R2
+0684    C0E0          1476         PUSH ACC
+0686    EB            1477         MOV A, R3
+0687    C0E0          1478         PUSH ACC
+                      1479         
+0689    ED            1480         MOV A, R5
+068A    C0E0          1481         PUSH ACC
+068C    7A04          1482         MOV R2, #004H
+                      1483         FMG_SET_REGION_LOOP_X: 
+068E    D0E0          1484             POP ACC
+0690    ADE0          1485             MOV R5, ACC
+0692    C0E0          1486             PUSH ACC
+0694    7B04          1487             MOV R3, #004H
+                      1488             FMG_SET_REGION_LOOP_Y: 
+                      1489                 ;C�lculo do byte
+0696    ED            1490                 MOV A, R5
+0697    75F008        1491                 MOV B, #008H
+069A    84            1492                 DIV AB
+069B    A9F0          1493                 MOV R1, B 
+069D    09            1494                 INC R1; R1 contem o bit que quero modificar (+1 por causa do 0 based)
+                      1495                 
+069E    75F012        1496                 MOV B, #012H ; Byte = 18 * A + R4
+06A1    A4            1497                 MUL AB
+06A2    2C            1498                 ADD A, R4
+06A3    F8            1499                 MOV R0, A 
+06A4    7440          1500     MOV A , # 64 
+06A6    28            1501                 ADD A, R0
+06A7    F8            1502                 MOV R0, A ; R0 contem a posi��o do byte que estou querendo
+                      1503                 
+                      1504                 ;Definir se R6 ou R7 e ent�o chamar o FMG_FIND_BIT
+06A8    EA            1505                 MOV A, R2
+06A9    14            1506                 DEC A
+06AA    75F002        1507                 MOV B, #002H
+06AD    84            1508                 DIV AB
+06AE    75F003        1509                 MOV B, #003H
+06B1    A4            1510                 MUL AB
+06B2    900000   F    1511                 MOV DPTR, #FMG_SET_REGION_SWITCH_1_R6_R7
+06B5    73            1512                 JMP @A+DPTR
+                      1513                 FMG_SET_REGION_SWITCH_1_R6_R7: 
+06B6    020000   F    1514                     JMP FMG_SET_REGION_SWITCH_1_R7 ;Como o contador est� invertido temos o R7 em 0
+06B9    020000   F    1515                     JMP FMG_SET_REGION_SWITCH_1_R6
+                      1516                     FMG_SET_REGION_SWITCH_1_R6: 
+                      1517                         ;Rotacionar R1 vezes o byte escolhido (RLC)
+06BC    E9            1518                         MOV A, R1
+06BD    C0E0          1519                         PUSH ACC
+06BF    E6            1520                         MOV A, @R0
+                      1521                         
+                      1522                         FMG_SET_REGION_SMALL_ROTATE_R6: 
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    26
+                     
+06C0    33            1523                             RLC A
+06C1    D9FD          1524                             DJNZ R1, FMG_SET_REGION_SMALL_ROTATE_R6
+06C3    F6            1525                         MOV @R0, A
+                      1526                         
+06C4    D0E0          1527                         POP ACC
+06C6    F9            1528                         MOV R1, A
+06C7    EE            1529                         MOV A, R6
+06C8    33            1530                         RLC A
+06C9    FE            1531                         MOV R6, A ; Carry contem o bit a ser introduzido no sistema
+                      1532                         
+06CA    E6            1533                         MOV A, @R0
+                      1534                         FMG_SET_REGION_SMALL_ROTATE_BACK_R6: 
+06CB    13            1535                             RRC A
+06CC    D9FD          1536                             DJNZ R1, FMG_SET_REGION_SMALL_ROTATE_BACK_R6
+06CE    F6            1537                         MOV @R0, A
+06CF    020000   F    1538                         JMP FMG_SET_REGION_LOOP_END
+                      1539                     FMG_SET_REGION_SWITCH_1_R7: 
+                      1540                         ;Rotacionar R1 vezes o byte escolhido (RLC)
+06D2    E9            1541                         MOV A, R1
+06D3    C0E0          1542                         PUSH ACC
+06D5    E6            1543                         MOV A, @R0
+                      1544                         
+                      1545                         FMG_SET_REGION_SMALL_ROTATE_R7: 
+06D6    33            1546                             RLC A
+06D7    D9FD          1547                             DJNZ R1, FMG_SET_REGION_SMALL_ROTATE_R7
+06D9    F6            1548                         MOV @R0, A
+                      1549                         
+06DA    D0E0          1550                         POP ACC
+06DC    F9            1551                         MOV R1, A
+06DD    EF            1552                         MOV A, R7
+06DE    33            1553                         RLC A
+06DF    FF            1554                         MOV R7, A ; Carry contem o bit a ser introduzido no sistema
+                      1555                         
+06E0    E6            1556                         MOV A, @R0
+                      1557                         FMG_SET_REGION_SMALL_ROTATE_BACK_R7: 
+06E1    13            1558                             RRC A
+06E2    D9FD          1559                             DJNZ R1, FMG_SET_REGION_SMALL_ROTATE_BACK_R7
+06E4    F6            1560                         MOV @R0, A
+06E5    020000   F    1561                         JMP FMG_SET_REGION_LOOP_END
+                      1562                 FMG_SET_REGION_LOOP_END: 
+06E8    0D            1563                     INC R5
+06E9    DB06          1564                     DJNZ R3, FMG_SET_REGION_LOOP_Y_WORKAROUND
+06EB    0C            1565                     INC R4
+06EC    DA06          1566                 DJNZ R2, FMG_SET_REGION_LOOP_X_WORKAROUND
+06EE    020000   F    1567                 JMP FMG_SET_REGION_END
+                      1568                 FMG_SET_REGION_LOOP_Y_WORKAROUND: 
+06F1    020000   F    1569                     LJMP FMG_SET_REGION_LOOP_Y
+                      1570                 FMG_SET_REGION_LOOP_X_WORKAROUND: 
+06F4    020000   F    1571                     LJMP FMG_SET_REGION_LOOP_X
+                      1572         FMG_SET_REGION_END: 
+06F7    D0E0          1573         POP ACC
+06F9    D0E0          1574         POP ACC
+06FB    FB            1575         MOV R3, A
+06FC    D0E0          1576         POP ACC
+06FE    FA            1577         MOV R2, A
+06FF    D0E0          1578         POP ACC
+0701    F9            1579         MOV R1, A
+MACRO ASSEMBLER MAIN                             12/04/14  06:55:53 PAGE    27
+                     
+0702    D0E0          1580         POP ACC
+0704    F8            1581         MOV R0, A
+0705    22            1582         RET
+                      1583     
+                      1584     CODE AT 0
+0000    020000   F    1585         LJMP INIT
+                      1586     
+                      1587     CODE AT 000BH
+                      1588     TIMER0_INTERRUPT: 
+000B    120000   F    1589         LCALL FMG_TIMER_0
+000E    22            1590         RET;
+                      1591     
+------                1592     CODE
+                      1593     INIT:  
+0706    758190        1594         MOV SP, #90H 
+0709    120000   F    1595         LCALL LCD_INIT
+070C    020000   F    1596         LJMP MAIN 
+                      1597         
+------                1598     CODE
+                      1599     MAIN:  
+                      1600         ;Banco 2
+070F    D2D4          1601         SETB RS1
+0711    C2D3          1602         CLR RS0
+0713    7901          1603         MOV R1, #001H
+0715    7A01          1604         MOV R2, #001H
+                      1605         
+                      1606     
+0717    7900          1607     MOV R1 , # 000H 
+0719    7A00          1608     MOV R2 , # 000H 
+071B    120000   F    1609         LCALL LCD_XY
+071E    120000   F    1610         LCALL FMG_TETRIS_MAIN
+                      1611     END
+MACRO ASSEMBLER MAIN                                       12/04/14 06:55:53 PAGE     0
+
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
+
+FMG_REMOVE_COMPLE~  C ADDR   0600H   R  SEG=?PR?MAIN            1339 1341# 
+FMG_PIECES_O . . .  C ADDR   011CH   R  SEG=?PR?MAIN            387# 954 
+LCD_DRAW . . . . .  C ADDR   006FH   R  SEG=?PR?MAIN            218# 823 828 832 
+                                                                842 844 865 867 886 
+                                                                888 894 896 902 907 
+                                                                910 1067 1069 1108 
+                                                                1111 1139 1141 1175 
+                                                                1191 
+BIG_DELAY. . . . .  C ADDR   00ECH   R  SEG=?PR?MAIN            186 315# 
+RCAP2H . . . . . .  D ADDR   00CBH   A                          33# 
+DPL. . . . . . . .  D ADDR   0082H   A                          16# 587 606 980 1423 
+                                                                
+P0 . . . . . . . .  D ADDR   0080H   A                          8# 
+FMG_REMOVE_COMPLE~  C ADDR   05EFH   R  SEG=?PR?MAIN            1324# 1330 
+P1 . . . . . . . .  D ADDR   0090H   A                          9# 155 156 157 1228 
+                                                                1229 1230 1231 
+FMG_REMOVE_COMPLE~  C ADDR   05FAH   R  SEG=?PR?MAIN            1336# 1342 
+INIT_DELAY . . . .  C ADDR   00F2H   R  SEG=?PR?MAIN            321# 322 
+CP_RL2 . . . . . .  B ADDR   00C8H.0 A                          105# 
+EXEN2. . . . . . .  B ADDR   00C8H.3 A                          102# 
+B. . . . . . . . .  D ADDR   00F0H   A                          14# 147 151 497 500 
+                                                                509 609 725 727 730 
+                                                                741 744 938 940 941 
+                                                                983 986 988 1275 
+                                                                1425 1432 1491 1493 
+                                                                1496 1507 1509 
+P2 . . . . . . . .  D ADDR   00A0H   A                          10# 
+FMG_SET_REGION_LO~  C ADDR   06F4H   R  SEG=?PR?MAIN            1566 1570# 
+FMG_VALIDATE_COLL~  C ADDR   05E3H   R  SEG=?PR?MAIN            1279 1309# 
+FMG_UPDATE_STATE_~  C ADDR   027DH   R  SEG=?PR?MAIN            519 694# 
+LCD_XY . . . . . .  C ADDR   00B3H   R  SEG=?PR?MAIN            271# 821 839 900 
+                                                                1040 1076 1088 1119 
+                                                                1168 1181 1186 1609 
+                                                                
+LCD_SEND_SERIAL_D~  C ADDR   007FH   R  SEG=?PR?MAIN            228 231# 
+T2EX . . . . . . .  B ADDR   0090H.1 A                          95# 
+PS . . . . . . . .  B ADDR   00B8H.4 A                          65# 
+SP . . . . . . . .  D ADDR   0081H   A                          15# 1594 
+P3 . . . . . . . .  D ADDR   00B0H   A                          11# 158 159 
+FMG_SET_REGION_LO~  C ADDR   06F1H   R  SEG=?PR?MAIN            1564 1568# 
+FMG_GET_REGION_SW~  C ADDR   02BDH   R  SEG=?PR?MAIN            750 751# 
+FMG_UPDATE_STATE_~  C ADDR   023EH   R  SEG=?PR?MAIN            599 601# 
+FMG_UPDATE_STATE_~  C ADDR   0647H   R  SEG=?PR?MAIN            537 560 598 682 1419# 
+                                                                
+FMG_DRAW_BORDER. .  C ADDR   0517H   R  SEG=?PR?MAIN            434 1161# 
+FMG_PIECES_S . . .  C ADDR   011FH   R  SEG=?PR?MAIN            389# 957 
+FMG_SCORE_0. . . .  N NUMB   0034h                              362# 
+T0 . . . . . . . .  B ADDR   00B0H.4 A                          74# 
+AC . . . . . . . .  B ADDR   00D0H.6 A                          41# 
+RCAP2L . . . . . .  D ADDR   00CAH   A                          32# 
+MAIN . . . . . . .  C ADDR   070FH   R  SEG=?PR?MAIN            1596 1599# 
+FMG_SET_REGION_SM~  C ADDR   06CBH   R  SEG=?PR?MAIN            1534# 1536 
+FMG_GET_REGION_SW~  C ADDR   02CDH   R  SEG=?PR?MAIN            749 768# 
+FMG_UPDATE_STATE_~  C ADDR   01FDH   R  SEG=?PR?MAIN            539 545# 
+FMG_PIECES_T . . .  C ADDR   013BH   R  SEG=?PR?MAIN            397# 969 
+FMG_SCORE_1. . . .  N NUMB   0035h                              363# 
+?PR?MAIN . . . . .  C SEG    0721H      REL=UNIT                114# 129 177 217 
+                                                                222 239 255 270 292 
+                                                                314 368 384 386 388 
+                                                                390 392 394 396 409 
+                                                                492 697 806 814 913 
+                                                                935 1000 1031 1160 
+                                                                1199 1271 1311 1344 
+                                                                1393 1403 1418 1463 
+                                                                1592 1598 
+REN. . . . . . . .  B ADDR   0098H.4 A                          83# 
+T1 . . . . . . . .  B ADDR   00B0H.5 A                          73# 
+OV . . . . . . . .  B ADDR   00D0H.2 A                          45# 
+FMG_SET_REGION_SM~  C ADDR   06E1H   R  SEG=?PR?MAIN            1557# 1559 
+FMG_TIMER_0_RIGHT.  C ADDR   0582H   R  SEG=?PR?MAIN            1231 1238# 
+FMG_SELECT_PIECE_I  C ADDR   0408H   R  SEG=?PR?MAIN            946 971# 
+FMG_DRAW_NEXT_PIE~  C ADDR   0337H   R  SEG=?PR?MAIN            847# 891 
+FMG_UPDATE_STATE_~  C ADDR   01F0H   R  SEG=?PR?MAIN            536# 
+FMG_DRAW_SCREEN. .  C ADDR   0456H   R  SEG=?PR?MAIN            435 472 1032# 
+FMG_PIECE_H. . . .  N NUMB   002Ah                              341# 586 605 916 
+                                                                1422 
+LCD_INIT . . . . .  C ADDR   0035H   R  SEG=?PR?MAIN            178# 1595 
+T2 . . . . . . . .  B ADDR   0090H.0 A                          96# 
+EA . . . . . . . .  B ADDR   00A8H.7 A                          58# 415 428 
+T2CON. . . . . . .  D ADDR   00C8H   A                          31# 
+FMG_TIMER_0_FALL .  C ADDR   058CH   R  SEG=?PR?MAIN            1221 1229 1244# 
+FMG_SELECT_PIECE_J  C ADDR   03FEH   R  SEG=?PR?MAIN            951 965# 
+FMG_SELECT_NEW_PI~  C ADDR   03C4H   R  SEG=?PR?MAIN            438 440 936# 1301 
+                                                                
+ACC. . . . . . . .  D ADDR   00E0H   A                          13# 142 179 214 228 
+                                                                242 252 258 268 272 
+                                                                289 294 311 706 708 
+                                                                710 712 715 718 719 
+                                                                720 754 761 771 778 
+                                                                796 797 799 801 803 
+                                                                850 852 853 854 855 
+                                                                856 857 858 859 860 
+                                                                861 862 864 866 871 
+                                                                873 874 875 876 877 
+                                                                878 879 880 881 882 
+                                                                883 885 887 1051 
+                                                                1053 1054 1055 1056 
+                                                                1057 1058 1059 1060 
+                                                                1061 1062 1063 1064 
+                                                                1066 1068 1092 1094 
+                                                                1095 1096 1097 1098 
+                                                                1099 1100 1101 1102 
+                                                                1103 1104 1105 1107 
+                                                                1110 1123 1125 1126 
+                                                                1127 1128 1129 1130 
+                                                                1131 1132 1133 1134 
+                                                                1135 1136 1138 1140 
+                                                                1201 1204 1206 1260 
+                                                                1262 1265 1350 1352 
+                                                                1369 1370 1388 1390 
+                                                                1472 1474 1476 1478 
+                                                                1481 1484 1485 1486 
+                                                                1519 1527 1542 1550 
+                                                                1573 1574 1576 1578 
+                                                                1580 
+MACRO ASSEMBLER MAIN                                       12/04/14 06:55:53 PAGE     1
+
+
+DOS MACRO ASSEMBLER MA51 V06.16.13.326
+OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\MAIN.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\MAIN.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+
+LOC     OBJ           LINE    SOURCE
+FMG_UPDATE_STATE_~  C ADDR   0212H   R  SEG=?PR?MAIN            561 563# 
+FMG_SET_REGION . .  C ADDR   067DH   R  SEG=?PR?MAIN            470 488 1297 1470# 
+                                                                
+FMG_TIME_TO_FALL .  N NUMB   0033h                              360# 413 1217 
+C_T2 . . . . . . .  B ADDR   00C8H.1 A                          104# 
+FMG_CREATE_SUPERI~  C ADDR   0639H   R  SEG=?PR?MAIN            1396# 1399 
+FMG_TIMER_0. . . .  C ADDR   054DH   R  SEG=?PR?MAIN            1200# 1589 
+FMG_SELECT_PIECE_L  C ADDR   03F9H   R  SEG=?PR?MAIN            950 962# 
+FMG_GET_REGION_SM~  C ADDR   02C1H   R  SEG=?PR?MAIN            757# 759 
+FMG_UPDATE_STATE_~  C ADDR   026EH   R  SEG=?PR?MAIN            683 685# 
+LCD_SEND_SERIAL_D~  C ADDR   0076H   R  SEG=?PR?MAIN            226# 236 
+WR . . . . . . . .  B ADDR   00B0H.6 A                          72# 
+ET0. . . . . . . .  B ADDR   00A8H.1 A                          62# 426 
+FMG_VALIDATE_COLL~  C ADDR   05BCH   R  SEG=?PR?MAIN            1280 1282# 
+FMG_GET_REGION_SM~  C ADDR   02D1H   R  SEG=?PR?MAIN            774# 776 
+FMG_UPDATE_STATE_~  C ADDR   0200H   R  SEG=?PR?MAIN            521 547# 
+FMG_DRAW_NEXT_PIE~  C ADDR   0300H   R  SEG=?PR?MAIN            446 452 815# 
+FMG_PIECE_L. . . .  N NUMB   002Bh                              342# 587 606 920 
+                                                                1423 
+LCD_X. . . . . . .  ? ADDR   0000H   A                          162# 284 298 819 
+                                                                837 898 1038 1074 
+                                                                1086 1114 1166 1177 
+                                                                1184 1607 
+RAND16REG. . . . .  N NUMB   0021h                              111# 131 133 136 
+                                                                137 141 146 148 150 
+                                                                
+ET1. . . . . . . .  B ADDR   00A8H.3 A                          60# 
+TF0. . . . . . . .  B ADDR   0088H.5 A                          51# 
+FMG_UPDATE_STATE_~  C ADDR   066BH   R  SEG=?PR?MAIN            1446 1448# 
+FMG_CLEAR_MEMORY_~  C ADDR   0447H   R  SEG=?PR?MAIN            1019# 1022 
+FMG_GET_REGION_LO~  C ADDR   02DDH   R  SEG=?PR?MAIN            767 784 785# 
+FMG_UPDATE_STATE_~  C ADDR   025CH   R  SEG=?PR?MAIN            523 669# 
+FMG_PIECES_Z . . .  C ADDR   0124H   R  SEG=?PR?MAIN            391# 960 
+FMG_NUMBERS_FONT .  C ADDR   00F9H   R  SEG=?PR?MAIN            370# 
+LCD_Y. . . . . . .  ? ADDR   0000H   A                          163# 279 299 820 
+                                                                838 899 1039 1075 
+                                                                1116 1118 1151 1153 
+                                                                1156 1167 1178 1180 
+                                                                1185 1608 
+ET2. . . . . . . .  B ADDR   00A8H.5 A                          91# 
+TF1. . . . . . . .  B ADDR   0088H.7 A                          49# 
+FMG_SELECT_PIECE_O  C ADDR   03EAH   R  SEG=?PR?MAIN            947 953# 
+FMG_GET_REGION_SW~  C ADDR   02B7H   R  SEG=?PR?MAIN            746 748# 
+FMG_GET_REGION_LO~  C ADDR   028FH   R  SEG=?PR?MAIN            717# 794 
+LCD_CLK. . . . . .  B ADDR   00B0H.1 A                          158# 227 234 
+RAND16 . . . . . .  C ADDR   0011H   R  SEG=?PR?MAIN            130# 
+RCLK . . . . . . .  B ADDR   00C8H.5 A                          100# 
+TF2. . . . . . . .  B ADDR   00C8H.7 A                          98# 
+RB8. . . . . . . .  B ADDR   0098H.2 A                          85# 
+TH0. . . . . . . .  D ADDR   008CH   A                          23# 424 1257 
+FMG_GET_REGION_LO~  C ADDR   0297H   R  SEG=?PR?MAIN            722# 792 
+FMG_UPDATE_STATE_~  C ADDR   01D6H   R  SEG=?PR?MAIN            512 518# 
+LCD_DIN. . . . . .  B ADDR   00B0H.0 A                          159# 229 232 
+EX0. . . . . . . .  B ADDR   00A8H.0 A                          63# 
+IT0. . . . . . . .  B ADDR   0088H.0 A                          56# 
+TH1. . . . . . . .  D ADDR   008DH   A                          24# 
+FMG_CREATE_INFERI~  C ADDR   0641H   R  SEG=?PR?MAIN            1406# 1409 
+FMG_REMOVE_SPECIF~  C ADDR   0625H   R  SEG=?PR?MAIN            1370 1374# 
+FMG_VALIDATE_COLL~  C ADDR   05ACH   R  SEG=?PR?MAIN            454 1272# 
+FMG_PIECE_0. . . .  N NUMB   002Dh                              344# 459 477 928 
+                                                                1286 
+RAND16B. . . . . .  C ADDR   001EH   R  SEG=?PR?MAIN            132 134 138# 
+TCLK . . . . . . .  B ADDR   00C8H.4 A                          101# 
+TB8. . . . . . . .  B ADDR   0098H.3 A                          84# 
+RXD. . . . . . . .  B ADDR   00B0H.0 A                          78# 
+EX1. . . . . . . .  B ADDR   00A8H.2 A                          61# 
+IT1. . . . . . . .  B ADDR   0088H.2 A                          54# 
+TH2. . . . . . . .  D ADDR   00CDH   A                          35# 
+IE . . . . . . . .  D ADDR   00A8H   A                          25# 
+FMG_UPDATE_STATE_~  C ADDR   0674H   R  SEG=?PR?MAIN            1447 1454 1455# 
+FMG_LOOP_LINHA_2 .  C ADDR   04A8H   R  SEG=?PR?MAIN            1084# 1155 
+MACRO ASSEMBLER MAIN                                       12/04/14 06:55:53 PAGE     2
+
+FMG_CLEAR_MEMORY_~  C ADDR   0450H   R  SEG=?PR?MAIN            1025# 1028 
+FMG_SELECT_PIECE_~  C ADDR   03D5H   R  SEG=?PR?MAIN            943 945# 
+FMG_PIECE_1. . . .  N NUMB   002Eh                              345# 460 478 932 
+                                                                1287 
+RAND16C. . . . . .  C ADDR   0028H   R  SEG=?PR?MAIN            142 144# 
+FMG_SET_REGION_SW~  C ADDR   06BCH   R  SEG=?PR?MAIN            1515 1516# 
+FMG_CREATE_SUPERI~  C ADDR   0637H   R  SEG=?PR?MAIN            1362 1394# 
+FMG_LOOP_LINHA_3 .  C ADDR   04A0H   R  SEG=?PR?MAIN            1078# 1157 
+FMG_SELECT_PIECE_S  C ADDR   03EFH   R  SEG=?PR?MAIN            948 956# 
+FMG_PIECE_R. . . .  N NUMB   002Ch                              343# 533 556 581 
+                                                                604 608 678 924 
+SM0. . . . . . . .  B ADDR   0098H.7 A                          80# 
+TXD. . . . . . . .  B ADDR   00B0H.1 A                          77# 
+P. . . . . . . . .  B ADDR   00D0H.0 A                          47# 122 140 
+SBUF . . . . . . .  D ADDR   0099H   A                          28# 
+TL0. . . . . . . .  D ADDR   008AH   A                          21# 421 1254 
+PCON . . . . . . .  D ADDR   0087H   A                          18# 
+FMG_SET_REGION_SW~  C ADDR   06D2H   R  SEG=?PR?MAIN            1514 1539# 
+FMG_DRAW_BORDER_L~  C ADDR   0543H   R  SEG=?PR?MAIN            1189# 1192 
+FMG_SELECT_PIECE_T  C ADDR   0403H   R  SEG=?PR?MAIN            952 968# 
+FMG_FIND_BIT_LOOP.  C ADDR   02FCH   R  SEG=?PR?MAIN            810# 812 
+SM1. . . . . . . .  B ADDR   0098H.6 A                          81# 
+TL1. . . . . . . .  D ADDR   008BH   A                          22# 
+FMG_GET_REGION_END  C ADDR   02ECH   R  SEG=?PR?MAIN            790 795# 
+FMG_UPDATE_STATE_~  C ADDR   027DH   R  SEG=?PR?MAIN            516 546 569 622 690 
+                                                                693 695# 
+FMG_PIECE_ID_H . .  N NUMB   0025h                              334# 915 979 
+SM2. . . . . . . .  B ADDR   0098H.5 A                          82# 
+TL2. . . . . . . .  D ADDR   00CCH   A                          34# 
+FMG_REMOVE_SPECIF~  C ADDR   0603H   R  SEG=?PR?MAIN            1340 1349# 
+FMG_TIMER_0_LEFT .  C ADDR   057DH   R  SEG=?PR?MAIN            1230 1235# 
+INIT_DELAY_2 . . .  C ADDR   00F0H   R  SEG=?PR?MAIN            319# 323 
+SCON . . . . . . .  D ADDR   0098H   A                          27# 
+INIT . . . . . . .  C ADDR   0706H   R  SEG=?PR?MAIN            1585 1593# 
+FMG_REMOVE_SPECIF~  C ADDR   0629H   R  SEG=?PR?MAIN            1373 1376 1377# 
+FMG_UPDATE_STATE_~  C ADDR   0259H   R  SEG=?PR?MAIN            600 621# 
+INIT_DELAY_3 . . .  C ADDR   00EEH   R  SEG=?PR?MAIN            317# 324 
+LCD_SEND_SERIAL_D~  C ADDR   0073H   R  SEG=?PR?MAIN            223# 248 264 
+PT0. . . . . . . .  B ADDR   00B8H.1 A                          68# 
+TMOD . . . . . . .  D ADDR   0089H   A                          20# 418 
+TCON . . . . . . .  D ADDR   0088H   A                          19# 
+FMG_SET_REGION_SM~  C ADDR   06C0H   R  SEG=?PR?MAIN            1522# 1524 
+FMG_CREATE_INFERI~  C ADDR   063FH   R  SEG=?PR?MAIN            1366 1404# 
+FMG_CLEAR_MEMORY_~  C ADDR   0437H   R  SEG=?PR?MAIN            1007# 1023 
+FMG_UPDATE_STATE_~  C ADDR   0237H   R  SEG=?PR?MAIN            592 597# 
+FMG_UPDATE_STATE_~  C ADDR   0234H   R  SEG=?PR?MAIN            582 593# 
+FMG_UPDATE_STATE_~  C ADDR   01F7H   R  SEG=?PR?MAIN            538 540# 
+LCD_CLEAR_INTERNA~  C ADDR   00DCH   R  SEG=?PR?MAIN            303# 309 
+LCD_SEND_DATA. . .  C ADDR   009DH   R  SEG=?PR?MAIN            219 256# 307 
+LCD_RESET. . . . .  B ADDR   0090H.5 A                          156# 183 
+EXF2 . . . . . . .  B ADDR   00C8H.6 A                          99# 
+PT1. . . . . . . .  B ADDR   00B8H.3 A                          66# 
+RS0. . . . . . . .  B ADDR   00D0H.3 A                          44# 182 245 261 275 
+                                                                297 818 1037 1164 
+                                                                1602 
+FMG_SET_REGION_SM~  C ADDR   06D6H   R  SEG=?PR?MAIN            1545# 1547 
+FMG_LOOP_LINHA_SU~  C ADDR   046DH   R  SEG=?PR?MAIN            1048# 1073 
+FMG_PIECE_ID_L . .  N NUMB   0026h                              335# 919 980 
+FMG_PIECE_X. . . .  N NUMB   0023h                              328# 443 456 468 
+                                                                474 486 526 542 544 
+                                                                549 565 567 577 671 
+                                                                1283 1295 1303 
+LCD_SERIAL_END_IF.  C ADDR   0081H   R  SEG=?PR?MAIN            230 233# 
+PT2. . . . . . . .  B ADDR   00B8H.5 A                          93# 
+RD . . . . . . . .  B ADDR   00B0H.7 A                          71# 
+TR0. . . . . . . .  B ADDR   0088H.4 A                          52# 416 427 1208 
+                                                                1258 
+RS1. . . . . . . .  B ADDR   00D0H.4 A                          43# 181 244 260 274 
+                                                                296 817 1036 1163 
+                                                                1601 
+MACRO ASSEMBLER MAIN                                       12/04/14 06:55:53 PAGE     3
+
+F0 . . . . . . . .  B ADDR   00D0H.5 A                          42# 
+FMG_SET_REGION_LO~  C ADDR   06E8H   R  SEG=?PR?MAIN            1538 1561 1562# 
+FMG_TIMER_0_ROTATE  C ADDR   0587H   R  SEG=?PR?MAIN            1228 1241# 
+FMG_SELECT_PIECE_Z  C ADDR   03F4H   R  SEG=?PR?MAIN            949 959# 
+FMG_GET_REGION_LO~  C ADDR   02E9H   R  SEG=?PR?MAIN            789 793# 
+FMG_UPDATE_STATE_~  C ADDR   01E5H   R  SEG=?PR?MAIN            520 524# 
+FMG_TIME_TO_FALL_0  N NUMB   0032h                              359# 1211 1213 1246 
+                                                                
+FMG_PIECE_Y. . . .  N NUMB   0024h                              329# 444 457 469 
+                                                                475 487 529 552 579 
+                                                                673 687 689 1284 
+                                                                1296 1304 
+TR1. . . . . . . .  B ADDR   0088H.6 A                          50# 
+F1 . . . . . . . .  B ADDR   00D0H.1 A                          46# 
+FMG_SET_REGION_SW~  C ADDR   06B6H   R  SEG=?PR?MAIN            1511 1513# 
+FMG_SET_REGION_LO~  C ADDR   068EH   R  SEG=?PR?MAIN            1483# 1571 
+FMG_CLEAR_MEMORY_~  C ADDR   0439H   R  SEG=?PR?MAIN            1009# 1012 
+FMG_FIND_BIT . . .  C ADDR   02FBH   R  SEG=?PR?MAIN            808# 
+FMG_GET_REGION_LO~  C ADDR   02E6H   R  SEG=?PR?MAIN            787 791# 
+FMG_UPDATE_STATE_~  C ADDR   0218H   R  SEG=?PR?MAIN            562 568# 
+FMG_WAIT_ETERNAL .  C ADDR   017BH   R  SEG=?PR?MAIN            451# 490 
+FMG_CLEAR_MEMORY .  C ADDR   0431H   R  SEG=?PR?MAIN            433 1001# 
+FMG_TETRIS_MAIN. .  C ADDR   0144H   R  SEG=?PR?MAIN            410# 1610 
+FMG_CONTROL_OLD. .  N NUMB   0031h                              352# 497 506 
+TR2. . . . . . . .  B ADDR   00C8H.2 A                          103# 
+PX0. . . . . . . .  B ADDR   00B8H.0 A                          69# 
+ES . . . . . . . .  B ADDR   00A8H.4 A                          59# 
+FMG_SET_REGION_LO~  C ADDR   0696H   R  SEG=?PR?MAIN            1488# 1569 
+FMG_REMOVE_COMPLE~  C ADDR   05E4H   R  SEG=?PR?MAIN            1312# 
+FMG_UPDATE_STATE_~  C ADDR   0277H   R  SEG=?PR?MAIN            684 691# 
+FMG_UPDATE_STATE_~  C ADDR   020BH   R  SEG=?PR?MAIN            559# 
+LCD_CLEAR. . . . .  C ADDR   00CEH   R  SEG=?PR?MAIN            205 293# 430 
+LCD_DC . . . . . .  B ADDR   0090H.7 A                          157# 246 262 
+PX1. . . . . . . .  B ADDR   00B8H.2 A                          67# 
+IP . . . . . . . .  D ADDR   00B8H   A                          26# 
+FMG_UPDATE_STATE_~  C ADDR   067CH   R  SEG=?PR?MAIN            1457 1460 1461# 
+FMG_UPDATE_STATE_~  C ADDR   0267H   R  SEG=?PR?MAIN            681# 
+FMG_PIECES_I . . .  C ADDR   0117H   R  SEG=?PR?MAIN            385# 973 
+FMG_CONTROL. . . .  N NUMB   0030h                              351# 496 505 1251 
+                                                                
+FMG_STATE. . . . .  N NUMB   002Fh                              347# 692 1274 1305 
+                                                                
+FMG_PIECE_ID_0 . .  N NUMB   0028h                              337# 615 834 927 
+                                                                994 
+LCD_SEND_COMMAND .  C ADDR   0087H   R  SEG=?PR?MAIN            191 194 197 200 203 
+                                                                208 211 240# 282 
+                                                                287 
+LCD_CE . . . . . .  B ADDR   0090H.6 A                          155# 184 247 249 
+                                                                263 265 
+PSW. . . . . . . .  D ADDR   00D0H   A                          12# 180 213 243 251 
+                                                                259 267 273 288 295 
+                                                                310 816 911 1035 
+                                                                1158 1162 1193 1202 
+                                                                1264 
+FMG_UPDATE_STATE_~  C ADDR   021BH   R  SEG=?PR?MAIN            522 570# 
+FMG_PIECES_J . . .  C ADDR   0132H   R  SEG=?PR?MAIN            395# 966 
+FMG_PIECE_ID_1 . .  N NUMB   0029h                              338# 619 890 931 
+                                                                998 
+LCD_CLEAR_INTERNA~  C ADDR   00DEH   R  SEG=?PR?MAIN            305# 308 
+RAND8REG . . . . .  N NUMB   0020h                              110# 116 119 123 
+                                                                125 
+RI . . . . . . . .  B ADDR   0098H.0 A                          87# 
+INT0 . . . . . . .  B ADDR   00B0H.2 A                          76# 
+FMG_DRAW_NEXT_PIE~  C ADDR   0314H   R  SEG=?PR?MAIN            826# 829 
+FMG_GET_REGION . .  C ADDR   027EH   R  SEG=?PR?MAIN            458 476 704# 1285 
+                                                                1439 
+FMG_UPDATE_STATE .  C ADDR   01BBH   R  SEG=?PR?MAIN            453 493# 
+FMG_FROM_WAIT_TO_~  C ADDR   03AAH   R  SEG=?PR?MAIN            439 914# 1300 
+FMG_PIECE_ID_R . .  N NUMB   0027h                              336# 923 987 
+LCD_BUS. . . . . .  ? ADDR   0000H   A                          161# 190 193 196 
+                                                                199 202 207 210 225 
+                                                                281 286 306 822 827 
+                                                                831 841 843 864 866 
+                                                                885 887 893 895 901 
+                                                                906 909 1066 1068 
+                                                                1107 1110 1138 1140 
+                                                                1174 1190 
+INT1 . . . . . . .  B ADDR   00B0H.3 A                          75# 
+CY . . . . . . . .  B ADDR   00D0H.7 A                          40# 
+DPH. . . . . . . .  D ADDR   0083H   A                          17# 586 605 979 1422 
+                                                                
+TIMER0_INTERRUPT .  C ADDR   000BH   A                          1588# 
+FMG_DRAW_BORDER_L~  C ADDR   0528H   R  SEG=?PR?MAIN            1173# 1176 
+FMG_SELECT_NEW_PI~  C ADDR   040DH   R  SEG=?PR?MAIN            955 958 961 964 967 
+                                                                970 974 977# 
+MACRO ASSEMBLER MAIN                                       12/04/14 06:55:53 PAGE     4
+
+FMG_UPDATE_STATE_~  C ADDR   01D3H   R  SEG=?PR?MAIN            503 515# 
+FMG_PIECES_L . . .  C ADDR   0129H   R  SEG=?PR?MAIN            393# 963 
+RAND8. . . . . . .  C ADDR   0000H   R  SEG=?PR?MAIN            115# 937 984 
+TI . . . . . . . .  B ADDR   0098H.1 A                          86# 
+FMG_SET_REGION_END  C ADDR   06F7H   R  SEG=?PR?MAIN            1567 1572# 
+FMG_REMOVE_SPECIF~  C ADDR   0621H   R  SEG=?PR?MAIN            1369 1371# 
+FMG_DRAW_NEXT_PIE~  C ADDR   039BH   R  SEG=?PR?MAIN            905# 908 
+IE0. . . . . . . .  B ADDR   0088H.1 A                          55# 
+FMG_UPDATE_STATE_~  C ADDR   0678H   R  SEG=?PR?MAIN            1453 1458# 
+FMG_VALIDATE_COLL~  C ADDR   05B6H   R  SEG=?PR?MAIN            1273 1278# 
+FMG_TIMER_0_END. .  C ADDR   0595H   R  SEG=?PR?MAIN            1225 1233 1237 1240 
+                                                                1243 1248 1250# 
+FMG_DRAW_BORDER_L~  C ADDR   0526H   R  SEG=?PR?MAIN            1171# 1182 
+FMG_CLEAR_MEMORY_~  C ADDR   0440H   R  SEG=?PR?MAIN            1014# 1017 
+FMG_GRID . . . . .  N NUMB   0040h                              366# 734 1003 1043 
+                                                                1314 1500 
+RAND8B . . . . . .  C ADDR   0007H   R  SEG=?PR?MAIN            117 120# 
+IE1. . . . . . . .  B ADDR   0088H.3 A                          53# 
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1832    ----
+   XDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+REGISTER BANK(S) USED : 0 
+
+ASSEMBLY COMPLETE.   0 WARNING(S)   0 ERROR(S)

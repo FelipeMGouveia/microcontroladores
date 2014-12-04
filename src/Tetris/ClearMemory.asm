@@ -1,0 +1,30 @@
+code
+FMG_CLEAR_MEMORY:
+    MOV R1, #04Ch
+    MOV R0, #fmg_grid
+    
+    MOV R3, #003h
+    
+    FMG_CLEAR_MEMORY_MAIN_LOOP:
+        MOV R2, #004h
+        FMG_CLEAR_MEMORY_LOOP_BORDER_LEFT:
+            MOV @R0, #0FFh
+            INC R0
+            DJNZ R2, FMG_CLEAR_MEMORY_LOOP_BORDER_LEFT
+        MOV R1, #00Ah
+        FMG_CLEAR_MEMORY_LOOP_MIDDLE:
+            MOV @R0, #000h
+            INC R0
+            DJNZ R1, FMG_CLEAR_MEMORY_LOOP_MIDDLE
+        MOV R2, #004h
+        FMG_CLEAR_MEMORY_LOOP_BORDER_RIGHT:
+            MOV @R0, #0FFh
+            INC R0
+            DJNZ R2, FMG_CLEAR_MEMORY_LOOP_BORDER_RIGHT
+        DJNZ R3, FMG_CLEAR_MEMORY_MAIN_LOOP
+    MOV R2, #012h
+    FMG_CLEAR_MEMORY_LOOP_BORDER_FLOOR:
+        MOV @R0, #0FFh
+        INC R0
+        DJNZ R2, FMG_CLEAR_MEMORY_LOOP_BORDER_FLOOR
+    RET

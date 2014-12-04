@@ -1,0 +1,119 @@
+MACRO ASSEMBLER DRAWBORDER                                 11/27/14 10:53:37 PAGE     1
+
+
+DOS MACRO ASSEMBLER MA51 V06.16.13.326
+OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\DRAWBORDER.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\DRAWBORDER.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+
+LOC     OBJ           LINE    SOURCE
+------                   1     CODE
+                         2     FMG_DRAW_BORDER: 
+0000    C000     F       3         PUSH PSW
+
+*** ERROR #46 IN LINE 3 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'PSW'
+0002    D200     F       4         SETB RS1
+
+*** ERROR #46 IN LINE 4 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'RS1'
+0004    C200     F       5         CLR RS0
+
+*** ERROR #46 IN LINE 5 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'RS0'
+                         6         
+0006    750020   F       7         MOV LCD_X, #020H
+
+*** ERROR #46 IN LINE 7 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_X'
+0009    750000   F       8         MOV LCD_Y, #000H
+
+*** ERROR #46 IN LINE 8 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_Y'
+000C    120000   F       9         LCALL LCD_XY
+
+*** ERROR #46 IN LINE 9 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_XY'
+                        10         
+000F    7B05            11         MOV R3, #005H
+                        12         FMG_DRAW_BORDER_LOOP_EXTERNAL: 
+0011    7C16            13             MOV R4, #016H
+                        14             FMG_DRAW_BORDER_LOOP: 
+0013    7500FF   F      15                 MOV LCD_BUS, #0FFH
+
+*** ERROR #46 IN LINE 15 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_BUS'
+0016    120000   F      16                 LCALL LCD_DRAW
+
+*** ERROR #46 IN LINE 16 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_DRAW'
+0019    DC00     F      17                 DJNZ R4, FMG_DRAW_BORDER_LOOP
+001B    750020   F      18             MOV LCD_X, #020H
+
+*** ERROR #46 IN LINE 18 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_X'
+001E    E500     F      19             MOV A, LCD_Y
+
+*** ERROR #46 IN LINE 19 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_Y'
+0020    2401            20             ADD A, #001H
+0022    F500     F      21             MOV LCD_Y, A
+
+*** ERROR #46 IN LINE 21 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_Y'
+0024    120000   F      22             LCALL LCD_XY
+
+*** ERROR #46 IN LINE 22 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_XY'
+0027    DB00     F      23         DJNZ R3, FMG_DRAW_BORDER_LOOP_EXTERNAL
+                        24         
+0029    750020   F      25         MOV LCD_X, #020H
+
+*** ERROR #46 IN LINE 25 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_X'
+002C    750005   F      26         MOV LCD_Y, #005H
+
+*** ERROR #46 IN LINE 26 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_Y'
+002F    120000   F      27         LCALL LCD_XY
+
+*** ERROR #46 IN LINE 27 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_XY'
+                        28         
+0032    7B16            29         MOV R3, #016H
+                        30         FMG_DRAW_BORDER_LOOP_BOTTOM: 
+0034    750001   F      31             MOV LCD_BUS, #001H
+
+*** ERROR #46 IN LINE 31 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_BUS'
+0037    120000   F      32             LCALL LCD_DRAW
+
+*** ERROR #46 IN LINE 32 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'LCD_DRAW'
+003A    DB00     F      33             DJNZ R3, FMG_DRAW_BORDER_LOOP_BOTTOM
+003C    D000     F      34         POP PSW
+
+*** ERROR #46 IN LINE 34 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : UNDEFINED SYMBOL (PASS-2) 'PSW'
+003E    22              35         RET
+
+*** WARNING #87 IN LINE 35 OF C:\Projects\microcontroladores\src\Tetris\DrawBorder.asm : MISSING 'END' STATEMENT
+MACRO ASSEMBLER DRAWBORDER                                 11/27/14 10:53:37 PAGE     0
+
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
+
+LCD_DRAW . . . . .  ? ADDR   0000H   A                          16 32 
+LCD_XY . . . . . .  ? ADDR   0000H   A                          9 22 27 
+FMG_DRAW_BORDER. .  C ADDR   0000H   R  SEG=?PR?DRAWBORDER      2# 
+LCD_X. . . . . . .  ? ADDR   0000H   A                          7 18 25 
+LCD_Y. . . . . . .  ? ADDR   0000H   A                          8 19 21 26 
+?PR?DRAWBORDER . .  C SEG    003FH      REL=UNIT                1# 
+FMG_DRAW_BORDER_L~  C ADDR   0034H   R  SEG=?PR?DRAWBORDER      30# 33 
+RS0. . . . . . . .  ? ADDR   0000H   A                          5 
+RS1. . . . . . . .  ? ADDR   0000H   A                          4 
+PSW. . . . . . . .  ? ADDR   0000H   A                          3 34 
+LCD_BUS. . . . . .  ? ADDR   0000H   A                          15 31 
+FMG_DRAW_BORDER_L~  C ADDR   0013H   R  SEG=?PR?DRAWBORDER      14# 17 
+FMG_DRAW_BORDER_L~  C ADDR   0011H   R  SEG=?PR?DRAWBORDER      12# 23 
+DRAWBORDER . . . .  N NUMB   -----
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     63    ----
+   XDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+REGISTER BANK(S) USED : 0 
+
+ASSEMBLY COMPLETE.   1 WARNING(S)  18 ERROR(S)

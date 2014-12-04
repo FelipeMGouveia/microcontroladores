@@ -1,6 +1,16 @@
 
 <ApplicationBuild Header="Commons" Extern=".\Commons.rapp" Path=".\Commons.rapp" OutputFile=".\Commons.aof" sate="96" >
-	<NodeASM Path=".\commons.asm" Header="commons.asm" Marker="-1" OutputFile=".\commons.obj" sate="0" />
+	<NodeASM Path=".\commons.asm" Header="commons.asm" Marker="0" OutputFile=".\commons.obj" sate="0" >
+		<Options>
+			<Config Header="Standard" >
+				<Set Header="NodeASM" >
+					<Section Header="Build" >
+						<Property Header="Exclude" Value="Yes" Removable="1" />
+					</Section>
+				</Set>
+			</Config>
+		</Options>
+	</NodeASM>
 	<NodeASM Path=".\tetris.asm" Header="tetris.asm" Marker="0" OutputFile=".\tetris.obj" sate="0" >
 		<Options>
 			<Config Header="Standard" >
@@ -34,6 +44,242 @@
 			</Config>
 		</Options>
 	</NodeASM>
+	<Group Header="Tetris" Marker="-1" OutputFile="" sate="96" >
+		<NodeASM Path=".\Tetris\common.asm" Header="common.asm" Marker="0" OutputFile=".\common.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\main.asm" Header="main.asm" Marker="0" OutputFile=".\main.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\UpdateState.asm" Header="UpdateState.asm" Marker="0" OutputFile=".\UpdateState.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\GetRegion.asm" Header="GetRegion.asm" Marker="0" OutputFile=".\GetRegion.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\FindBit.asm" Header="FindBit.asm" Marker="0" OutputFile=".\FindBit.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\DrawNextPiece.asm" Header="DrawNextPiece.asm" Marker="0" OutputFile=".\DrawNextPiece.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\CopyFromWaitToGame.asm" Header="CopyFromWaitToGame.asm" Marker="0" OutputFile=".\CopyFromWaitToGame.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\SelectNewPiece.asm" Header="SelectNewPiece.asm" Marker="0" OutputFile=".\SelectNewPiece.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\ClearMemory.asm" Header="ClearMemory.asm" Marker="0" OutputFile=".\ClearMemory.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\DrawScreen.asm" Header="DrawScreen.asm" Marker="0" OutputFile=".\DrawScreen.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\DrawBorder.asm" Header="DrawBorder.asm" Marker="0" OutputFile=".\DrawBorder.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<Group Header="UpdateState" Marker="-1" OutputFile="" sate="96" >
+			<NodeASM Path=".\Tetris\UpdateState\UpdateStateLeft.asm" Header="UpdateStateLeft.asm" Marker="0" OutputFile=".\UpdateStateLeft.obj" sate="0" >
+				<Options>
+					<Config Header="Standard" >
+						<Set Header="NodeASM" >
+							<Section Header="Build" >
+								<Property Header="Exclude" Value="Yes" Removable="1" />
+							</Section>
+						</Set>
+					</Config>
+				</Options>
+			</NodeASM>
+			<NodeASM Path=".\Tetris\UpdateState\UpdateStateRight.asm" Header="UpdateStateRight.asm" Marker="0" OutputFile=".\UpdateStateRight.obj" sate="0" >
+				<Options>
+					<Config Header="Standard" >
+						<Set Header="NodeASM" >
+							<Section Header="Build" >
+								<Property Header="Exclude" Value="Yes" Removable="1" />
+							</Section>
+						</Set>
+					</Config>
+				</Options>
+			</NodeASM>
+			<NodeASM Path=".\Tetris\UpdateState\UpdateStateCheckColision.asm" Header="UpdateStateCheckColision.asm" Marker="0" OutputFile=".\UpdateStateCheckColision.obj" sate="0" >
+				<Options>
+					<Config Header="Standard" >
+						<Set Header="NodeASM" >
+							<Section Header="Build" >
+								<Property Header="Exclude" Value="Yes" Removable="1" />
+							</Section>
+						</Set>
+					</Config>
+				</Options>
+			</NodeASM>
+			<NodeASM Path=".\Tetris\UpdateState\UpdateStateFall.asm" Header="UpdateStateFall.asm" Marker="0" OutputFile=".\UpdateStateFall.obj" sate="0" >
+				<Options>
+					<Config Header="Standard" >
+						<Set Header="NodeASM" >
+							<Section Header="Build" >
+								<Property Header="Exclude" Value="Yes" Removable="1" />
+							</Section>
+						</Set>
+					</Config>
+				</Options>
+			</NodeASM>
+			<NodeASM Path=".\Tetris\UpdateState\UpdateStateRotate.asm" Header="UpdateStateRotate.asm" Marker="0" OutputFile=".\UpdateStateRotate.obj" sate="0" >
+				<Options>
+					<Config Header="Standard" >
+						<Set Header="NodeASM" >
+							<Section Header="Build" >
+								<Property Header="Exclude" Value="Yes" Removable="1" />
+							</Section>
+						</Set>
+					</Config>
+				</Options>
+			</NodeASM>
+		</Group>
+		<NodeASM Path=".\Tetris\Timer0.asm" Header="Timer0.asm" Marker="0" OutputFile=".\Timer0.obj" sate="2" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\ValidateCollision.asm" Header="ValidateCollision.asm" Marker="0" OutputFile=".\ValidateCollision.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\RemoveCompleteLines.asm" Header="RemoveCompleteLines.asm" Marker="0" OutputFile=".\RemoveCompleteLines.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\RemoveSpecificLine.asm" Header="RemoveSpecificLine.asm" Marker="0" OutputFile=".\RemoveSpecificLine.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\SetRegion.asm" Header="SetRegion.asm" Marker="0" OutputFile=".\SetRegion.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+	</Group>
+	<NodeASM Path=".\main.asm" Header="main.asm" Marker="-1" OutputFile=".\main.obj" sate="0" />
 	<Options>
 		<Config Header="Standard" >
 			<Set Header="ApplicationBuild" >
@@ -52,17 +298,4 @@
 			</Set>
 		</Config>
 	</Options>
-	<Group Header="Tetris" Marker="-1" OutputFile="" sate="96" >
-		<NodeASM Path=".\Tetris\common.asm" Header="common.asm" Marker="0" OutputFile=".\common.obj" sate="2" >
-			<Options>
-				<Config Header="Standard" >
-					<Set Header="NodeASM" >
-						<Section Header="Build" >
-							<Property Header="Exclude" Value="Yes" Removable="1" />
-						</Section>
-					</Set>
-				</Config>
-			</Options>
-		</NodeASM>
-	</Group>
 </ApplicationBuild>
