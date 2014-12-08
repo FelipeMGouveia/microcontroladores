@@ -3,6 +3,9 @@ FMG_TETRIS_MAIN:
     ;Configuração do timer_0
     MOV A, #00Fh
     MOV fmg_time_to_fall, A
+    MOV fmg_score_0, #000h
+    MOV fmg_score_1, #000h
+
     
     CLR EA ;Desabilita interrupção até configurar o(s) timer(s)
     CLR TR0 ; Para o timer 0
@@ -33,7 +36,7 @@ FMG_TETRIS_MAIN:
     
     ;Move a peça para a posição central no topo
     MOV fmg_piece_x, #007h
-    MOV fmg_piece_y, #00Ah
+    MOV fmg_piece_y, #000h
     
     LCALL FMG_DRAW_NEXT_PIECE ; Desenha a peça que está na espera
 
@@ -44,7 +47,19 @@ FMG_TETRIS_MAIN:
         LCALL FMG_DRAW_NEXT_PIECE ; Desenha a peça que está na espera
         LCALL FMG_UPDATE_STATE ;Movimenta a peça atual.
         LCALL FMG_VALIDATE_COLLISION ; Valida se ocorreu uma colisão
+
+        LCALL FMG_REMOVE_COMPLETE_LINES; Remove as linhas completas 
+        ;R7 Está com a quantidade de linhas removidas
+        LCALL FMG_UPDATE_SCORE
         
+        LCALL FMG_DRAW_SCORE
+        
+        LCALL FMG_TEST_END
+        MOV A, fmg_state
+        CLR C
+        SUBB A, #002h
+        JZ FMG_END_GAME
+       
         MOV R4, fmg_piece_x
         MOV R5, fmg_piece_y
         LCALL FMG_GET_REGION
@@ -78,6 +93,8 @@ FMG_TETRIS_MAIN:
         MOV R4, fmg_piece_x
         MOV R5, fmg_piece_y
         LCALL FMG_SET_REGION
-        
     LJMP FMG_WAIT_ETERNAL
+    
+    FMG_END_GAME:
+        LCALL FMG_DRAW_END
     RET

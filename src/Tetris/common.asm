@@ -41,7 +41,7 @@ fmg_grid SET 040h
 
 code
     ;Fonte numérica 3x5
-    FMG_NUMBERS_FONT: DB 01Fh, 011h, 01Fh, 009h, 01Fh, 001h, 009h, 013h, 01Dh, 011h, 015h, 00Ah, 01Ch, 004h, 01Fh, 01Ch, 015h, 012h, 01Fh, 015h, 017h, 010h, 017h, 018h, 01FH, 015H, 01Fh, 01Ch, 014h, 01Fh
+    fmg_numbers_font: DB 0F8h, 088h, 0F8h, 090h, 0F8h, 080h, 090h, 0C8h, 0B8h, 088h, 0A8h, 050h, 038h, 020h, 0F8h, 038h, 0A8h, 048h, 0F8h, 0A8h, 0D8h, 008h, 0D8h, 081h, 0F8H, 0A8H, 0F8h, 038h, 028h, 0F8h
 
     ;Cada peça é definida por um par de bytes onde os bits mais significativos representam 
     ;a coluna impares(3 e 1), e os menos significativos representam as colunas pares (2 e 0)

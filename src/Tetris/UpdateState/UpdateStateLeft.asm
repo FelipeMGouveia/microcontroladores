@@ -1,6 +1,6 @@
 ;Carrega a posição X e Y para R4 e R5
 MOV A, fmg_piece_x
-SUBB A, #001h
+DEC A
 MOV R4, A
 MOV A, fmg_piece_y
 MOV R5, A
@@ -16,7 +16,7 @@ FMG_UPDATE_STATE_LEFT:
 FMG_UPDATE_STATE_LEFT_VALID:
     ;Rotação válida
     MOV A, fmg_piece_x
-    SUBB A, #001h
+    DEC A
     MOV fmg_piece_x, A; Atualiza a posição
 FMG_UPDATE_STATE_LEFT_NOT_VALID:
     LJMP FMG_UPDATE_STATE_END

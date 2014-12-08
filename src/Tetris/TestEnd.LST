@@ -1,0 +1,66 @@
+MACRO ASSEMBLER TESTEND                                    12/08/14 01:02:43 PAGE     1
+
+
+DOS MACRO ASSEMBLER MA51 V06.16.13.326
+OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\TESTEND.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\TESTEND.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+
+LOC     OBJ           LINE    SOURCE
+------                   1     CODE
+                         2         FMG_TEST_END: 
+0000    7800     F       3             MOV R0, #FMG_GRID
+
+*** ERROR #46 IN LINE 3 OF C:\Projects\microcontroladores\src\Tetris\TestEnd.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_GRID'
+0002    7B00             4             MOV R3, #000H
+0004    7C0A             5             MOV R4, #00AH
+                         6             
+                         7             FMG_TEST_END_LOOP: 
+0006    E6               8                 MOV A, @R0
+0007    4B               9                 ORL A, R3
+0008    FB              10                 MOV R3, A
+0009    08              11                 INC R0
+000A    DC00     F      12                 DJNZ R4, FMG_TEST_END_LOOP
+000C    EB              13             MOV A, R3
+000D    6000     F      14             JZ FMG_TEST_END_END
+000F    7000     F      15             JNZ FMG_TEST_END_END_GAME
+                        16             
+                        17             FMG_TEST_END_END_GAME: 
+0011    750002   F      18                 MOV FMG_STATE, #002H
+
+*** ERROR #46 IN LINE 18 OF C:\Projects\microcontroladores\src\Tetris\TestEnd.asm : UNDEFINED SYMBOL (PASS-2) 'FMG_STATE'
+                        19             FMG_TEST_END_END: 
+0014    22              20         RET
+
+*** WARNING #87 IN LINE 20 OF C:\Projects\microcontroladores\src\Tetris\TestEnd.asm : MISSING 'END' STATEMENT
+MACRO ASSEMBLER TESTEND                                    12/08/14 01:02:43 PAGE     0
+
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
+
+FMG_TEST_END_END .  C ADDR   0014H   R  SEG=?PR?TESTEND         14 19# 
+FMG_TEST_END_LOOP.  C ADDR   0006H   R  SEG=?PR?TESTEND         7# 12 
+FMG_TEST_END . . .  C ADDR   0000H   R  SEG=?PR?TESTEND         2# 
+?PR?TESTEND. . . .  C SEG    0015H      REL=UNIT                1# 
+FMG_STATE. . . . .  ? ADDR   0000H   A                          18 
+FMG_TEST_END_END_~  C ADDR   0011H   R  SEG=?PR?TESTEND         15 17# 
+FMG_GRID . . . . .  ? ADDR   0000H   A                          3 
+TESTEND. . . . . .  N NUMB   -----
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     21    ----
+   XDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+REGISTER BANK(S) USED : 0 
+
+ASSEMBLY COMPLETE.   1 WARNING(S)   2 ERROR(S)

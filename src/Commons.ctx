@@ -1,16 +1,27 @@
 
 <Debug>
 	<Views>
-		<View File=".\Tetris\common.asm" Line="10" Index="0" />
+		<View File=".\Tetris\common.asm" Line="44" Index="0" />
 		<View File=".\Tetris\ValidateCollision.asm" Line="17" Index="1" />
-		<View File=".\Tetris\GetRegion.asm" Line="36" Index="2" />
+		<View File=".\Tetris\GetRegion.asm" Line="3" Index="2" />
 		<View File=".\Tetris\SetRegion.asm" Line="1" Index="3" />
 		<View File=".\Tetris\FindBit.asm" Line="4" Index="4" />
 		<View File=".\tetris.asm" Line="17" Index="5" />
-		<View File=".\Tetris\main.asm" Line="64" Index="6" />
-		<View File=".\main.asm" Line="792" Index="7" focus="1" />
-		<View File=".\Tetris\DrawScreen.asm" Line="46" Index="8" />
-																																																																																																																																																																																																																																										
+		<View File=".\Tetris\main.asm" Line="10" Index="6" />
+		<View File=".\Tetris\DrawScreen.asm" Line="14" Index="7" />
+		<View File=".\main.asm" Line="1507" Index="8" focus="1" />
+		<View File=".\Tetris\CopyFromWaitToGame.asm" Line="18" Index="9" />
+		<View File=".\Tetris\UpdateState\UpdateStateCheckColision.asm" Line="2" Index="10" />
+		<View File=".\Tetris\UpdateState\UpdateStateFall.asm" Line="13" Index="11" />
+		<View File=".\Tetris\UpdateState\UpdateStateRotate.asm" Line="46" Index="12" />
+		<View File=".\Tetris\UpdateState\UpdateStateLeft.asm" Line="19" Index="13" />
+		<View File=".\Tetris\UpdateState\UpdateStateRight.asm" Line="19" Index="14" />
+		<View File=".\Tetris\Timer0.asm" Line="1" Index="15" />
+		<View File=".\commons.asm" Line="32" Index="16" />
+		<View File=".\LCD.asm" Line="1" Index="17" />
+		<View File=".\Random.asm" Line="1" Index="18" />
+		<View File=".\Tetris\SelectNewPiece.asm" Line="16" Index="19" />
+																																																																																																												
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
@@ -23,7 +34,7 @@
 		<BookMark File="" Line="0" />
 		<BookMark File="" Line="0" />
 		<BookMark File="" Line="0" />
-																																																																																																																																																																																																																																										
+																																																																																																												
 	</BookMarks>
 	<Grep>
 		<GrepIncludeSub>yes</GrepIncludeSub>
@@ -34,66 +45,54 @@
 		<GrepFileTypes>
 			<GrepFileTypesValue>*.c;*.h</GrepFileTypesValue>
 			<GrepFileType>*.c;*.h</GrepFileType>
-																																																																																																																																																																																																																																																																																																																																																																																																						
+																																																																																																																																																																																				
 		</GrepFileTypes>
 		<GrepFindWhat>
 			<GrepFindWhatValue/>
-																																																																																																																																																																																																																																																																																																																																																																																																						
+																																																																																																																																																																																				
 		</GrepFindWhat>
 		<GrepFindWhere>
 			<GrepFindWhereValue>Application Files</GrepFindWhereValue>
 			<GrepPathStr>Application Files</GrepPathStr>
 			<GrepPathStr>Application Path</GrepPathStr>
 			<GrepPathStr>Project Files</GrepPathStr>
-																																																																																																																																																																																																																																																																																																																																																																																																						
+																																																																																																																																																																																				
 		</GrepFindWhere>
 		<GrepReplaceWhat>
 			<GrepReplaceWhatValue/>
-																																																																																																																																																																																																																																																																																																																																																																																																						
+																																																																																																																																																																																				
 		</GrepReplaceWhat>
-																																																																																																																																																																																																																																										
+																																																																																																												
 	</Grep>
 	<FindStrings>
-		<Find>GET</Find>
-		<Find>FMG_TET</Find>
-		<Find>TIMER0_INTERRUPT</Find>
-		<Find>FMG</Find>
-		<Find>FMG_M</Find>
-		<Find>Main</Find>
-		<Find>DPL</Find>
-		<Find>fmg_piece_id_2</Find>
-		<Find>fmg_piece_id_0</Find>
-		<Find>rando</Find>
-		<Find>lcd_X</Find>
-		<Find>FMG_DRAW_SCREEN</Find>
-		<Find>FMG_CLEAR_MEMORY</Find>
-		<Find>LCD_CLEAR</Find>
-		<Find>CLEAR</Find>
-		<Find>#021h</Find>
-		<Find>#017h</Find>
-		<Find>RS0</Find>
-		<Find>RS2</Find>
-		<Find>USING</Find>
-																																																																																																																																																																																																																																										
+		<Find>000B</Find>
+		<Find>fmg_control</Find>
+		<Find>SETB EA</Find>
+		<Find>CLR EA</Find>
+		<Find>R1</Find>
+		<Find>EA </Find>
+		<Find>EA</Find>
+		<Find>FMG_UPDATE_STATE_CHECK_COLLISION:</Find>
+		<Find>LCALL FMG_UPDATE_STATE_CHECK_COLLISION</Find>
+		<Find>FMG_UPDATE_STATE_CHECK_COLLISION_TEST_R7</Find>
+		<Find>FMG_UPDATE_STATE_SWITCH_STATE_FALL</Find>
+		<Find>fmg_stat</Find>
+		<Find>VAlidate</Find>
+		<Find>FMG_T</Find>
+		<Find>LCALL FMG_FROM_WAIT_TO_GAME</Find>
+		<Find>LCALL FMG_FROM_WAIT_TO_GAME ; Coloca a peça da espera no jogo.</Find>
+		<Find>P1.0</Find>
+		<Find>FMG_TIMER_0_FALL</Find>
+		<Find>TIMER_)</Find>
+		<Find>TR0</Find>
+																																																																																																												
 	</FindStrings>
 	<ReplaceStrings>
+		<Find>GET</Find>
 		<Find>SET</Find>
-																																																																																																																																																																																																																																										
+																																																																																																												
 	</ReplaceStrings>
-	<Commons>
-		<DataView Focus="48" TopRow="0" NbPerLine="24" />
-		<CodeView TopRow="0" Focus="0" >
-			<CodeReport>
-				<0>80</0>
-				<1>88</1>
-				<2>48</2>
-				<3>264</3>
-				<4>48</4>
-				<5>100</5>
-			</CodeReport>
-		</CodeView>
-		<CodeView Focus="0" TopRow="0" NbPerLine="8" />
-	</Commons>
+	<Commons/>
 	<Flags>
 		<Report>
 			<Def Header="FlagReport" NbCol="9" >
@@ -110,7 +109,8 @@
 				<Col Type="PT_STRING" Header="Condcount" sizeCache="DD" AutoSize="1" Edit="0" Sortable="0" Visible="0" />
 			</Def>
 			<Rows>
-				<Row Check="True" Kind="Breakpoint" KindID="0" Space="CODE" SpaceID="0" Condition="" Line="L:1324" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
+				<Row Check="True" Kind="Breakpoint" KindID="0" Space="CODE" SpaceID="0" Condition="" Line="L:1656" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
+				<Row Check="True" Kind="Breakpoint" KindID="0" Space="CODE" SpaceID="0" Condition="" Line="L:1671" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
 			</Rows>
 		</Report>
 	</Flags>

@@ -263,7 +263,7 @@ fmg_grid SET 040h
 
 code
     ;Fonte num�rica 3x5
-    FMG_NUMBERS_FONT: DB 01Fh, 011h, 01Fh, 009h, 01Fh, 001h, 009h, 013h, 01Dh, 011h, 015h, 00Ah, 01Ch, 004h, 01Fh, 01Ch, 015h, 012h, 01Fh, 015h, 017h, 010h, 017h, 018h, 01FH, 015H, 01Fh, 01Ch, 014h, 01Fh
+    fmg_numbers_font: DB 0F8h, 088h, 0F8h, 090h, 0F8h, 080h, 090h, 0C8h, 0B8h, 088h, 0A8h, 050h, 038h, 020h, 0F8h, 038h, 0A8h, 048h, 0F8h, 0A8h, 0D8h, 008h, 0D8h, 081h, 0F8H, 0A8H, 0F8h, 038h, 028h, 0F8h
 
     ;Cada pe�a � definida por um par de bytes onde os bits mais significativos representam 
     ;a coluna impares(3 e 1), e os menos significativos representam as colunas pares (2 e 0)
@@ -307,6 +307,9 @@ FMG_TETRIS_MAIN:
     ;Configura��o do timer_0
     MOV A, #00Fh
     MOV fmg_time_to_fall, A
+    MOV fmg_score_0, #000h
+    MOV fmg_score_1, #000h
+
     
     CLR EA ;Desabilita interrup��o at� configurar o(s) timer(s)
     CLR TR0 ; Para o timer 0
@@ -337,7 +340,7 @@ FMG_TETRIS_MAIN:
     
     ;Move a pe�a para a posi��o central no topo
     MOV fmg_piece_x, #007h
-    MOV fmg_piece_y, #00Ah
+    MOV fmg_piece_y, #000h
     
     LCALL FMG_DRAW_NEXT_PIECE ; Desenha a pe�a que est� na espera
 
@@ -348,7 +351,19 @@ FMG_TETRIS_MAIN:
         LCALL FMG_DRAW_NEXT_PIECE ; Desenha a pe�a que est� na espera
         LCALL FMG_UPDATE_STATE ;Movimenta a pe�a atual.
         LCALL FMG_VALIDATE_COLLISION ; Valida se ocorreu uma colis�o
+
+        LCALL FMG_REMOVE_COMPLETE_LINES; Remove as linhas completas 
+        ;R7 Est� com a quantidade de linhas removidas
+        LCALL FMG_UPDATE_SCORE
         
+        LCALL FMG_DRAW_SCORE
+        
+        LCALL FMG_TEST_END
+        MOV A, fmg_state
+        CLR C
+        SUBB A, #002h
+        JZ FMG_END_GAME
+       
         MOV R4, fmg_piece_x
         MOV R5, fmg_piece_y
         LCALL FMG_GET_REGION
@@ -382,8 +397,10 @@ FMG_TETRIS_MAIN:
         MOV R4, fmg_piece_x
         MOV R5, fmg_piece_y
         LCALL FMG_SET_REGION
-        
     LJMP FMG_WAIT_ETERNAL
+    
+    FMG_END_GAME:
+        LCALL FMG_DRAW_END
     RET
 code 
     FMG_UPDATE_STATE:
@@ -420,7 +437,7 @@ code
     FMG_UPDATE_STATE_SWITCH_STATE_LEFT:
         ;Carrega a posi��o X e Y para R4 e R5
 MOV A, fmg_piece_x
-SUBB A, #001h
+DEC A
 MOV R4, A
 MOV A, fmg_piece_y
 MOV R5, A
@@ -436,14 +453,14 @@ FMG_UPDATE_STATE_LEFT:
 FMG_UPDATE_STATE_LEFT_VALID:
     ;Rota��o v�lida
     MOV A, fmg_piece_x
-    SUBB A, #001h
+    DEC A
     MOV fmg_piece_x, A; Atualiza a posi��o
 FMG_UPDATE_STATE_LEFT_NOT_VALID:
     LJMP FMG_UPDATE_STATE_END
     FMG_UPDATE_STATE_SWITCH_STATE_RIGHT:
         ;Carrega a posi��o X e Y para R4 e R5
 MOV A, fmg_piece_x
-ADD A, #001h
+INC A
 MOV R4, A
 MOV A, fmg_piece_y
 MOV R5, A
@@ -459,7 +476,7 @@ FMG_UPDATE_STATE_RIGHT:
 FMG_UPDATE_STATE_RIGHT_VALID:
     ;Rota��o v�lida
     MOV A, fmg_piece_x
-    ADD A, #001h
+    INC A
     MOV fmg_piece_x, A; Atualiza a posi��o
 FMG_UPDATE_STATE_RIGHT_NOT_VALID:
     LJMP FMG_UPDATE_STATE_END
@@ -483,11 +500,11 @@ MOV DPH, fmg_piece_H
 MOV DPL, fmg_piece_L
 MOV A, #000h
 MOVC A, @A+DPTR
-SUBB A, #001h; Zero based
+DEC A; Zero based
 MOV R1, A
 JMP FMG_UPDATE_STATE_ROTATION_LEFT
 FMG_UPDATE_STATE_LEFT_NOT_ZERO: ; Atualiza para o caso de n�o ser zero
-SUBB A, 1
+DEC A
 MOV R1, A
 
 FMG_UPDATE_STATE_ROTATION_LEFT:
@@ -508,11 +525,11 @@ FMG_UPDATE_STATE_ROTATION_LEFT_VALID:
     MOV R1, A
     ;Coloca em id 0 e 1 qual a pe�a selecionada
     MOVC A, @A+DPTR ;Representa��o da pe�a (primeiros bytes)
-    MOV fmg_piece_id_0, A
+    MOV fmg_piece_0, A
     MOV A, R1
     ADD A, #001h ;Representa��o da pe�a (segundos bytes)
     MOVC A, @A+DPTR
-    MOV fmg_piece_id_1, A
+    MOV fmg_piece_1, A
     
 FMG_UPDATE_STATE_ROTATION_LEFT_NOT_VALID:
     LJMP FMG_UPDATE_STATE_END
@@ -745,17 +762,18 @@ code
         MOV R1, A
         MOV ACC, @R1
         
-        MOV C, ACC.4
+        MOV C, ACC.7
         MOV ACC.0, C
         MOV ACC.1, C
-        MOV C, ACC.5
+        MOV C, ACC.6
         MOV ACC.2, C
         MOV ACC.3, C
-        MOV C, ACC.6
-        MOV ACC.4, C
-        MOV ACC.5, C
-        MOV C, ACC.7
+        MOV C, ACC.4
         MOV ACC.6, C
+        MOV ACC.7, C
+        MOV C, ACC.5
+        MOV ACC.5, C
+        MOV ACC.4, C
 
         MOV lcd_bus, ACC; primeiro draw
         LCALL LCD_DRAW
@@ -766,17 +784,18 @@ code
         MOV R1, A
         MOV ACC, @R1
         
-        MOV C, ACC.3
+        MOV C, ACC.0
         MOV ACC.7, C
         MOV ACC.6, C
-        MOV C, ACC.2
+        MOV C, ACC.1
         MOV ACC.5, C
         MOV ACC.4, C
-        MOV C, ACC.1
-        MOV ACC.3, C
-        MOV ACC.2, C
-        MOV C, ACC.0
+        MOV C, ACC.3
         MOV ACC.1, C
+        MOV ACC.0, C
+        MOV C, ACC.2
+        MOV ACC.2, C
+        MOV ACC.3, C
 
         MOV lcd_bus, ACC; primeiro draw
         LCALL LCD_DRAW
@@ -1117,14 +1136,14 @@ code
         JZ FMG_TIMER_0_FALL ;Se for para a pe�a cair, ent�o caia!
         
         ;Ignorando o teste dos bot�es!
-        MOV A, #000h
-        JMP FMG_TIMER_0_END
+        ;MOV A, #000h
+        ;JMP FMG_TIMER_0_END
         
         ;Adimitindo que: B1(P1.0) == Up, B2(P1.1) == Down, B3(P1.2) == Left, B4(P1.3) == Right, B5(P1.4) == Not Used
-        JB P1.0, FMG_TIMER_0_ROTATE
-        JB P1.1, FMG_TIMER_0_FALL
-        JB P1.2, FMG_TIMER_0_LEFT
-        JB P1.3, FMG_TIMER_0_RIGHT
+        JNB P1.0, FMG_TIMER_0_ROTATE
+        JNB P1.1, FMG_TIMER_0_FALL
+        JNB P1.2, FMG_TIMER_0_LEFT
+        JNB P1.3, FMG_TIMER_0_RIGHT
         MOV A, #000h
         JMP FMG_TIMER_0_END
 
@@ -1140,6 +1159,7 @@ code
         FMG_TIMER_0_FALL:
             MOV A, #000h
             MOV fmg_time_to_fall_0, A
+            MOV fmg_control_old, A ;Atualiza o controle antigo
             MOV A, #004h
             JMP FMG_TIMER_0_END
             
@@ -1206,50 +1226,80 @@ code
     RET
 code
     FMG_REMOVE_COMPLETE_LINES:
+        ;R7 - Contador de linhas removidas!
+        MOV A, #000h
+        PUSH ACC
         ; Capturar �ltima linha da tela
         MOV R0, #fmg_grid
-        MOV A, #028 ; Deslocamento do come�o das linhas na mem�ria
-        
+        MOV A, #028h ; Deslocamento do come�o das linhas na mem�ria
         ADD A, R0 ; Posi��o do come�o das linhas na mem�ria
         MOV R0, A
-        MOV R1, A
-        MOV R2, #00Ah ;Quantidade de colunas
         
-        MOV R3, #0FFh ; M�scara para teste das linhas
-        
-        FMG_REMOVE_COMPLETE_LINES_LOOP_0:
-            MOV A, @R1 ; Captura o elemento que est� em R1
-            ANL A, R3 ; Captura quais as linhas que est�o completas
-            MOV R3, A
-            INC R1
+        FMG_REMOVE_COMPLETE_LINES_LOOP:
+            MOV A, R0
+            MOV R1, A ;R1 est� na mesma posi��o que R0
+            MOV R2, #00Ah ;Quantidade de colunas �teis por linha
+            MOV R3, #0FFh ; M�scara para teste das linhas
             
-            DJNZ R2, FMG_REMOVE_COMPLETE_LINES_LOOP_0
-        ;R3 possui as linhas completas, move-lo para A para acessar cada linha
-        MOV A, R3
-        
-        MOV R4, #008h ;Quantidade de linhas a serem analizadas
-        MOV R5, #000h ;Controle do n�mero da linha
-        FMG_REMOVE_COMPLETE_LINES_LOOP_1:
-            RRC A
-            ;Carry contem a linha a ser analizada (0 ... 7)
-            JNC FMG_REMOVE_COMPLETE_LINES_LOOP_1_NEXT
-            LCALL FMG_REMOVE_SPECIFIC_LINE
-            FMG_REMOVE_COMPLETE_LINES_LOOP_1_NEXT:
-            DJNZ R4, FMG_REMOVE_COMPLETE_LINES_LOOP_1
+            FMG_REMOVE_COMPLETE_LINES_LOOP_0:
+                MOV A, @R1 ; Captura o elemento que est� em R1
+                ANL A, R3 ; Captura quais as linhas que est�o completas
+                MOV R3, A
+                INC R1
+                
+                DJNZ R2, FMG_REMOVE_COMPLETE_LINES_LOOP_0
+            ;R3 possui as linhas completas, move-lo para A para acessar cada linha
+            MOV A, R3
+            
+            ;Se R3 for 0 ent�o n�o temos linhas a serem removidas, caso contr�rio removemos linhas
+            JZ FMG_REMOVE_COMPLETE_LINES_LINE_COMPLETE
+            JNZ FMG_REMOVE_COMPLETE_LINES_REMOVE_SPECIFIC
+            ;Nenhuma linha a remover, logo movo para a pr�xima linha macro do jogo.
+            FMG_REMOVE_COMPLETE_LINES_LINE_COMPLETE:
+                MOV A, R0
+                CLR C
+                SUBB A, #fmg_grid
+                CLR C
+                SUBB A, #004h ; Verificar se R0 est� j� na posi��o 0
+                JZ FMG_REMOVE_COMPLETE_LINES_END ; J� verificamos as primeiras linhas
+                ADD A, #fmg_grid
+                SUBB A, #00Eh
+                MOV R0, A
+                MOV R1, A
+                JMP FMG_REMOVE_COMPLETE_LINES_LOOP
+            FMG_REMOVE_COMPLETE_LINES_REMOVE_SPECIFIC:
+                LCALL FMG_REMOVE_SPECIFIC_LINE
+                POP ACC
+                INC A
+                PUSH ACC
+                JMP FMG_REMOVE_COMPLETE_LINES_LOOP
+        FMG_REMOVE_COMPLETE_LINES_END:
+        POP ACC
+        MOV R7, A
     RET
 code
     ;Remove uma linha especifica do jogo.
-    ;R0 - Come�o da linha (macro)
-    ;R5 - N�mero da linha (espec�fica)
-    ;Tentar n�o afetar R0, R3, R4 e R5
+    ;R0 - Come�o da linha (macro 8 bits)
+    ;R3 - M�scara do AND das linhas (linhas a serem removidas)
+    ;Tentar n�o afetar R0!
     FMG_REMOVE_SPECIFIC_LINE:
-    PUSH ACC
-    MOV A, R1
-    PUSH ACC
-    
         MOV A, R0
+        PUSH ACC
+        MOV A, R1
+        PUSH ACC
+        MOV A, R2
+        PUSH ACC
+        MOV A, R3
+        PUSH ACC
+        LCALL FMG_SELECT_LINE_TO_REMOVE
+        MOV R4, #00Ah
+        MOV B, #004h
+        FMG_REMOVE_SPECIFIC_LINE_MAIN_LOOP:
+        ;R5 Contem o bit a ser removido
+        MOV A, R0
+        CLR C
         SUBB A, #012h
-        MOV A, R1 ;R1 est� com a linha acima de R0
+        MOV R1, A ;Endere�o da linha superior
         MOV A, #007h
         CLR C
         SUBB A, R5 ;Gerar m�scara superior
@@ -1258,12 +1308,19 @@ code
         LCALL FMG_CREATE_SUPERIOR_MASK
         MOV A, R5
         MOV R2, A
-        DEC R2
         LCALL FMG_CREATE_INFERIOR_MASK
         
+        MOV A, R0
+        CLR C
+        SUBB A, #fmg_grid
+        CLR C
+        SUBB A, B ;Subtraindo 4 de A
+        JZ FMG_REMOVE_SPECIFIC_LINE_SET_NOT_CARRY ; Se R0 for a linha superior ignorar teste com linhas superiores
+ 
         MOV A, @R1 ; Linha superior
         JB ACC.0, FMG_REMOVE_SPECIFIC_LINE_SET_CARRY
         JNB ACC.0, FMG_REMOVE_SPECIFIC_LINE_SET_NOT_CARRY
+        
         FMG_REMOVE_SPECIFIC_LINE_SET_CARRY:
             SETB C
             JMP FMG_REMOVE_SPECIFIC_LINE_SET_CARRY_END
@@ -1271,19 +1328,76 @@ code
             CLR C
             JMP FMG_REMOVE_SPECIFIC_LINE_SET_CARRY_END
         FMG_REMOVE_SPECIFIC_LINE_SET_CARRY_END:
+            MOV A, @R0
+            ANL A, R6
+            RRC A
+            MOV R6, A
+            MOV A, @R0
+            ANL A, R7
+            XRL A, R6
+            MOV @R0, A
+        ;Fazer a etapa de corre��o para as linhas superiores
+        MOV A, R0
+        CLR C
+        SUBB A, #fmg_grid
+        CLR C
+        SUBB A, B ;Subtraindo 4 de A
+        ;Se R0 for a linha superior ent�o ok, fim
+        JZ FMG_REMOVE_SPECIFIC_LINE_END
         
-        MOV A, @R0
-        ANL A, R6
-        RRC A
-        MOV R6, A
-        MOV A, @R0
-        ANL A, R7
-        XRL A, R6
-        MOV @R0, A
+        ;Se n�o verificar linha superior
+        MOV A, R1
+        CLR C
+        SUBB A, #fmg_grid
+        CLR C
+        SUBB A, B ;Subtraindo 4 de A
+        ;Se a linha superior for a primeira linha, ent�o limpar o carry e fazer apenas o rotate
+        JZ FMG_REMOVE_SPECIFIC_LINE_LEVEL_1
+        JNZ FMG_REMOVE_SPECIFIC_LINE_LEVEL_2
         
+        FMG_REMOVE_SPECIFIC_LINE_LEVEL_1:
+            CLR C
+            MOV A, @R1
+            RRC A
+            MOV @R1, A
+            JMP FMG_REMOVE_SPECIFIC_LINE_END
+        FMG_REMOVE_SPECIFIC_LINE_LEVEL_2:
+            MOV A, @R1
+            MOV R2, A ; Linha superior
+            MOV A, R1
+            SUBB A, #012h
+            MOV R1, A; Linhas 2 niveis acima
+            MOV A, @R1
+            RRC A
+            MOV A, R2
+            RRC A
+            MOV R2, A
+            CLR C
+            MOV A, @R1
+            RRC A
+            MOV @R1, A
+            MOV A, R1
+            ADD A, #012h
+            MOV R1, A
+            MOV A, R2
+            MOV @R1, A
+        FMG_REMOVE_SPECIFIC_LINE_END:
+        INC R0
+        INC B
+        DJNZ R4, FMG_REMOVE_LINE_MAIN_LOOP_WORKAROUND
+        
+        JMP FMG_REMOVE_SPECIFIC_LINE_END_END
+        FMG_REMOVE_LINE_MAIN_LOOP_WORKAROUND:
+            LJMP FMG_REMOVE_SPECIFIC_LINE_MAIN_LOOP
+        FMG_REMOVE_SPECIFIC_LINE_END_END:
+    POP ACC
+    MOV R3, A
+    POP ACC
+    MOV R2, A
     POP ACC
     MOV R1, A
     POP ACC
+    MOV R0, A
     RET
     
 code
@@ -1291,19 +1405,37 @@ code
     MOV A, #000h
     FMG_CREATE_SUPERIOR_MASK_LOOP:
         SETB C
-        RLC A
+        RRC A
         DJNZ R2, FMG_CREATE_SUPERIOR_MASK_LOOP
     MOV R6, A
     RET
     
 code
     FMG_CREATE_INFERIOR_MASK:
+    MOV A, R2
+    JZ FMG_CREATE_INFERIOR_MASK_END
     MOV A, #000h
     FMG_CREATE_INFERIOR_MASK_LOOP:
         SETB C
-        RRC A
+        RLC A
         DJNZ R2, FMG_CREATE_INFERIOR_MASK_LOOP
+    FMG_CREATE_INFERIOR_MASK_END:
     MOV R7, A
+    RET
+code
+    FMG_SELECT_LINE_TO_REMOVE:
+    ;R3 - m�scara a ser analizada
+    ; N�o alterar nem R0 nem R7
+    CLR C
+    MOV R1, #008h
+    MOV R5, #000h
+    MOV A, R3
+    FMG_SELECT_LINE_TO_REMOVE_LOOP:
+        RRC A
+        JC FMG_SELECT_LINE_TO_REMOVE_END
+        INC R5
+        DJNZ R1, FMG_SELECT_LINE_TO_REMOVE_LOOP
+    FMG_SELECT_LINE_TO_REMOVE_END:
     RET
 ;Checa se uma determinada posi��o de pe�a � v�lida.
 ; in R1 = Rota��o da pe�a a ser checada
@@ -1475,6 +1607,385 @@ code
     MOV R1, A
     POP ACC
     MOV R0, A
+    RET
+code
+    FMG_UPDATE_SCORE:
+    ;R7 Quantidade de linhas removidas
+    ;fmg_score_0 - pontua��o Inferior
+    ;fmg_score_1 - pontua��o Superior
+    
+    MOV A, R7
+    MOV B, #003h
+    MUL AB
+    
+    MOV DPTR, #FMG_UPDATE_SCORE_SWITCH_LINES
+    JMP @A+DPTR
+    
+    FMG_UPDATE_SCORE_SWITCH_LINES:
+        JMP FMG_UPDATE_SCORE_SWITCH_LINES_0
+        JMP FMG_UPDATE_SCORE_SWITCH_LINES_1
+        JMP FMG_UPDATE_SCORE_SWITCH_LINES_2
+        JMP FMG_UPDATE_SCORE_SWITCH_LINES_3
+        JMP FMG_UPDATE_SCORE_SWITCH_LINES_4
+    FMG_UPDATE_SCORE_SWITCH_LINES_0:
+        MOV R0, #000h;
+        JMP FMG_UPDATE_SCORE_END
+    FMG_UPDATE_SCORE_SWITCH_LINES_1:
+        MOV R0, #001h;
+        JMP FMG_UPDATE_SCORE_END
+    FMG_UPDATE_SCORE_SWITCH_LINES_2:
+        MOV R0, #003h;
+        JMP FMG_UPDATE_SCORE_END
+    FMG_UPDATE_SCORE_SWITCH_LINES_3:
+        MOV R0, #005h;
+        JMP FMG_UPDATE_SCORE_END
+    FMG_UPDATE_SCORE_SWITCH_LINES_4:
+        MOV R0, #008h;
+        JMP FMG_UPDATE_SCORE_END
+    FMG_UPDATE_SCORE_END:
+        MOV A, fmg_score_0
+        ADD A, R0
+        MOV fmg_score_0, A
+        MOV A, fmg_score_1
+        ADDC A, #000h
+        MOV fmg_score_1, A
+    RET
+code
+    FMG_DRAW_SCORE:
+    PUSH PSW
+    MOV A, fmg_score_1
+    MOV B, #006h
+    MUL AB
+    MOV B, #00Ah
+    DIV AB
+    MOV R2, A; Estouro!
+    MOV A, B; Unidades da parte High do score!
+    MOV R1, A
+    MOV A, fmg_score_0
+    MOV B, #00Ah
+    DIV AB
+    MOV R7, A ;Divis�o
+    MOV A, B
+    ADD A, R1
+    MOV R1, A 
+    MOV B, #00Ah
+    DIV AB
+    ADD A, R2
+    MOV R2, A
+    MOV A, B
+    MOV R1, A ;Unidades!
+    MOV A, R7
+    ADDC A, #000h
+    MOV R7, A
+    
+    MOV A, fmg_score_1
+    MOV B, #005h
+    MUL AB
+    ADD A, R2
+    MOV B, #00Ah
+    DIV AB
+    MOV R3, A;Estouro
+    MOV A, B; Dezenas da parte High do score!
+    MOV R2, A
+    MOV A, R7
+    MOV B, #00Ah
+    DIV AB
+    MOV R7, A ; Divis�o
+    MOV A, B
+    ADD A, R2
+    MOV R2, A ;Dezenas
+    MOV B, #00Ah
+    DIV AB
+    ADD A, R3
+    MOV R3, A
+    MOV A, B
+    MOV R2, A
+    MOV A, R7
+    ADDC A, #000h
+    MOV R7, A
+    
+    MOV A, fmg_score_1
+    MOV B, #002h
+    MUL AB
+    ADD A, R3
+    MOV B, #00Ah
+    DIV AB
+    MOV R4, A;Estouro
+    MOV A, B; Centenas da parte High do score!
+    MOV R3, A
+    MOV A, R7
+    MOV B, #00Ah
+    DIV AB
+    MOV R7, A ; Divis�o
+    MOV A,B
+    ADD A, R3
+    MOV R3, A ;Centenas
+    MOV B, #00Ah
+    DIV AB
+    ADD A, R4
+    MOV R4, A
+    MOV A, B
+    MOV R3, A
+    MOV A, R7
+    ADDC A, #000h
+    MOV R7, A
+    
+    MOV A, R1
+    PUSH ACC
+    MOV A, R2
+    PUSH ACC
+    MOV A, R3
+    PUSH ACC
+    MOV A, R4
+    PUSH ACC
+    
+    ;;;;;;;;;;;;;
+    ;; DESENHO ;;
+    ;;;;;;;;;;;;;
+    SETB RS1
+    CLR RS0
+    
+    MOV DPTR, #fmg_numbers_font
+    MOV R3, #000h
+    ;Milhares
+    POP ACC
+    MOV lcd_X, #03Ch
+    MOV lcd_Y, #000h
+    LCALL LCD_XY
+    
+    MOV B, #003h
+    MUL AB
+    MOV R4, A
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A    
+    LCALL LCD_DRAW
+    INC R4
+    MOV A, R4
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    INC R4
+    MOV A, R4
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    
+    ;Centenas
+    POP ACC
+    MOV lcd_X, #040h
+    MOV lcd_Y, #000h
+    LCALL LCD_XY
+    
+    MOV B, #003h
+    MUL AB
+    MOV R4, A
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A    
+    LCALL LCD_DRAW
+    INC R4
+    MOV A, R4
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    INC R4
+    MOV A, R4
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    
+    ;Dezenas
+    POP ACC
+    MOV lcd_X, #044h
+    MOV lcd_Y, #000h
+    LCALL LCD_XY
+    
+    MOV B, #003h
+    MUL AB
+    MOV R4, A
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    INC R4
+    MOV A, R4
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    INC R4
+    MOV A, R4
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    
+    ;Unidades
+    POP ACC
+    MOV lcd_X, #048h
+    MOV lcd_Y, #000h
+    LCALL LCD_XY
+    MOV B, #003h
+    MUL AB
+    MOV R4, A
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    INC R4
+    MOV A, R4
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    INC R4
+    MOV A, R4
+    MOVC A, @A+DPTR
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    POP PSW
+    RET
+code
+    FMG_TEST_END:
+        MOV R0, #fmg_grid
+        MOV A, #004h
+        ADD A, R0
+        MOV R0, A
+        MOV R3, #000h
+        MOV R4, #00Ah
+        
+        FMG_TEST_END_LOOP:
+            MOV A, @R0
+            ORL A, R3
+            MOV R3, A
+            INC R0
+            DJNZ R4, FMG_TEST_END_LOOP
+        MOV A, R3
+        ANL A, #0F0h
+        JZ FMG_TEST_END_END
+        JNZ FMG_TEST_END_END_GAME
+        
+        FMG_TEST_END_END_GAME:
+            MOV fmg_state, #002h
+        FMG_TEST_END_END:
+    RET
+code
+    FMG_DRAW_END:
+    PUSH PSW
+    
+    LCALL LCD_CLEAR
+
+    ;;;;;;;;;
+    ;; THE ;;
+    ;;;;;;;;;
+    MOV lcd_X, #004h
+    MOV lcd_Y, #001h
+    LCALL LCD_XY    
+    
+    MOV R4, #00Eh
+    FMG_DRAW_END_T_TOP:
+        MOV lcd_bus, #0FFh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_T_TOP
+    
+    MOV R3, #005h
+    FMG_DRAW_END_T_H_TOP:
+        MOV lcd_bus, #000h
+        LCALL LCD_DRAW
+        DJNZ R3, FMG_DRAW_END_T_H_TOP
+        
+    MOV R4, #005h
+    FMG_DRAW_END_H1_TOP:
+        MOV lcd_bus, #0FFh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_H1_TOP
+    MOV R4, #005h
+    FMG_DRAW_END_H2_TOP:
+        MOV lcd_bus, #0F0h
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_H2_TOP
+    MOV R4, #005h
+    FMG_DRAW_END_H3_TOP:
+        MOV lcd_bus, #0FFh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_H3_TOP
+    
+    MOV R3, #005h
+    FMG_DRAW_END_H_E_TOP:
+        MOV lcd_bus, #000h
+        LCALL LCD_DRAW
+        DJNZ R3, FMG_DRAW_END_H_E_TOP
+    
+    MOV R4, #005h
+    FMG_DRAW_END_E_TOP:
+        MOV lcd_bus, #0FFh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_E_TOP
+    MOV R4, #005h
+    FMG_DRAW_END_E2_TOP:
+        MOV lcd_bus, #0CFh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_E2_TOP
+    MOV R4, #005h
+    FMG_DRAW_END_E3_TOP:
+        MOV lcd_bus, #00Fh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_E3_TOP
+    
+    ;Linha 2
+    MOV lcd_X, #008h
+    MOV lcd_Y, #002h
+    LCALL LCD_XY
+    
+    MOV R4, #005h
+    FMG_DRAW_END_T_MIDDLE:
+        MOV lcd_bus, #0FFh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_T_MIDDLE
+    
+    MOV R3, #00Ah
+    FMG_DRAW_END_T_H_MIDDLE:
+        MOV lcd_bus, #000h
+        LCALL LCD_DRAW
+        DJNZ R3, FMG_DRAW_END_T_H_MIDDLE
+    
+    MOV R4, #005h
+    FMG_DRAW_END_H1_MIDDLE:
+        MOV lcd_bus, #0FFh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_H1_MIDDLE
+
+    MOV R4, #005h
+    FMG_DRAW_END_H2_MIDDLE:
+        MOV lcd_bus, #00Fh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_H2_MIDDLE
+    
+    MOV R4, #005h
+    FMG_DRAW_END_H3_MIDDLE:
+        MOV lcd_bus, #0FFh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_H3_MIDDLE
+    
+    MOV R3, #005h
+    FMG_DRAW_END_H_E_MIDDLE:
+        MOV lcd_bus, #000h
+        LCALL LCD_DRAW
+        DJNZ R3, FMG_DRAW_END_H_E_MIDDLE
+        
+    MOV R4, #005h
+    FMG_DRAW_END_E_BOTTOM:
+        MOV lcd_bus, #0FFh
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_E_BOTTOM
+    MOV R4, #005h
+    FMG_DRAW_END_E2_BOTTOM:
+        MOV lcd_bus, #0F3h
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_E2_BOTTOM
+    MOV R4, #005h
+    FMG_DRAW_END_E3_BOTTOM:
+        MOV lcd_bus, #0F0h
+        LCALL LCD_DRAW
+        DJNZ R4, FMG_DRAW_END_E3_BOTTOM
+    
+    FMG_DRAW_END_ETERNAL:
+        JMP FMG_DRAW_END_ETERNAL
+    POP PSW
     RET
 
 code at 0

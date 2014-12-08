@@ -36,17 +36,18 @@ code
         MOV R1, A
         MOV ACC, @R1
         
-        MOV C, ACC.4
+        MOV C, ACC.7
         MOV ACC.0, C
         MOV ACC.1, C
-        MOV C, ACC.5
+        MOV C, ACC.6
         MOV ACC.2, C
         MOV ACC.3, C
-        MOV C, ACC.6
-        MOV ACC.4, C
-        MOV ACC.5, C
-        MOV C, ACC.7
+        MOV C, ACC.4
         MOV ACC.6, C
+        MOV ACC.7, C
+        MOV C, ACC.5
+        MOV ACC.5, C
+        MOV ACC.4, C
 
         MOV lcd_bus, ACC; primeiro draw
         LCALL LCD_DRAW
@@ -57,17 +58,18 @@ code
         MOV R1, A
         MOV ACC, @R1
         
-        MOV C, ACC.3
+        MOV C, ACC.0
         MOV ACC.7, C
         MOV ACC.6, C
-        MOV C, ACC.2
+        MOV C, ACC.1
         MOV ACC.5, C
         MOV ACC.4, C
-        MOV C, ACC.1
-        MOV ACC.3, C
-        MOV ACC.2, C
-        MOV C, ACC.0
+        MOV C, ACC.3
         MOV ACC.1, C
+        MOV ACC.0, C
+        MOV C, ACC.2
+        MOV ACC.2, C
+        MOV ACC.3, C
 
         MOV lcd_bus, ACC; primeiro draw
         LCALL LCD_DRAW

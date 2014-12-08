@@ -17,11 +17,11 @@ MOV DPH, fmg_piece_H
 MOV DPL, fmg_piece_L
 MOV A, #000h
 MOVC A, @A+DPTR
-SUBB A, #001h; Zero based
+DEC A; Zero based
 MOV R1, A
 JMP FMG_UPDATE_STATE_ROTATION_LEFT
 FMG_UPDATE_STATE_LEFT_NOT_ZERO: ; Atualiza para o caso de não ser zero
-SUBB A, 1
+DEC A
 MOV R1, A
 
 FMG_UPDATE_STATE_ROTATION_LEFT:
@@ -42,11 +42,11 @@ FMG_UPDATE_STATE_ROTATION_LEFT_VALID:
     MOV R1, A
     ;Coloca em id 0 e 1 qual a peça selecionada
     MOVC A, @A+DPTR ;Representação da peça (primeiros bytes)
-    MOV fmg_piece_id_0, A
+    MOV fmg_piece_0, A
     MOV A, R1
     ADD A, #001h ;Representação da peça (segundos bytes)
     MOVC A, @A+DPTR
-    MOV fmg_piece_id_1, A
+    MOV fmg_piece_1, A
     
 FMG_UPDATE_STATE_ROTATION_LEFT_NOT_VALID:
     LJMP FMG_UPDATE_STATE_END

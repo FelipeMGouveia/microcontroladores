@@ -223,7 +223,7 @@
 				</Options>
 			</NodeASM>
 		</Group>
-		<NodeASM Path=".\Tetris\Timer0.asm" Header="Timer0.asm" Marker="0" OutputFile=".\Timer0.obj" sate="2" >
+		<NodeASM Path=".\Tetris\Timer0.asm" Header="Timer0.asm" Marker="0" OutputFile=".\Timer0.obj" sate="0" >
 			<Options>
 				<Config Header="Standard" >
 					<Set Header="NodeASM" >
@@ -278,8 +278,63 @@
 				</Config>
 			</Options>
 		</NodeASM>
+		<NodeASM Path=".\Tetris\UpdateScore.asm" Header="UpdateScore.asm" Marker="0" OutputFile=".\UpdateScore.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\DrawScore.asm" Header="DrawScore.asm" Marker="0" OutputFile=".\DrawScore.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\TestEnd.asm" Header="TestEnd.asm" Marker="0" OutputFile=".\TestEnd.obj" sate="0" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="LinkExclude" Value="No" Removable="1" />
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
+		<NodeASM Path=".\Tetris\DrawEnd.asm" Header="DrawEnd.asm" Marker="0" OutputFile=".\DrawEnd.obj" sate="2" >
+			<Options>
+				<Config Header="Standard" >
+					<Set Header="NodeASM" >
+						<Section Header="Build" >
+							<Property Header="Exclude" Value="Yes" Removable="1" />
+						</Section>
+					</Set>
+				</Config>
+			</Options>
+		</NodeASM>
 	</Group>
-	<NodeASM Path=".\main.asm" Header="main.asm" Marker="-1" OutputFile=".\main.obj" sate="0" />
+	<NodeASM Path=".\main.asm" Header="main.asm" Marker="0" OutputFile=".\main.obj" sate="0" >
+		<Options>
+			<Config Header="Standard" >
+				<Set Header="NodeASM" >
+					<Section Header="Build" >
+						<Property Header="Exclude" Value="No" Removable="1" />
+					</Section>
+				</Set>
+			</Config>
+		</Options>
+	</NodeASM>
 	<Options>
 		<Config Header="Standard" >
 			<Set Header="ApplicationBuild" >

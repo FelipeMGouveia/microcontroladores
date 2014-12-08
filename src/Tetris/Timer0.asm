@@ -27,14 +27,14 @@ code
         JZ FMG_TIMER_0_FALL ;Se for para a peça cair, então caia!
         
         ;Ignorando o teste dos botões!
-        MOV A, #000h
-        JMP FMG_TIMER_0_END
+        ;MOV A, #000h
+        ;JMP FMG_TIMER_0_END
         
         ;Adimitindo que: B1(P1.0) == Up, B2(P1.1) == Down, B3(P1.2) == Left, B4(P1.3) == Right, B5(P1.4) == Not Used
-        JB P1.0, FMG_TIMER_0_ROTATE
-        JB P1.1, FMG_TIMER_0_FALL
-        JB P1.2, FMG_TIMER_0_LEFT
-        JB P1.3, FMG_TIMER_0_RIGHT
+        JNB P1.0, FMG_TIMER_0_ROTATE
+        JNB P1.1, FMG_TIMER_0_FALL
+        JNB P1.2, FMG_TIMER_0_LEFT
+        JNB P1.3, FMG_TIMER_0_RIGHT
         MOV A, #000h
         JMP FMG_TIMER_0_END
 
@@ -50,6 +50,7 @@ code
         FMG_TIMER_0_FALL:
             MOV A, #000h
             MOV fmg_time_to_fall_0, A
+            MOV fmg_control_old, A ;Atualiza o controle antigo
             MOV A, #004h
             JMP FMG_TIMER_0_END
             
