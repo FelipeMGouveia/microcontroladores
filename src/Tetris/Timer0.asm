@@ -70,4 +70,4 @@ code
         MOV R0, A
         POP PSW
         POP ACC
-    RETI
+    RET

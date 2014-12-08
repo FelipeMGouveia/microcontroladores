@@ -1179,7 +1179,7 @@ code
         MOV R0, A
         POP PSW
         POP ACC
-    RETI
+    RET
 ;Valida o estado atual do jogo, este momento ocorre ap�s a detec��o de colis�es, e deve:
 ;   Sortear pr�xima pe�a
 ;   Remover linhas completas
@@ -1994,7 +1994,7 @@ code at 0
 code at 000Bh
 TIMER0_INTERRUPT:
     LCALL FMG_TIMER_0
-    ret;
+    RETI;
 
 code
 INIT: 

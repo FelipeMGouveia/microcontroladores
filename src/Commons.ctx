@@ -1,97 +1,5 @@
 
 <Debug>
-	<Views>
-		<View File=".\Tetris\common.asm" Line="44" Index="0" />
-		<View File=".\Tetris\ValidateCollision.asm" Line="17" Index="1" />
-		<View File=".\Tetris\GetRegion.asm" Line="3" Index="2" />
-		<View File=".\Tetris\SetRegion.asm" Line="1" Index="3" />
-		<View File=".\Tetris\FindBit.asm" Line="4" Index="4" />
-		<View File=".\tetris.asm" Line="17" Index="5" />
-		<View File=".\Tetris\main.asm" Line="10" Index="6" />
-		<View File=".\Tetris\DrawScreen.asm" Line="14" Index="7" />
-		<View File=".\main.asm" Line="1507" Index="8" focus="1" />
-		<View File=".\Tetris\CopyFromWaitToGame.asm" Line="18" Index="9" />
-		<View File=".\Tetris\UpdateState\UpdateStateCheckColision.asm" Line="2" Index="10" />
-		<View File=".\Tetris\UpdateState\UpdateStateFall.asm" Line="13" Index="11" />
-		<View File=".\Tetris\UpdateState\UpdateStateRotate.asm" Line="46" Index="12" />
-		<View File=".\Tetris\UpdateState\UpdateStateLeft.asm" Line="19" Index="13" />
-		<View File=".\Tetris\UpdateState\UpdateStateRight.asm" Line="19" Index="14" />
-		<View File=".\Tetris\Timer0.asm" Line="1" Index="15" />
-		<View File=".\commons.asm" Line="32" Index="16" />
-		<View File=".\LCD.asm" Line="1" Index="17" />
-		<View File=".\Random.asm" Line="1" Index="18" />
-		<View File=".\Tetris\SelectNewPiece.asm" Line="16" Index="19" />
-																																																																																																												
-	</Views>
-	<BookMarks>
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-		<BookMark File="" Line="0" />
-																																																																																																												
-	</BookMarks>
-	<Grep>
-		<GrepIncludeSub>yes</GrepIncludeSub>
-		<GrepMatchCase>no</GrepMatchCase>
-		<GrepMatchWhole>no</GrepMatchWhole>
-		<GrepRegExp>no</GrepRegExp>
-		<GrepReplaceMode>no</GrepReplaceMode>
-		<GrepFileTypes>
-			<GrepFileTypesValue>*.c;*.h</GrepFileTypesValue>
-			<GrepFileType>*.c;*.h</GrepFileType>
-																																																																																																																																																																																				
-		</GrepFileTypes>
-		<GrepFindWhat>
-			<GrepFindWhatValue/>
-																																																																																																																																																																																				
-		</GrepFindWhat>
-		<GrepFindWhere>
-			<GrepFindWhereValue>Application Files</GrepFindWhereValue>
-			<GrepPathStr>Application Files</GrepPathStr>
-			<GrepPathStr>Application Path</GrepPathStr>
-			<GrepPathStr>Project Files</GrepPathStr>
-																																																																																																																																																																																				
-		</GrepFindWhere>
-		<GrepReplaceWhat>
-			<GrepReplaceWhatValue/>
-																																																																																																																																																																																				
-		</GrepReplaceWhat>
-																																																																																																												
-	</Grep>
-	<FindStrings>
-		<Find>000B</Find>
-		<Find>fmg_control</Find>
-		<Find>SETB EA</Find>
-		<Find>CLR EA</Find>
-		<Find>R1</Find>
-		<Find>EA </Find>
-		<Find>EA</Find>
-		<Find>FMG_UPDATE_STATE_CHECK_COLLISION:</Find>
-		<Find>LCALL FMG_UPDATE_STATE_CHECK_COLLISION</Find>
-		<Find>FMG_UPDATE_STATE_CHECK_COLLISION_TEST_R7</Find>
-		<Find>FMG_UPDATE_STATE_SWITCH_STATE_FALL</Find>
-		<Find>fmg_stat</Find>
-		<Find>VAlidate</Find>
-		<Find>FMG_T</Find>
-		<Find>LCALL FMG_FROM_WAIT_TO_GAME</Find>
-		<Find>LCALL FMG_FROM_WAIT_TO_GAME ; Coloca a peça da espera no jogo.</Find>
-		<Find>P1.0</Find>
-		<Find>FMG_TIMER_0_FALL</Find>
-		<Find>TIMER_)</Find>
-		<Find>TR0</Find>
-																																																																																																												
-	</FindStrings>
-	<ReplaceStrings>
-		<Find>GET</Find>
-		<Find>SET</Find>
-																																																																																																												
-	</ReplaceStrings>
 	<Commons/>
 	<Flags>
 		<Report>
@@ -107,11 +15,91 @@
 				<Col Type="PT_STRING" Header="Condition" sizeCache="DDDDDDDDDDDDDDDDDDDDDDDD" AutoSize="1" Edit="0" Sortable="0" />
 				<Col Type="PT_STRING" Header="Condexpr" sizeCache="DD" AutoSize="1" Edit="0" Sortable="0" Visible="0" />
 				<Col Type="PT_STRING" Header="Condcount" sizeCache="DD" AutoSize="1" Edit="0" Sortable="0" Visible="0" />
+							
 			</Def>
 			<Rows>
-				<Row Check="True" Kind="Breakpoint" KindID="0" Space="CODE" SpaceID="0" Condition="" Line="L:1656" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
-				<Row Check="True" Kind="Breakpoint" KindID="0" Space="CODE" SpaceID="0" Condition="" Line="L:1671" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
+				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:1656" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
+				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:1672" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
+							
 			</Rows>
+					
 		</Report>
+			
 	</Flags>
+	<Views>
+		<View File=".\Tetris\ValidateCollision.asm" Line="17" Index="0" />
+		<View File=".\Tetris\GetRegion.asm" Line="3" Index="1" />
+		<View File=".\Tetris\SetRegion.asm" Line="1" Index="2" />
+		<View File=".\Tetris\FindBit.asm" Line="4" Index="3" />
+		<View File=".\Tetris\main.asm" Line="39" Index="4" focus="1" />
+		<View File=".\Tetris\DrawScreen.asm" Line="11" Index="5" />
+		<View File=".\main.asm" Line="1669" Index="6" />
+		<View File=".\Tetris\RemoveCompleteLines.asm" Line="52" Index="7" />
+		<View File=".\Tetris\RemoveSpecificLine.asm" Line="143" Index="8" />
+		<View File=".\Tetris\UpdateScore.asm" Line="16" Index="9" />
+		<View File=".\Tetris\DrawScore.asm" Line="81" Index="10" />
+		<View File=".\Tetris\TestEnd.asm" Line="16" Index="11" />
+		<View File=".\Tetris\DrawEnd.asm" Line="120" Index="12" />
+	</Views>
+	<BookMarks>
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+		<BookMark File="" Line="0" />
+	</BookMarks>
+	<Grep>
+		<GrepIncludeSub>yes</GrepIncludeSub>
+		<GrepMatchCase>no</GrepMatchCase>
+		<GrepMatchWhole>no</GrepMatchWhole>
+		<GrepRegExp>no</GrepRegExp>
+		<GrepReplaceMode>no</GrepReplaceMode>
+		<GrepFileTypes>
+			<GrepFileTypesValue>*.c;*.h</GrepFileTypesValue>
+			<GrepFileType>*.c;*.h</GrepFileType>
+		</GrepFileTypes>
+		<GrepFindWhat>
+			<GrepFindWhatValue/>
+		</GrepFindWhat>
+		<GrepFindWhere>
+			<GrepFindWhereValue>Application Files</GrepFindWhereValue>
+			<GrepPathStr>Application Files</GrepPathStr>
+			<GrepPathStr>Application Path</GrepPathStr>
+			<GrepPathStr>Project Files</GrepPathStr>
+		</GrepFindWhere>
+		<GrepReplaceWhat>
+			<GrepReplaceWhatValue/>
+		</GrepReplaceWhat>
+	</Grep>
+	<FindStrings>
+		<Find>TEST_END</Find>
+		<Find>fmg_number</Find>
+		<Find>fmg_number]</Find>
+		<Find>    FMG_UPDATE_SCORE:</Find>
+		<Find>    FMG_DRAW_SCORE:</Find>
+		<Find>FMG_DRAW_SCORE:</Find>
+		<Find>ADDC</Find>
+		<Find>FMG_CREATE_INFERIOR_MASK:</Find>
+		<Find>MOV A, R7</Find>
+		<Find>MOV R7, A</Find>
+		<Find>R7</Find>
+		<Find>FMG_CREATE_SUPERIOR_MASK:</Find>
+		<Find>000B</Find>
+		<Find>fmg_control</Find>
+		<Find>SETB EA</Find>
+		<Find>CLR EA</Find>
+		<Find>R1</Find>
+		<Find>EA </Find>
+		<Find>EA</Find>
+		<Find>FMG_UPDATE_STATE_CHECK_COLLISION:</Find>
+	</FindStrings>
+	<ReplaceStrings>
+		<Find>GET</Find>
+		<Find>SET</Find>
+	</ReplaceStrings>
 </Debug>

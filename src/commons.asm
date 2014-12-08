@@ -3,13 +3,13 @@ $include(LCD.asm)
 
 $include(tetris.asm)
 
-code at 0
+code at 0000h
     ljmp INIT
 
 code at 000Bh
 TIMER0_INTERRUPT:
     LCALL FMG_TIMER_0
-    ret;
+    RETI;
 
 code
 INIT: 

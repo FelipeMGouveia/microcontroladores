@@ -1,5 +1,5 @@
 
-<ApplicationBuild Header="Commons" Extern=".\Commons.rapp" Path=".\Commons.rapp" OutputFile=".\Commons.aof" sate="96" >
+<ApplicationBuild Header="Commons" Extern=".\Commons.rapp" Path=".\Commons.rapp" OutputFile=".\Commons.aof" sate="98" >
 	<NodeASM Path=".\commons.asm" Header="commons.asm" Marker="0" OutputFile=".\commons.obj" sate="0" >
 		<Options>
 			<Config Header="Standard" >
@@ -312,7 +312,7 @@
 				</Config>
 			</Options>
 		</NodeASM>
-		<NodeASM Path=".\Tetris\DrawEnd.asm" Header="DrawEnd.asm" Marker="0" OutputFile=".\DrawEnd.obj" sate="2" >
+		<NodeASM Path=".\Tetris\DrawEnd.asm" Header="DrawEnd.asm" Marker="0" OutputFile=".\DrawEnd.obj" sate="0" >
 			<Options>
 				<Config Header="Standard" >
 					<Set Header="NodeASM" >
