@@ -1402,12 +1402,18 @@ code
     
 code
     FMG_CREATE_SUPERIOR_MASK:
+    MOV A, R2
+    JZ FMG_CREATE_SUPERIOR_MASK_SEVEN
     MOV A, #000h
     FMG_CREATE_SUPERIOR_MASK_LOOP:
         SETB C
         RRC A
         DJNZ R2, FMG_CREATE_SUPERIOR_MASK_LOOP
     MOV R6, A
+    JMP FMG_CREATE_SUPERIOR_MASK_END
+    FMG_CREATE_SUPERIOR_MASK_SEVEN:
+    MOV R6, #000h
+    FMG_CREATE_SUPERIOR_MASK_END:
     RET
     
 code
@@ -1988,7 +1994,7 @@ code
     POP PSW
     RET
 
-code at 0
+code at 0000h
     ljmp INIT
 
 code at 000Bh

@@ -1,4 +1,4 @@
-LX51 CODE BANKING LINKER/LOCATOR V06.16.13.326                                 12/08/14  14:20:58
+LX51 CODE BANKING LINKER/LOCATOR V06.16.13.326                                 12/09/14  07:28:57
 MS-DOS LX51 CODE BANKING LINKER/LOCATOR V06.16.13.326,  INVOKED BY:
 C:\Raisonance\Ride\Bin\LX51.EXE C:\Projects\microcontroladores\src\main.obj TO(C:\Projects\microc&
 ontroladores\src\Commons.aof) LIBPATH(C:\Raisonance\Ride\Lib\51) GENERATEDEPFILE MAP IX RS(256) R&
@@ -23,13 +23,13 @@ LINK MAP OF MODULE: C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF (COMMONS)
     CODE     0000H      0003H     ABSOLUTE       
              0003H      0008H                    *** GAP ***
     CODE     000BH      0004H     ABSOLUTE       
-    CODE     000FH      09E2H     UNIT           ?PR?MAIN
+    CODE     000FH      09EAH     UNIT           ?PR?MAIN
 
 EXECUTABLE SUMMARY:
 -------------------
     Total INTERNAL RAM storage requirement:  0008H (8)
     Total EXTERNAL RAM storage requirement:  0000H (0)
-    Total     CODE     storage requirement:  09E9H (2537)
+    Total     CODE     storage requirement:  09F1H (2545)
 Note:  Summary does not include dynamic stack requirements
 
 
@@ -54,16 +54,16 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	D:0080H            SYMBOL             P0
 	C:061AH            SYMBOL             FMG_REMOVE_COMPLETE_LINES_LOOP_0
 	D:0090H            SYMBOL             P1
-	C:0929H            SYMBOL             FMG_DRAW_END_T_TOP
-	C:07BCH            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES
-	C:07F0H            SYMBOL             FMG_DRAW_SCORE
+	C:0931H            SYMBOL             FMG_DRAW_END_T_TOP
+	C:07C4H            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES
+	C:07F8H            SYMBOL             FMG_DRAW_SCORE
 	C:0101H            SYMBOL             INIT_DELAY
 	B:00C8H            SYMBOL             CP_RL2
 	B:00CBH            SYMBOL             EXEN2
 	D:00F0H            SYMBOL             B
 	D:00A0H            SYMBOL             P2
-	C:0993H            SYMBOL             FMG_DRAW_END_H1_MIDDLE
-	C:07A1H            SYMBOL             FMG_SET_REGION_LOOP_X_WORKAROUND
+	C:099BH            SYMBOL             FMG_DRAW_END_H1_MIDDLE
+	C:07A9H            SYMBOL             FMG_SET_REGION_LOOP_X_WORKAROUND
 	C:0609H            SYMBOL             FMG_VALIDATE_COLLISION_SWITCH_CONTINUE
 	C:02A2H            SYMBOL             FMG_UPDATE_STATE_SWITCH_STATE_NOTHING
 	C:00C2H            SYMBOL             LCD_XY
@@ -72,31 +72,32 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	B:00BCH            SYMBOL             PS
 	D:0081H            SYMBOL             SP
 	D:00B0H            SYMBOL             P3
-	C:099CH            SYMBOL             FMG_DRAW_END_H2_MIDDLE
-	C:079EH            SYMBOL             FMG_SET_REGION_LOOP_Y_WORKAROUND
+	C:09A4H            SYMBOL             FMG_DRAW_END_H2_MIDDLE
+	C:07A6H            SYMBOL             FMG_SET_REGION_LOOP_Y_WORKAROUND
 	C:02E2H            SYMBOL             FMG_GET_REGION_SWITCH_1_R6
 	C:0263H            SYMBOL             FMG_UPDATE_STATE_ROTATION_LEFT_VALID
-	C:06F4H            SYMBOL             FMG_UPDATE_STATE_CHECK_COLLISION
+	C:06FCH            SYMBOL             FMG_UPDATE_STATE_CHECK_COLLISION
 	C:0540H            SYMBOL             FMG_DRAW_BORDER
 	C:012EH            SYMBOL             FMG_PIECES_S
 	B:00B4H            SYMBOL             T0
 	B:00D6H            SYMBOL             AC
 	D:00CAH            SYMBOL             RCAP2L
-	C:09DFH            SYMBOL             MAIN
-	C:09A5H            SYMBOL             FMG_DRAW_END_H3_MIDDLE
-	C:098AH            SYMBOL             FMG_DRAW_END_T_H_MIDDLE
-	C:0968H            SYMBOL             FMG_DRAW_END_E2_TOP
-	C:091AH            SYMBOL             FMG_TEST_END_END
-	C:0778H            SYMBOL             FMG_SET_REGION_SMALL_ROTATE_BACK_R6
-	C:06F3H            SYMBOL             FMG_SELECT_LINE_TO_REMOVE_END
+	C:09E7H            SYMBOL             MAIN
+	C:09ADH            SYMBOL             FMG_DRAW_END_H3_MIDDLE
+	C:0992H            SYMBOL             FMG_DRAW_END_T_H_MIDDLE
+	C:0970H            SYMBOL             FMG_DRAW_END_E2_TOP
+	C:0922H            SYMBOL             FMG_TEST_END_END
+	C:0780H            SYMBOL             FMG_SET_REGION_SMALL_ROTATE_BACK_R6
+	C:06FBH            SYMBOL             FMG_SELECT_LINE_TO_REMOVE_END
 	C:02F2H            SYMBOL             FMG_GET_REGION_SWITCH_1_R7
 	C:0226H            SYMBOL             FMG_UPDATE_STATE_LEFT_NOT_VALID
 	C:014AH            SYMBOL             FMG_PIECES_T
 	B:009CH            SYMBOL             REN
 	B:00B5H            SYMBOL             T1
 	B:00D2H            SYMBOL             OV
-	C:0971H            SYMBOL             FMG_DRAW_END_E3_TOP
-	C:078EH            SYMBOL             FMG_SET_REGION_SMALL_ROTATE_BACK_R7
+	C:0979H            SYMBOL             FMG_DRAW_END_E3_TOP
+	C:0796H            SYMBOL             FMG_SET_REGION_SMALL_ROTATE_BACK_R7
+	C:06E3H            SYMBOL             FMG_CREATE_SUPERIOR_MASK_END
 	C:05A6H            SYMBOL             FMG_TIMER_0_RIGHT
 	C:0431H            SYMBOL             FMG_SELECT_PIECE_I
 	C:035CH            SYMBOL             FMG_DRAW_NEXT_PIECE_INTERNAL
@@ -106,23 +107,23 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	B:0090H            SYMBOL             T2
 	B:00AFH            SYMBOL             EA
 	D:00C8H            SYMBOL             T2CON
-	C:09D0H            SYMBOL             FMG_DRAW_END_ETERNAL
-	C:09C0H            SYMBOL             FMG_DRAW_END_E2_BOTTOM
-	C:093BH            SYMBOL             FMG_DRAW_END_H1_TOP
+	C:09D8H            SYMBOL             FMG_DRAW_END_ETERNAL
+	C:09C8H            SYMBOL             FMG_DRAW_END_E2_BOTTOM
+	C:0943H            SYMBOL             FMG_DRAW_END_H1_TOP
 	C:05B0H            SYMBOL             FMG_TIMER_0_FALL
 	C:0427H            SYMBOL             FMG_SELECT_PIECE_J
 	C:03EDH            SYMBOL             FMG_SELECT_NEW_PIECE
 	D:00E0H            SYMBOL             ACC
-	C:09C9H            SYMBOL             FMG_DRAW_END_E3_BOTTOM
-	C:0944H            SYMBOL             FMG_DRAW_END_H2_TOP
-	C:090AH            SYMBOL             FMG_TEST_END_LOOP
-	C:06EDH            SYMBOL             FMG_SELECT_LINE_TO_REMOVE_LOOP
+	C:09D1H            SYMBOL             FMG_DRAW_END_E3_BOTTOM
+	C:094CH            SYMBOL             FMG_DRAW_END_H2_TOP
+	C:0912H            SYMBOL             FMG_TEST_END_LOOP
+	C:06F5H            SYMBOL             FMG_SELECT_LINE_TO_REMOVE_LOOP
 	C:023AH            SYMBOL             FMG_UPDATE_STATE_RIGHT_VALID
-	C:072AH            SYMBOL             FMG_SET_REGION
+	C:0732H            SYMBOL             FMG_SET_REGION
 	B:00C9H            SYMBOL             C_T2
-	C:094DH            SYMBOL             FMG_DRAW_END_H3_TOP
-	C:0932H            SYMBOL             FMG_DRAW_END_T_H_TOP
-	C:06D6H            SYMBOL             FMG_CREATE_SUPERIOR_MASK_LOOP
+	C:0955H            SYMBOL             FMG_DRAW_END_H3_TOP
+	C:093AH            SYMBOL             FMG_DRAW_END_T_H_TOP
+	C:06D9H            SYMBOL             FMG_CREATE_SUPERIOR_MASK_LOOP
 	C:06BCH            SYMBOL             FMG_REMOVE_SPECIFIC_LINE_END
 	C:0576H            SYMBOL             FMG_TIMER_0
 	C:0422H            SYMBOL             FMG_SELECT_PIECE_L
@@ -138,8 +139,8 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	C:0325H            SYMBOL             FMG_DRAW_NEXT_PIECE
 	B:00ABH            SYMBOL             ET1
 	B:008DH            SYMBOL             TF0
-	C:0718H            SYMBOL             FMG_UPDATE_STATE_CHECK_COLLISION_TEST_R7
-	C:06E5H            SYMBOL             FMG_CREATE_INFERIOR_MASK_END
+	C:0720H            SYMBOL             FMG_UPDATE_STATE_CHECK_COLLISION_TEST_R7
+	C:06EDH            SYMBOL             FMG_CREATE_INFERIOR_MASK_END
 	C:0637H            SYMBOL             FMG_REMOVE_COMPLETE_LINES_REMOVE_SPECIFIC
 	C:0470H            SYMBOL             FMG_CLEAR_MEMORY_LOOP_BORDER_RIGHT
 	C:0302H            SYMBOL             FMG_GET_REGION_LOOP_END
@@ -156,13 +157,13 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	B:00CFH            SYMBOL             TF2
 	B:009AH            SYMBOL             RB8
 	D:008CH            SYMBOL             TH0
-	C:07E4H            SYMBOL             FMG_UPDATE_SCORE_END
+	C:07ECH            SYMBOL             FMG_UPDATE_SCORE_END
 	C:02BCH            SYMBOL             FMG_GET_REGION_LOOP_Y
 	C:0201H            SYMBOL             FMG_UPDATE_STATE_SWITCH_CONTROL
 	B:00A8H            SYMBOL             EX0
 	B:0088H            SYMBOL             IT0
 	D:008DH            SYMBOL             TH1
-	C:06E1H            SYMBOL             FMG_CREATE_INFERIOR_MASK_LOOP
+	C:06E9H            SYMBOL             FMG_CREATE_INFERIOR_MASK_LOOP
 	C:0680H            SYMBOL             FMG_REMOVE_SPECIFIC_LINE_SET_NOT_CARRY
 	C:05D2H            SYMBOL             FMG_VALIDATE_COLLISION
 	C:002DH            SYMBOL             RAND16B
@@ -173,15 +174,16 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	B:008AH            SYMBOL             IT1
 	D:00CDH            SYMBOL             TH2
 	D:00A8H            SYMBOL             IE
-	C:0721H            SYMBOL             FMG_UPDATE_STATE_CHECK_COLLISION_COLLISION
-	C:06E7H            SYMBOL             FMG_SELECT_LINE_TO_REMOVE
+	C:0729H            SYMBOL             FMG_UPDATE_STATE_CHECK_COLLISION_COLLISION
+	C:06EFH            SYMBOL             FMG_SELECT_LINE_TO_REMOVE
 	C:0642H            SYMBOL             FMG_REMOVE_COMPLETE_LINES_END
 	C:04D1H            SYMBOL             FMG_LOOP_LINHA_2
 	C:0479H            SYMBOL             FMG_CLEAR_MEMORY_LOOP_BORDER_FLOOR
 	C:03FEH            SYMBOL             FMG_SELECT_PIECE_SWITCH
-	C:0900H            SYMBOL             FMG_TEST_END
+	C:0908H            SYMBOL             FMG_TEST_END
 	C:0037H            SYMBOL             RAND16C
-	C:0769H            SYMBOL             FMG_SET_REGION_SWITCH_1_R6
+	C:0771H            SYMBOL             FMG_SET_REGION_SWITCH_1_R6
+	C:06E1H            SYMBOL             FMG_CREATE_SUPERIOR_MASK_SEVEN
 	C:06D4H            SYMBOL             FMG_CREATE_SUPERIOR_MASK
 	C:065AH            SYMBOL             FMG_REMOVE_SPECIFIC_LINE_MAIN_LOOP
 	C:04C9H            SYMBOL             FMG_LOOP_LINHA_3
@@ -192,27 +194,27 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	D:0099H            SYMBOL             SBUF
 	D:008AH            SYMBOL             TL0
 	D:0087H            SYMBOL             PCON
-	C:07CBH            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES_0
-	C:077FH            SYMBOL             FMG_SET_REGION_SWITCH_1_R7
+	C:07D3H            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES_0
+	C:0787H            SYMBOL             FMG_SET_REGION_SWITCH_1_R7
 	C:056CH            SYMBOL             FMG_DRAW_BORDER_LOOP_BOTTOM
 	C:042CH            SYMBOL             FMG_SELECT_PIECE_T
 	C:0321H            SYMBOL             FMG_FIND_BIT_LOOP
 	B:009EH            SYMBOL             SM1
 	D:008BH            SYMBOL             TL1
-	C:07D0H            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES_1
+	C:07D8H            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES_1
 	C:0614H            SYMBOL             FMG_REMOVE_COMPLETE_LINES_LOOP
 	C:0311H            SYMBOL             FMG_GET_REGION_END
 	C:02A2H            SYMBOL             FMG_UPDATE_STATE_END
 	B:009DH            SYMBOL             SM2
 	D:00CCH            SYMBOL             TL2
-	C:095FH            SYMBOL             FMG_DRAW_END_E_TOP
-	C:07D5H            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES_2
+	C:0967H            SYMBOL             FMG_DRAW_END_E_TOP
+	C:07DDH            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES_2
 	C:0646H            SYMBOL             FMG_REMOVE_SPECIFIC_LINE
 	C:05A1H            SYMBOL             FMG_TIMER_0_LEFT
 	C:00FFH            SYMBOL             INIT_DELAY_2
 	D:0098H            SYMBOL             SCON
-	C:09D6H            SYMBOL             INIT
-	C:07DAH            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES_3
+	C:09DEH            SYMBOL             INIT
+	C:07E2H            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES_3
 	C:0684H            SYMBOL             FMG_REMOVE_SPECIFIC_LINE_SET_CARRY_END
 	C:027EH            SYMBOL             FMG_UPDATE_STATE_ROTATION_LEFT_NOT_VALID
 	C:00FDH            SYMBOL             INIT_DELAY_3
@@ -220,10 +222,10 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	B:00B9H            SYMBOL             PT0
 	D:0089H            SYMBOL             TMOD
 	D:0088H            SYMBOL             TCON
-	C:09B7H            SYMBOL             FMG_DRAW_END_E_BOTTOM
-	C:07DFH            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES_4
-	C:076DH            SYMBOL             FMG_SET_REGION_SMALL_ROTATE_R6
-	C:06DCH            SYMBOL             FMG_CREATE_INFERIOR_MASK
+	C:09BFH            SYMBOL             FMG_DRAW_END_E_BOTTOM
+	C:07E7H            SYMBOL             FMG_UPDATE_SCORE_SWITCH_LINES_4
+	C:0775H            SYMBOL             FMG_SET_REGION_SMALL_ROTATE_R6
+	C:06E4H            SYMBOL             FMG_CREATE_INFERIOR_MASK
 	C:0460H            SYMBOL             FMG_CLEAR_MEMORY_MAIN_LOOP
 	C:025CH            SYMBOL             FMG_UPDATE_STATE_ROTATION_LEFT
 	C:025AH            SYMBOL             FMG_UPDATE_STATE_LEFT_NOT_ZERO
@@ -233,8 +235,8 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	B:00CEH            SYMBOL             EXF2
 	B:00BBH            SYMBOL             PT1
 	B:00D3H            SYMBOL             RS0
-	C:09AEH            SYMBOL             FMG_DRAW_END_H_E_MIDDLE
-	C:0783H            SYMBOL             FMG_SET_REGION_SMALL_ROTATE_R7
+	C:09B6H            SYMBOL             FMG_DRAW_END_H_E_MIDDLE
+	C:078BH            SYMBOL             FMG_SET_REGION_SMALL_ROTATE_R7
 	C:06C4H            SYMBOL             FMG_REMOVE_LINE_MAIN_LOOP_WORKAROUND
 	C:0496H            SYMBOL             FMG_LOOP_LINHA_SUPERIOR
 	C:0090H            SYMBOL             LCD_SERIAL_END_IF
@@ -243,16 +245,16 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	B:008CH            SYMBOL             TR0
 	B:00D4H            SYMBOL             RS1
 	B:00D5H            SYMBOL             F0
-	C:0795H            SYMBOL             FMG_SET_REGION_LOOP_END
+	C:079DH            SYMBOL             FMG_SET_REGION_LOOP_END
 	C:05ABH            SYMBOL             FMG_TIMER_0_ROTATE
 	C:041DH            SYMBOL             FMG_SELECT_PIECE_Z
 	C:030EH            SYMBOL             FMG_GET_REGION_LOOP_X_WORKAROUND
 	C:0210H            SYMBOL             FMG_UPDATE_STATE_SWITCH_STATE_LEFT
-	C:07B3H            SYMBOL             FMG_UPDATE_SCORE
+	C:07BBH            SYMBOL             FMG_UPDATE_SCORE
 	B:008EH            SYMBOL             TR1
 	B:00D1H            SYMBOL             F1
-	C:0763H            SYMBOL             FMG_SET_REGION_SWITCH_1_R6_R7
-	C:073BH            SYMBOL             FMG_SET_REGION_LOOP_X
+	C:076BH            SYMBOL             FMG_SET_REGION_SWITCH_1_R6_R7
+	C:0743H            SYMBOL             FMG_SET_REGION_LOOP_X
 	C:0625H            SYMBOL             FMG_REMOVE_COMPLETE_LINES_LINE_COMPLETE
 	C:0462H            SYMBOL             FMG_CLEAR_MEMORY_LOOP_BORDER_LEFT
 	C:0320H            SYMBOL             FMG_FIND_BIT
@@ -264,15 +266,15 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	B:00CAH            SYMBOL             TR2
 	B:00B8H            SYMBOL             PX0
 	B:00ACH            SYMBOL             ES
-	C:0743H            SYMBOL             FMG_SET_REGION_LOOP_Y
+	C:074BH            SYMBOL             FMG_SET_REGION_LOOP_Y
 	C:029CH            SYMBOL             FMG_UPDATE_STATE_FALL_NOT_VALID
 	C:0233H            SYMBOL             FMG_UPDATE_STATE_RIGHT
 	C:060AH            SYMBOL             FMG_REMOVE_COMPLETE_LINES
 	C:00DDH            SYMBOL             LCD_CLEAR
 	B:00BAH            SYMBOL             PX1
 	D:00B8H            SYMBOL             IP
-	C:0956H            SYMBOL             FMG_DRAW_END_H_E_TOP
-	C:0729H            SYMBOL             FMG_UPDATE_STATE_CHECK_COLLISION_END
+	C:095EH            SYMBOL             FMG_DRAW_END_H_E_TOP
+	C:0731H            SYMBOL             FMG_UPDATE_STATE_CHECK_COLLISION_END
 	C:06A0H            SYMBOL             FMG_REMOVE_SPECIFIC_LINE_LEVEL_1
 	C:028CH            SYMBOL             FMG_UPDATE_STATE_FALL
 	C:0126H            SYMBOL             FMG_PIECES_I
@@ -295,17 +297,17 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	C:0551H            SYMBOL             FMG_DRAW_BORDER_LOOP
 	C:0436H            SYMBOL             FMG_SELECT_NEW_PIECE_END
 	C:01FEH            SYMBOL             FMG_UPDATE_STATE_END_WORKAROUND
-	C:091BH            SYMBOL             FMG_DRAW_END
+	C:0923H            SYMBOL             FMG_DRAW_END
 	C:0138H            SYMBOL             FMG_PIECES_L
 	C:000FH            SYMBOL             RAND8
 	B:0099H            SYMBOL             TI
-	C:0981H            SYMBOL             FMG_DRAW_END_T_MIDDLE
-	C:0917H            SYMBOL             FMG_TEST_END_END_GAME
-	C:07A4H            SYMBOL             FMG_SET_REGION_END
+	C:0989H            SYMBOL             FMG_DRAW_END_T_MIDDLE
+	C:091FH            SYMBOL             FMG_TEST_END_END_GAME
+	C:07ACH            SYMBOL             FMG_SET_REGION_END
 	C:067CH            SYMBOL             FMG_REMOVE_SPECIFIC_LINE_SET_CARRY
 	C:03C4H            SYMBOL             FMG_DRAW_NEXT_PIECE_BOTTOM
 	B:0089H            SYMBOL             IE0
-	C:0725H            SYMBOL             FMG_UPDATE_STATE_CHECK_COLLISION_NOT_COLLISION
+	C:072DH            SYMBOL             FMG_UPDATE_STATE_CHECK_COLLISION_NOT_COLLISION
 	C:06C7H            SYMBOL             FMG_REMOVE_SPECIFIC_LINE_END_END
 	C:05DCH            SYMBOL             FMG_VALIDATE_COLLISION_SWITCH
 	C:05BBH            SYMBOL             FMG_TIMER_0_END
@@ -313,9 +315,9 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	C:0469H            SYMBOL             FMG_CLEAR_MEMORY_LOOP_MIDDLE
 	C:0016H            SYMBOL             RAND8B
 	B:008BH            SYMBOL             IE1
-	C:0000H            LINE#              1992
-	C:000BH            LINE#              1996
-	C:000EH            LINE#              1997
+	C:0000H            LINE#              1998
+	C:000BH            LINE#              2002
+	C:000EH            LINE#              2003
 	C:000FH            LINE#              12
 	C:0011H            LINE#              13
 	C:0013H            LINE#              14
@@ -1192,453 +1194,457 @@ SYMBOL TABLE FOR C:\PROJECTS\MICROCONTROLADORES\SRC\COMMONS.AOF(MAIN)
 	C:06D2H            LINE#              1400
 	C:06D3H            LINE#              1401
 	C:06D4H            LINE#              1405
-	C:06D6H            LINE#              1407
-	C:06D7H            LINE#              1408
-	C:06D8H            LINE#              1409
+	C:06D5H            LINE#              1406
+	C:06D7H            LINE#              1407
+	C:06D9H            LINE#              1409
 	C:06DAH            LINE#              1410
 	C:06DBH            LINE#              1411
-	C:06DCH            LINE#              1415
-	C:06DDH            LINE#              1416
-	C:06DFH            LINE#              1417
-	C:06E1H            LINE#              1419
-	C:06E2H            LINE#              1420
-	C:06E3H            LINE#              1421
-	C:06E5H            LINE#              1423
-	C:06E6H            LINE#              1424
-	C:06E7H            LINE#              1429
-	C:06E8H            LINE#              1430
-	C:06EAH            LINE#              1431
-	C:06ECH            LINE#              1432
-	C:06EDH            LINE#              1434
-	C:06EEH            LINE#              1435
+	C:06DDH            LINE#              1412
+	C:06DEH            LINE#              1413
+	C:06E1H            LINE#              1415
+	C:06E3H            LINE#              1417
+	C:06E4H            LINE#              1421
+	C:06E5H            LINE#              1422
+	C:06E7H            LINE#              1423
+	C:06E9H            LINE#              1425
+	C:06EAH            LINE#              1426
+	C:06EBH            LINE#              1427
+	C:06EDH            LINE#              1429
+	C:06EEH            LINE#              1430
+	C:06EFH            LINE#              1435
 	C:06F0H            LINE#              1436
-	C:06F1H            LINE#              1437
-	C:06F3H            LINE#              1439
-	C:06F4H            LINE#              1450
-	C:06F7H            LINE#              1451
-	C:06FAH            LINE#              1452
-	C:06FBH            LINE#              1453
-	C:06FEH            LINE#              1454
-	C:06FFH            LINE#              1455
-	C:0701H            LINE#              1456
+	C:06F2H            LINE#              1437
+	C:06F4H            LINE#              1438
+	C:06F5H            LINE#              1440
+	C:06F6H            LINE#              1441
+	C:06F8H            LINE#              1442
+	C:06F9H            LINE#              1443
+	C:06FBH            LINE#              1445
+	C:06FCH            LINE#              1456
+	C:06FFH            LINE#              1457
 	C:0702H            LINE#              1458
 	C:0703H            LINE#              1459
-	C:0704H            LINE#              1460
+	C:0706H            LINE#              1460
 	C:0707H            LINE#              1461
-	C:0708H            LINE#              1462
-	C:070AH            LINE#              1463
-	C:070BH            LINE#              1464
-	C:070CH            LINE#              1467
-	C:070FH            LINE#              1470
-	C:0710H            LINE#              1471
-	C:0711H            LINE#              1472
-	C:0712H            LINE#              1473
-	C:0713H            LINE#              1474
-	C:0715H            LINE#              1475
+	C:0709H            LINE#              1462
+	C:070AH            LINE#              1464
+	C:070BH            LINE#              1465
+	C:070CH            LINE#              1466
+	C:070FH            LINE#              1467
+	C:0710H            LINE#              1468
+	C:0712H            LINE#              1469
+	C:0713H            LINE#              1470
+	C:0714H            LINE#              1473
+	C:0717H            LINE#              1476
 	C:0718H            LINE#              1477
 	C:0719H            LINE#              1478
 	C:071AH            LINE#              1479
 	C:071BH            LINE#              1480
-	C:071CH            LINE#              1481
-	C:071EH            LINE#              1482
+	C:071DH            LINE#              1481
+	C:0720H            LINE#              1483
 	C:0721H            LINE#              1484
 	C:0722H            LINE#              1485
-	C:0725H            LINE#              1487
+	C:0723H            LINE#              1486
+	C:0724H            LINE#              1487
 	C:0726H            LINE#              1488
 	C:0729H            LINE#              1490
-	C:072AH            LINE#              1499
-	C:072BH            LINE#              1500
-	C:072DH            LINE#              1501
-	C:072EH            LINE#              1502
-	C:0730H            LINE#              1503
-	C:0731H            LINE#              1504
-	C:0733H            LINE#              1505
-	C:0734H            LINE#              1506
+	C:072AH            LINE#              1491
+	C:072DH            LINE#              1493
+	C:072EH            LINE#              1494
+	C:0731H            LINE#              1496
+	C:0732H            LINE#              1505
+	C:0733H            LINE#              1506
+	C:0735H            LINE#              1507
 	C:0736H            LINE#              1508
-	C:0737H            LINE#              1509
+	C:0738H            LINE#              1509
 	C:0739H            LINE#              1510
-	C:073BH            LINE#              1512
-	C:073DH            LINE#              1513
-	C:073FH            LINE#              1514
-	C:0741H            LINE#              1515
+	C:073BH            LINE#              1511
+	C:073CH            LINE#              1512
+	C:073EH            LINE#              1514
+	C:073FH            LINE#              1515
+	C:0741H            LINE#              1516
 	C:0743H            LINE#              1518
-	C:0744H            LINE#              1519
+	C:0745H            LINE#              1519
 	C:0747H            LINE#              1520
-	C:0748H            LINE#              1521
-	C:074AH            LINE#              1522
+	C:0749H            LINE#              1521
 	C:074BH            LINE#              1524
-	C:074EH            LINE#              1525
+	C:074CH            LINE#              1525
 	C:074FH            LINE#              1526
 	C:0750H            LINE#              1527
-	C:0751H            LINE#              1528
-	C:0753H            LINE#              1529
-	C:0754H            LINE#              1530
-	C:0755H            LINE#              1533
-	C:0756H            LINE#              1534
-	C:0757H            LINE#              1535
-	C:075AH            LINE#              1536
-	C:075BH            LINE#              1537
-	C:075EH            LINE#              1538
-	C:075FH            LINE#              1539
-	C:0762H            LINE#              1540
-	C:0763H            LINE#              1542
-	C:0766H            LINE#              1543
-	C:0769H            LINE#              1546
-	C:076AH            LINE#              1547
-	C:076CH            LINE#              1548
-	C:076DH            LINE#              1551
-	C:076EH            LINE#              1552
-	C:0770H            LINE#              1553
-	C:0771H            LINE#              1555
-	C:0773H            LINE#              1556
-	C:0774H            LINE#              1557
-	C:0775H            LINE#              1558
-	C:0776H            LINE#              1559
-	C:0777H            LINE#              1561
-	C:0778H            LINE#              1563
-	C:0779H            LINE#              1564
-	C:077BH            LINE#              1565
-	C:077CH            LINE#              1566
-	C:077FH            LINE#              1569
-	C:0780H            LINE#              1570
-	C:0782H            LINE#              1571
-	C:0783H            LINE#              1574
-	C:0784H            LINE#              1575
-	C:0786H            LINE#              1576
-	C:0787H            LINE#              1578
-	C:0789H            LINE#              1579
-	C:078AH            LINE#              1580
-	C:078BH            LINE#              1581
-	C:078CH            LINE#              1582
-	C:078DH            LINE#              1584
-	C:078EH            LINE#              1586
-	C:078FH            LINE#              1587
-	C:0791H            LINE#              1588
-	C:0792H            LINE#              1589
-	C:0795H            LINE#              1591
+	C:0752H            LINE#              1528
+	C:0753H            LINE#              1530
+	C:0756H            LINE#              1531
+	C:0757H            LINE#              1532
+	C:0758H            LINE#              1533
+	C:0759H            LINE#              1534
+	C:075BH            LINE#              1535
+	C:075CH            LINE#              1536
+	C:075DH            LINE#              1539
+	C:075EH            LINE#              1540
+	C:075FH            LINE#              1541
+	C:0762H            LINE#              1542
+	C:0763H            LINE#              1543
+	C:0766H            LINE#              1544
+	C:0767H            LINE#              1545
+	C:076AH            LINE#              1546
+	C:076BH            LINE#              1548
+	C:076EH            LINE#              1549
+	C:0771H            LINE#              1552
+	C:0772H            LINE#              1553
+	C:0774H            LINE#              1554
+	C:0775H            LINE#              1557
+	C:0776H            LINE#              1558
+	C:0778H            LINE#              1559
+	C:0779H            LINE#              1561
+	C:077BH            LINE#              1562
+	C:077CH            LINE#              1563
+	C:077DH            LINE#              1564
+	C:077EH            LINE#              1565
+	C:077FH            LINE#              1567
+	C:0780H            LINE#              1569
+	C:0781H            LINE#              1570
+	C:0783H            LINE#              1571
+	C:0784H            LINE#              1572
+	C:0787H            LINE#              1575
+	C:0788H            LINE#              1576
+	C:078AH            LINE#              1577
+	C:078BH            LINE#              1580
+	C:078CH            LINE#              1581
+	C:078EH            LINE#              1582
+	C:078FH            LINE#              1584
+	C:0791H            LINE#              1585
+	C:0792H            LINE#              1586
+	C:0793H            LINE#              1587
+	C:0794H            LINE#              1588
+	C:0795H            LINE#              1590
 	C:0796H            LINE#              1592
-	C:0798H            LINE#              1593
+	C:0797H            LINE#              1593
 	C:0799H            LINE#              1594
-	C:079BH            LINE#              1595
-	C:079EH            LINE#              1597
-	C:07A1H            LINE#              1599
-	C:07A4H            LINE#              1601
-	C:07A6H            LINE#              1602
-	C:07A8H            LINE#              1603
-	C:07A9H            LINE#              1604
-	C:07ABH            LINE#              1605
-	C:07ACH            LINE#              1606
-	C:07AEH            LINE#              1607
-	C:07AFH            LINE#              1608
-	C:07B1H            LINE#              1609
-	C:07B2H            LINE#              1610
-	C:07B3H            LINE#              1617
-	C:07B4H            LINE#              1618
-	C:07B7H            LINE#              1619
-	C:07B8H            LINE#              1621
-	C:07BBH            LINE#              1622
-	C:07BCH            LINE#              1625
-	C:07BFH            LINE#              1626
-	C:07C2H            LINE#              1627
-	C:07C5H            LINE#              1628
-	C:07C8H            LINE#              1629
-	C:07CBH            LINE#              1631
-	C:07CDH            LINE#              1632
-	C:07D0H            LINE#              1634
-	C:07D2H            LINE#              1635
-	C:07D5H            LINE#              1637
-	C:07D7H            LINE#              1638
-	C:07DAH            LINE#              1640
-	C:07DCH            LINE#              1641
-	C:07DFH            LINE#              1643
-	C:07E1H            LINE#              1644
-	C:07E4H            LINE#              1646
-	C:07E6H            LINE#              1647
-	C:07E7H            LINE#              1648
-	C:07E9H            LINE#              1649
-	C:07EBH            LINE#              1650
-	C:07EDH            LINE#              1651
-	C:07EFH            LINE#              1652
-	C:07F0H            LINE#              1655
-	C:07F2H            LINE#              1656
-	C:07F4H            LINE#              1657
+	C:079AH            LINE#              1595
+	C:079DH            LINE#              1597
+	C:079EH            LINE#              1598
+	C:07A0H            LINE#              1599
+	C:07A1H            LINE#              1600
+	C:07A3H            LINE#              1601
+	C:07A6H            LINE#              1603
+	C:07A9H            LINE#              1605
+	C:07ACH            LINE#              1607
+	C:07AEH            LINE#              1608
+	C:07B0H            LINE#              1609
+	C:07B1H            LINE#              1610
+	C:07B3H            LINE#              1611
+	C:07B4H            LINE#              1612
+	C:07B6H            LINE#              1613
+	C:07B7H            LINE#              1614
+	C:07B9H            LINE#              1615
+	C:07BAH            LINE#              1616
+	C:07BBH            LINE#              1623
+	C:07BCH            LINE#              1624
+	C:07BFH            LINE#              1625
+	C:07C0H            LINE#              1627
+	C:07C3H            LINE#              1628
+	C:07C4H            LINE#              1631
+	C:07C7H            LINE#              1632
+	C:07CAH            LINE#              1633
+	C:07CDH            LINE#              1634
+	C:07D0H            LINE#              1635
+	C:07D3H            LINE#              1637
+	C:07D5H            LINE#              1638
+	C:07D8H            LINE#              1640
+	C:07DAH            LINE#              1641
+	C:07DDH            LINE#              1643
+	C:07DFH            LINE#              1644
+	C:07E2H            LINE#              1646
+	C:07E4H            LINE#              1647
+	C:07E7H            LINE#              1649
+	C:07E9H            LINE#              1650
+	C:07ECH            LINE#              1652
+	C:07EEH            LINE#              1653
+	C:07EFH            LINE#              1654
+	C:07F1H            LINE#              1655
+	C:07F3H            LINE#              1656
+	C:07F5H            LINE#              1657
 	C:07F7H            LINE#              1658
-	C:07F8H            LINE#              1659
-	C:07FBH            LINE#              1660
-	C:07FCH            LINE#              1661
-	C:07FDH            LINE#              1662
-	C:07FFH            LINE#              1663
-	C:0800H            LINE#              1664
-	C:0802H            LINE#              1665
-	C:0805H            LINE#              1666
-	C:0806H            LINE#              1667
-	C:0807H            LINE#              1668
-	C:0809H            LINE#              1669
-	C:080AH            LINE#              1670
-	C:080BH            LINE#              1671
-	C:080EH            LINE#              1672
-	C:080FH            LINE#              1673
-	C:0810H            LINE#              1674
+	C:07F8H            LINE#              1661
+	C:07FAH            LINE#              1662
+	C:07FCH            LINE#              1663
+	C:07FFH            LINE#              1664
+	C:0800H            LINE#              1665
+	C:0803H            LINE#              1666
+	C:0804H            LINE#              1667
+	C:0805H            LINE#              1668
+	C:0807H            LINE#              1669
+	C:0808H            LINE#              1670
+	C:080AH            LINE#              1671
+	C:080DH            LINE#              1672
+	C:080EH            LINE#              1673
+	C:080FH            LINE#              1674
 	C:0811H            LINE#              1675
-	C:0813H            LINE#              1676
-	C:0814H            LINE#              1677
-	C:0815H            LINE#              1678
+	C:0812H            LINE#              1676
+	C:0813H            LINE#              1677
+	C:0816H            LINE#              1678
 	C:0817H            LINE#              1679
-	C:0818H            LINE#              1681
-	C:081AH            LINE#              1682
-	C:081DH            LINE#              1683
-	C:081EH            LINE#              1684
+	C:0818H            LINE#              1680
+	C:0819H            LINE#              1681
+	C:081BH            LINE#              1682
+	C:081CH            LINE#              1683
+	C:081DH            LINE#              1684
 	C:081FH            LINE#              1685
-	C:0822H            LINE#              1686
-	C:0823H            LINE#              1687
-	C:0824H            LINE#              1688
-	C:0826H            LINE#              1689
-	C:0827H            LINE#              1690
-	C:0828H            LINE#              1691
-	C:082BH            LINE#              1692
-	C:082CH            LINE#              1693
-	C:082DH            LINE#              1694
-	C:082FH            LINE#              1695
-	C:0830H            LINE#              1696
-	C:0831H            LINE#              1697
-	C:0834H            LINE#              1698
-	C:0835H            LINE#              1699
-	C:0836H            LINE#              1700
+	C:0820H            LINE#              1687
+	C:0822H            LINE#              1688
+	C:0825H            LINE#              1689
+	C:0826H            LINE#              1690
+	C:0827H            LINE#              1691
+	C:082AH            LINE#              1692
+	C:082BH            LINE#              1693
+	C:082CH            LINE#              1694
+	C:082EH            LINE#              1695
+	C:082FH            LINE#              1696
+	C:0830H            LINE#              1697
+	C:0833H            LINE#              1698
+	C:0834H            LINE#              1699
+	C:0835H            LINE#              1700
 	C:0837H            LINE#              1701
-	C:0839H            LINE#              1702
-	C:083AH            LINE#              1703
-	C:083BH            LINE#              1704
+	C:0838H            LINE#              1702
+	C:0839H            LINE#              1703
+	C:083CH            LINE#              1704
 	C:083DH            LINE#              1705
-	C:083EH            LINE#              1707
-	C:0840H            LINE#              1708
-	C:0843H            LINE#              1709
-	C:0844H            LINE#              1710
+	C:083EH            LINE#              1706
+	C:083FH            LINE#              1707
+	C:0841H            LINE#              1708
+	C:0842H            LINE#              1709
+	C:0843H            LINE#              1710
 	C:0845H            LINE#              1711
-	C:0848H            LINE#              1712
-	C:0849H            LINE#              1713
-	C:084AH            LINE#              1714
-	C:084CH            LINE#              1715
-	C:084DH            LINE#              1716
-	C:084EH            LINE#              1717
-	C:0851H            LINE#              1718
-	C:0852H            LINE#              1719
-	C:0853H            LINE#              1720
-	C:0855H            LINE#              1721
-	C:0856H            LINE#              1722
-	C:0857H            LINE#              1723
-	C:085AH            LINE#              1724
-	C:085BH            LINE#              1725
-	C:085CH            LINE#              1726
+	C:0846H            LINE#              1713
+	C:0848H            LINE#              1714
+	C:084BH            LINE#              1715
+	C:084CH            LINE#              1716
+	C:084DH            LINE#              1717
+	C:0850H            LINE#              1718
+	C:0851H            LINE#              1719
+	C:0852H            LINE#              1720
+	C:0854H            LINE#              1721
+	C:0855H            LINE#              1722
+	C:0856H            LINE#              1723
+	C:0859H            LINE#              1724
+	C:085AH            LINE#              1725
+	C:085BH            LINE#              1726
 	C:085DH            LINE#              1727
-	C:085FH            LINE#              1728
-	C:0860H            LINE#              1729
-	C:0861H            LINE#              1730
+	C:085EH            LINE#              1728
+	C:085FH            LINE#              1729
+	C:0862H            LINE#              1730
 	C:0863H            LINE#              1731
-	C:0864H            LINE#              1733
-	C:0865H            LINE#              1734
-	C:0867H            LINE#              1735
-	C:0868H            LINE#              1736
-	C:086AH            LINE#              1737
-	C:086BH            LINE#              1738
-	C:086DH            LINE#              1739
-	C:086EH            LINE#              1740
-	C:0870H            LINE#              1745
-	C:0872H            LINE#              1746
-	C:0874H            LINE#              1748
-	C:0877H            LINE#              1749
-	C:0879H            LINE#              1751
-	C:087BH            LINE#              1752
-	C:087DH            LINE#              1753
-	C:087FH            LINE#              1754
-	C:0882H            LINE#              1756
-	C:0885H            LINE#              1757
-	C:0886H            LINE#              1758
-	C:0887H            LINE#              1759
-	C:0888H            LINE#              1760
-	C:0889H            LINE#              1761
-	C:088CH            LINE#              1762
+	C:0864H            LINE#              1732
+	C:0865H            LINE#              1733
+	C:0867H            LINE#              1734
+	C:0868H            LINE#              1735
+	C:0869H            LINE#              1736
+	C:086BH            LINE#              1737
+	C:086CH            LINE#              1739
+	C:086DH            LINE#              1740
+	C:086FH            LINE#              1741
+	C:0870H            LINE#              1742
+	C:0872H            LINE#              1743
+	C:0873H            LINE#              1744
+	C:0875H            LINE#              1745
+	C:0876H            LINE#              1746
+	C:0878H            LINE#              1751
+	C:087AH            LINE#              1752
+	C:087CH            LINE#              1754
+	C:087FH            LINE#              1755
+	C:0881H            LINE#              1757
+	C:0883H            LINE#              1758
+	C:0885H            LINE#              1759
+	C:0887H            LINE#              1760
+	C:088AH            LINE#              1762
 	C:088DH            LINE#              1763
 	C:088EH            LINE#              1764
 	C:088FH            LINE#              1765
 	C:0890H            LINE#              1766
-	C:0893H            LINE#              1767
+	C:0891H            LINE#              1767
 	C:0894H            LINE#              1768
 	C:0895H            LINE#              1769
 	C:0896H            LINE#              1770
 	C:0897H            LINE#              1771
-	C:089AH            LINE#              1774
-	C:089CH            LINE#              1775
+	C:0898H            LINE#              1772
+	C:089BH            LINE#              1773
+	C:089CH            LINE#              1774
+	C:089DH            LINE#              1775
 	C:089EH            LINE#              1776
-	C:08A0H            LINE#              1777
-	C:08A3H            LINE#              1779
-	C:08A6H            LINE#              1780
-	C:08A7H            LINE#              1781
-	C:08A8H            LINE#              1782
-	C:08A9H            LINE#              1783
-	C:08AAH            LINE#              1784
-	C:08ADH            LINE#              1785
+	C:089FH            LINE#              1777
+	C:08A2H            LINE#              1780
+	C:08A4H            LINE#              1781
+	C:08A6H            LINE#              1782
+	C:08A8H            LINE#              1783
+	C:08ABH            LINE#              1785
 	C:08AEH            LINE#              1786
 	C:08AFH            LINE#              1787
 	C:08B0H            LINE#              1788
 	C:08B1H            LINE#              1789
-	C:08B4H            LINE#              1790
+	C:08B2H            LINE#              1790
 	C:08B5H            LINE#              1791
 	C:08B6H            LINE#              1792
 	C:08B7H            LINE#              1793
 	C:08B8H            LINE#              1794
-	C:08BBH            LINE#              1797
-	C:08BDH            LINE#              1798
+	C:08B9H            LINE#              1795
+	C:08BCH            LINE#              1796
+	C:08BDH            LINE#              1797
+	C:08BEH            LINE#              1798
 	C:08BFH            LINE#              1799
-	C:08C1H            LINE#              1800
-	C:08C4H            LINE#              1802
-	C:08C7H            LINE#              1803
-	C:08C8H            LINE#              1804
-	C:08C9H            LINE#              1805
-	C:08CAH            LINE#              1806
-	C:08CBH            LINE#              1807
-	C:08CEH            LINE#              1808
+	C:08C0H            LINE#              1800
+	C:08C3H            LINE#              1803
+	C:08C5H            LINE#              1804
+	C:08C7H            LINE#              1805
+	C:08C9H            LINE#              1806
+	C:08CCH            LINE#              1808
 	C:08CFH            LINE#              1809
 	C:08D0H            LINE#              1810
 	C:08D1H            LINE#              1811
 	C:08D2H            LINE#              1812
-	C:08D5H            LINE#              1813
+	C:08D3H            LINE#              1813
 	C:08D6H            LINE#              1814
 	C:08D7H            LINE#              1815
 	C:08D8H            LINE#              1816
 	C:08D9H            LINE#              1817
-	C:08DCH            LINE#              1820
-	C:08DEH            LINE#              1821
+	C:08DAH            LINE#              1818
+	C:08DDH            LINE#              1819
+	C:08DEH            LINE#              1820
+	C:08DFH            LINE#              1821
 	C:08E0H            LINE#              1822
-	C:08E2H            LINE#              1823
-	C:08E5H            LINE#              1824
-	C:08E8H            LINE#              1825
-	C:08E9H            LINE#              1826
-	C:08EAH            LINE#              1827
-	C:08EBH            LINE#              1828
-	C:08ECH            LINE#              1829
-	C:08EFH            LINE#              1830
+	C:08E1H            LINE#              1823
+	C:08E4H            LINE#              1826
+	C:08E6H            LINE#              1827
+	C:08E8H            LINE#              1828
+	C:08EAH            LINE#              1829
+	C:08EDH            LINE#              1830
 	C:08F0H            LINE#              1831
 	C:08F1H            LINE#              1832
 	C:08F2H            LINE#              1833
 	C:08F3H            LINE#              1834
-	C:08F6H            LINE#              1835
+	C:08F4H            LINE#              1835
 	C:08F7H            LINE#              1836
 	C:08F8H            LINE#              1837
 	C:08F9H            LINE#              1838
 	C:08FAH            LINE#              1839
-	C:08FDH            LINE#              1840
-	C:08FFH            LINE#              1841
-	C:0900H            LINE#              1844
+	C:08FBH            LINE#              1840
+	C:08FEH            LINE#              1841
+	C:08FFH            LINE#              1842
+	C:0900H            LINE#              1843
+	C:0901H            LINE#              1844
 	C:0902H            LINE#              1845
-	C:0904H            LINE#              1846
-	C:0905H            LINE#              1847
-	C:0906H            LINE#              1848
-	C:0908H            LINE#              1849
-	C:090AH            LINE#              1852
-	C:090BH            LINE#              1853
-	C:090CH            LINE#              1854
-	C:090DH            LINE#              1855
-	C:090EH            LINE#              1856
-	C:0910H            LINE#              1857
-	C:0911H            LINE#              1858
+	C:0905H            LINE#              1846
+	C:0907H            LINE#              1847
+	C:0908H            LINE#              1850
+	C:090AH            LINE#              1851
+	C:090CH            LINE#              1852
+	C:090DH            LINE#              1853
+	C:090EH            LINE#              1854
+	C:0910H            LINE#              1855
+	C:0912H            LINE#              1858
 	C:0913H            LINE#              1859
-	C:0915H            LINE#              1860
-	C:0917H            LINE#              1863
-	C:091AH            LINE#              1865
-	C:091BH            LINE#              1868
-	C:091DH            LINE#              1870
-	C:0920H            LINE#              1875
-	C:0922H            LINE#              1876
-	C:0924H            LINE#              1877
-	C:0927H            LINE#              1879
-	C:0929H            LINE#              1881
-	C:092BH            LINE#              1882
-	C:092EH            LINE#              1883
-	C:0930H            LINE#              1885
-	C:0932H            LINE#              1887
-	C:0934H            LINE#              1888
-	C:0937H            LINE#              1889
-	C:0939H            LINE#              1891
-	C:093BH            LINE#              1893
-	C:093DH            LINE#              1894
-	C:0940H            LINE#              1895
-	C:0942H            LINE#              1896
-	C:0944H            LINE#              1898
-	C:0946H            LINE#              1899
-	C:0949H            LINE#              1900
-	C:094BH            LINE#              1901
-	C:094DH            LINE#              1903
-	C:094FH            LINE#              1904
-	C:0952H            LINE#              1905
-	C:0954H            LINE#              1907
-	C:0956H            LINE#              1909
-	C:0958H            LINE#              1910
-	C:095BH            LINE#              1911
-	C:095DH            LINE#              1913
-	C:095FH            LINE#              1915
-	C:0961H            LINE#              1916
-	C:0964H            LINE#              1917
-	C:0966H            LINE#              1918
-	C:0968H            LINE#              1920
-	C:096AH            LINE#              1921
-	C:096DH            LINE#              1922
-	C:096FH            LINE#              1923
-	C:0971H            LINE#              1925
-	C:0973H            LINE#              1926
-	C:0976H            LINE#              1927
-	C:0978H            LINE#              1930
-	C:097AH            LINE#              1931
-	C:097CH            LINE#              1932
-	C:097FH            LINE#              1934
-	C:0981H            LINE#              1936
-	C:0983H            LINE#              1937
-	C:0986H            LINE#              1938
-	C:0988H            LINE#              1940
-	C:098AH            LINE#              1942
-	C:098CH            LINE#              1943
-	C:098FH            LINE#              1944
-	C:0991H            LINE#              1946
-	C:0993H            LINE#              1948
-	C:0995H            LINE#              1949
-	C:0998H            LINE#              1950
-	C:099AH            LINE#              1952
-	C:099CH            LINE#              1954
-	C:099EH            LINE#              1955
-	C:09A1H            LINE#              1956
-	C:09A3H            LINE#              1958
-	C:09A5H            LINE#              1960
-	C:09A7H            LINE#              1961
-	C:09AAH            LINE#              1962
-	C:09ACH            LINE#              1964
-	C:09AEH            LINE#              1966
-	C:09B0H            LINE#              1967
-	C:09B3H            LINE#              1968
-	C:09B5H            LINE#              1970
-	C:09B7H            LINE#              1972
-	C:09B9H            LINE#              1973
-	C:09BCH            LINE#              1974
-	C:09BEH            LINE#              1975
-	C:09C0H            LINE#              1977
-	C:09C2H            LINE#              1978
-	C:09C5H            LINE#              1979
-	C:09C7H            LINE#              1980
-	C:09C9H            LINE#              1982
-	C:09CBH            LINE#              1983
-	C:09CEH            LINE#              1984
-	C:09D0H            LINE#              1987
-	C:09D3H            LINE#              1988
-	C:09D5H            LINE#              1989
-	C:09D6H            LINE#              2001
-	C:09D9H            LINE#              2002
-	C:09DCH            LINE#              2003
-	C:09DFH            LINE#              2008
-	C:09E1H            LINE#              2009
-	C:09E3H            LINE#              2010
-	C:09E5H            LINE#              2011
+	C:0914H            LINE#              1860
+	C:0915H            LINE#              1861
+	C:0916H            LINE#              1862
+	C:0918H            LINE#              1863
+	C:0919H            LINE#              1864
+	C:091BH            LINE#              1865
+	C:091DH            LINE#              1866
+	C:091FH            LINE#              1869
+	C:0922H            LINE#              1871
+	C:0923H            LINE#              1874
+	C:0925H            LINE#              1876
+	C:0928H            LINE#              1881
+	C:092AH            LINE#              1882
+	C:092CH            LINE#              1883
+	C:092FH            LINE#              1885
+	C:0931H            LINE#              1887
+	C:0933H            LINE#              1888
+	C:0936H            LINE#              1889
+	C:0938H            LINE#              1891
+	C:093AH            LINE#              1893
+	C:093CH            LINE#              1894
+	C:093FH            LINE#              1895
+	C:0941H            LINE#              1897
+	C:0943H            LINE#              1899
+	C:0945H            LINE#              1900
+	C:0948H            LINE#              1901
+	C:094AH            LINE#              1902
+	C:094CH            LINE#              1904
+	C:094EH            LINE#              1905
+	C:0951H            LINE#              1906
+	C:0953H            LINE#              1907
+	C:0955H            LINE#              1909
+	C:0957H            LINE#              1910
+	C:095AH            LINE#              1911
+	C:095CH            LINE#              1913
+	C:095EH            LINE#              1915
+	C:0960H            LINE#              1916
+	C:0963H            LINE#              1917
+	C:0965H            LINE#              1919
+	C:0967H            LINE#              1921
+	C:0969H            LINE#              1922
+	C:096CH            LINE#              1923
+	C:096EH            LINE#              1924
+	C:0970H            LINE#              1926
+	C:0972H            LINE#              1927
+	C:0975H            LINE#              1928
+	C:0977H            LINE#              1929
+	C:0979H            LINE#              1931
+	C:097BH            LINE#              1932
+	C:097EH            LINE#              1933
+	C:0980H            LINE#              1936
+	C:0982H            LINE#              1937
+	C:0984H            LINE#              1938
+	C:0987H            LINE#              1940
+	C:0989H            LINE#              1942
+	C:098BH            LINE#              1943
+	C:098EH            LINE#              1944
+	C:0990H            LINE#              1946
+	C:0992H            LINE#              1948
+	C:0994H            LINE#              1949
+	C:0997H            LINE#              1950
+	C:0999H            LINE#              1952
+	C:099BH            LINE#              1954
+	C:099DH            LINE#              1955
+	C:09A0H            LINE#              1956
+	C:09A2H            LINE#              1958
+	C:09A4H            LINE#              1960
+	C:09A6H            LINE#              1961
+	C:09A9H            LINE#              1962
+	C:09ABH            LINE#              1964
+	C:09ADH            LINE#              1966
+	C:09AFH            LINE#              1967
+	C:09B2H            LINE#              1968
+	C:09B4H            LINE#              1970
+	C:09B6H            LINE#              1972
+	C:09B8H            LINE#              1973
+	C:09BBH            LINE#              1974
+	C:09BDH            LINE#              1976
+	C:09BFH            LINE#              1978
+	C:09C1H            LINE#              1979
+	C:09C4H            LINE#              1980
+	C:09C6H            LINE#              1981
+	C:09C8H            LINE#              1983
+	C:09CAH            LINE#              1984
+	C:09CDH            LINE#              1985
+	C:09CFH            LINE#              1986
+	C:09D1H            LINE#              1988
+	C:09D3H            LINE#              1989
+	C:09D6H            LINE#              1990
+	C:09D8H            LINE#              1993
+	C:09DBH            LINE#              1994
+	C:09DDH            LINE#              1995
+	C:09DEH            LINE#              2007
+	C:09E1H            LINE#              2008
+	C:09E4H            LINE#              2009
 	C:09E7H            LINE#              2014
 	C:09E9H            LINE#              2015
 	C:09EBH            LINE#              2016
-	C:09EEH            LINE#              2017
+	C:09EDH            LINE#              2017
+	C:09EFH            LINE#              2020
+	C:09F1H            LINE#              2021
+	C:09F3H            LINE#              2022
+	C:09F6H            LINE#              2023
 	-------            ENDMOD             MAIN
 
 ----------------------

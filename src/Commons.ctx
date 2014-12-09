@@ -1,6 +1,10 @@
 
 <Debug>
-	<Commons/>
+	<Commons>
+		<DataView Focus="0" TopRow="0" NbPerLine="20" />
+		<DataView Focus="109" TopRow="0" NbPerLine="20" />
+																		
+	</Commons>
 	<Flags>
 		<Report>
 			<Def Header="FlagReport" NbCol="9" >
@@ -18,8 +22,8 @@
 							
 			</Def>
 			<Rows>
-				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:1656" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
-				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:1672" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
+				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:351" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
+				<Row Check="True" Kind="Breakpoint" KindID="0" Space="code" SpaceID="0" Condition="" Line="L:1294" File="main.asm" Path="C:\Projects\microcontroladores\src\main.asm" />
 							
 			</Rows>
 					
@@ -31,15 +35,17 @@
 		<View File=".\Tetris\GetRegion.asm" Line="3" Index="1" />
 		<View File=".\Tetris\SetRegion.asm" Line="1" Index="2" />
 		<View File=".\Tetris\FindBit.asm" Line="4" Index="3" />
-		<View File=".\Tetris\main.asm" Line="39" Index="4" focus="1" />
+		<View File=".\Tetris\main.asm" Line="57" Index="4" />
 		<View File=".\Tetris\DrawScreen.asm" Line="11" Index="5" />
-		<View File=".\main.asm" Line="1669" Index="6" />
+		<View File=".\main.asm" Line="2002" Index="6" focus="1" />
 		<View File=".\Tetris\RemoveCompleteLines.asm" Line="52" Index="7" />
-		<View File=".\Tetris\RemoveSpecificLine.asm" Line="143" Index="8" />
+		<View File=".\Tetris\RemoveSpecificLine.asm" Line="135" Index="8" />
 		<View File=".\Tetris\UpdateScore.asm" Line="16" Index="9" />
 		<View File=".\Tetris\DrawScore.asm" Line="81" Index="10" />
 		<View File=".\Tetris\TestEnd.asm" Line="16" Index="11" />
 		<View File=".\Tetris\DrawEnd.asm" Line="120" Index="12" />
+		<View File=".\commons.asm" Line="6" Index="13" />
+		<View File=".\Tetris\Timer0.asm" Line="13" Index="14" />
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
@@ -77,6 +83,8 @@
 		</GrepReplaceWhat>
 	</Grep>
 	<FindStrings>
+		<Find>FMG_TETRIS_Ma</Find>
+		<Find>FMG_REMOVE_SPECIFIC_LINE</Find>
 		<Find>TEST_END</Find>
 		<Find>fmg_number</Find>
 		<Find>fmg_number]</Find>
@@ -95,8 +103,6 @@
 		<Find>CLR EA</Find>
 		<Find>R1</Find>
 		<Find>EA </Find>
-		<Find>EA</Find>
-		<Find>FMG_UPDATE_STATE_CHECK_COLLISION:</Find>
 	</FindStrings>
 	<ReplaceStrings>
 		<Find>GET</Find>
