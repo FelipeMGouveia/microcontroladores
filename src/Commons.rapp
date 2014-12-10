@@ -1,6 +1,6 @@
 
-<ApplicationBuild Header="Commons" Extern=".\Commons.rapp" Path=".\Commons.rapp" OutputFile=".\Commons.aof" sate="98" >
-	<NodeASM Path=".\commons.asm" Header="commons.asm" Marker="0" OutputFile=".\commons.obj" sate="0" >
+<ApplicationBuild Header="Commons" Extern=".\Commons.rapp" Path=".\Commons.rapp" OutputFile=".\Commons.aof" sate="96" >
+	<NodeASM Path=".\commons.asm" Header="commons.asm" Marker="0" OutputFile=".\commons.obj" sate="2" >
 		<Options>
 			<Config Header="Standard" >
 				<Set Header="NodeASM" >
@@ -353,4 +353,15 @@
 			</Set>
 		</Config>
 	</Options>
+	<NodeASM Path=".\Music.asm" Header="Music.asm" Marker="0" OutputFile=".\Music.obj" sate="0" >
+		<Options>
+			<Config Header="Standard" >
+				<Set Header="NodeASM" >
+					<Section Header="Build" >
+						<Property Header="Exclude" Value="Yes" Removable="1" />
+					</Section>
+				</Set>
+			</Config>
+		</Options>
+	</NodeASM>
 </ApplicationBuild>

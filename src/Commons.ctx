@@ -3,7 +3,7 @@
 	<Commons>
 		<DataView Focus="0" TopRow="0" NbPerLine="20" />
 		<DataView Focus="109" TopRow="0" NbPerLine="20" />
-																		
+																								
 	</Commons>
 	<Flags>
 		<Report>
@@ -31,21 +31,7 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\Tetris\ValidateCollision.asm" Line="17" Index="0" />
-		<View File=".\Tetris\GetRegion.asm" Line="3" Index="1" />
-		<View File=".\Tetris\SetRegion.asm" Line="1" Index="2" />
-		<View File=".\Tetris\FindBit.asm" Line="4" Index="3" />
-		<View File=".\Tetris\main.asm" Line="57" Index="4" />
-		<View File=".\Tetris\DrawScreen.asm" Line="11" Index="5" />
-		<View File=".\main.asm" Line="2002" Index="6" focus="1" />
-		<View File=".\Tetris\RemoveCompleteLines.asm" Line="52" Index="7" />
-		<View File=".\Tetris\RemoveSpecificLine.asm" Line="135" Index="8" />
-		<View File=".\Tetris\UpdateScore.asm" Line="16" Index="9" />
-		<View File=".\Tetris\DrawScore.asm" Line="81" Index="10" />
-		<View File=".\Tetris\TestEnd.asm" Line="16" Index="11" />
-		<View File=".\Tetris\DrawEnd.asm" Line="120" Index="12" />
-		<View File=".\commons.asm" Line="6" Index="13" />
-		<View File=".\Tetris\Timer0.asm" Line="13" Index="14" />
+		<View File=".\Music.asm" Line="24" Index="0" focus="1" />
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
