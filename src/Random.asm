@@ -1,4 +1,4 @@
-﻿;to use these pseudo-random number sequence generators, memory must be
+;to use these pseudo-random number sequence generators, memory must be
 ;set aside to hold the last random number, which is used to generate the
 ;next one so that a randomly distributed (but predictable) sequence of
 ;number is generated.

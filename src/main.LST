@@ -1,9 +1,9 @@
-MACRO ASSEMBLER MAIN                                       12/09/14 07:28:56 PAGE     1
+MACRO ASSEMBLER MAIN                                       12/14/14 16:44:16 PAGE     1
 
 
 DOS MACRO ASSEMBLER MA51 V06.16.13.326
-OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\MAIN.OBJ
-ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\MAIN.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+OBJECT MODULE PLACED IN C:\USERS\GEARLLES\DOCUMENTS\GIT\MICROCONTROLADORES\MICROCONTROLADORES\SRC\MAIN.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\USERS\GEARLLES\DOCUMENTS\GIT\MICROCONTROLADORES\MICROCONTROLADORES\SRC\MAIN.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
 
 LOC     OBJ           LINE    SOURCE
                          1     $INCLUDE(REG52.INC)
@@ -56,7 +56,7 @@ LOC     OBJ           LINE    SOURCE
 0034    22             152     	RET
                        153     	
                        154     ;Defini��o das portas a serrem utilizadas pelo LCD
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE     2
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE     2
                      
   0096                 155     LCD_CE    SET P1.6 ;Chip enabled
   0095                 156     LCD_RESET SET P1.5 ;Reset
@@ -115,7 +115,7 @@ LOC     OBJ           LINE    SOURCE
                        209         
 0065    780C           210     MOV R0 , # 00CH 
 0067    120000   F     211         LCALL LCD_SEND_COMMAND
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE     3
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE     3
                      
                        212         
 006A    D0D0           213         POP PSW
@@ -174,7 +174,7 @@ LOC     OBJ           LINE    SOURCE
                        266         ;Volta os registradores PSW e ACC respectivamente
 00AE    D0D0           267         POP PSW
 00B0    D0E0           268         POP ACC
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE     4
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE     4
                      
 00B2    22             269         RET
 ------                 270     CODE
@@ -233,7 +233,7 @@ LOC     OBJ           LINE    SOURCE
 00F4    DEFA           323             DJNZ R6, INIT_DELAY_2
 00F6    DDF6           324             DJNZ R5, INIT_DELAY_3
 00F8    22             325         RET
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE     5
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE     5
                      
                        326     
                        327     ;Posi��o da pe�a na tela (Canto superior esquerdo da mesma).
@@ -299,7 +299,7 @@ LOC     OBJ           LINE    SOURCE
                        380         ;  Z:  6  7
                        381         ;  L:  8  9 10 11
                        382         ;  J: 12 13 14 15
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE     6
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE     6
                      
                        383         ;  T: 16 17 18 19
 ------                 384         CODE
@@ -367,7 +367,7 @@ LOC     OBJ           LINE    SOURCE
 0169    120000   F     437         LCALL FMG_DRAW_BORDER  ;Desenhar borda do tabuleiro
 016C    120000   F     438         LCALL FMG_DRAW_SCREEN  ;Desenhar estado do tabuleiro
                        439         
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE     7
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE     7
                      
                        440         ;Selecionar pr�xima pe�a
 016F    120000   F     441         LCALL FMG_SELECT_NEW_PIECE  ; Selecionar nova pe�a
@@ -426,7 +426,7 @@ LOC     OBJ           LINE    SOURCE
 01C3    EE             494             MOV A, R6
 01C4    9A             495             SUBB A, R2
 01C5    FE             496             MOV R6, A
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE     8
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE     8
                      
                        497             
 01C6    EF             498             MOV A, R7
@@ -485,7 +485,7 @@ LOC     OBJ           LINE    SOURCE
 020A    F9             551     MOV R1, A
                        552     
                        553     FMG_UPDATE_STATE_LEFT: 
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE     9
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE     9
                      
 020B    120000   F     554         LCALL FMG_UPDATE_STATE_CHECK_COLLISION
 020E    4002           555         JC FMG_UPDATE_STATE_LEFT_VALID; Posi��o v�lida
@@ -544,7 +544,7 @@ LOC     OBJ           LINE    SOURCE
 0247    F9             608     MOV R1, A
 0248    020000   F     609     JMP FMG_UPDATE_STATE_ROTATION_LEFT
                        610     FMG_UPDATE_STATE_LEFT_NOT_ZERO:  ; Atualiza para o caso de n�o ser zero
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    10
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    10
                      
 024B    14             611     DEC A
 024C    F9             612     MOV R1, A
@@ -603,7 +603,7 @@ LOC     OBJ           LINE    SOURCE
                        665     ;SUBB A, R0 ; Verifica se R0 � igual a A
                        666     ;JNZ FMG_UPDATE_STATE_RIGHT_NOT_MAX ;Se A == B, ent�o resete A, sen�o continue
                        667     ;    ;IF (A == B) R1 = 0 
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    11
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    11
                      
                        668     ;    ;ELSE R1 = A
                        669     ;    MOV R1, #000h ; Coloca 0 em R1.
@@ -662,7 +662,7 @@ LOC     OBJ           LINE    SOURCE
 0294    E8             722         MOV A, R0
 0295    C0E0           723         PUSH ACC
 0297    E9             724         MOV A, R1
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    12
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    12
                      
 0298    C0E0           725         PUSH ACC
 029A    EA             726         MOV A, R2
@@ -721,7 +721,7 @@ LOC     OBJ           LINE    SOURCE
 02DC    F9             779                         MOV R1, A
 02DD    EE             780                         MOV A, R6
 02DE    33             781                         RLC A
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    13
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    13
                      
 02DF    FE             782                         MOV R6, A ; Carry contem o bit a ser introduzido no sistema
                        783                         
@@ -780,7 +780,7 @@ LOC     OBJ           LINE    SOURCE
 031C    7912           836     MOV R1 , # 012H 
 031E    7A00           837     MOV R2 , # 000H 
 0320    120000   F     838         LCALL LCD_XY
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    14
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    14
                      
 0323    78C0           839     MOV R0 , # 0C0H 
 0325    120000   F     840         LCALL LCD_DRAW
@@ -839,7 +839,7 @@ LOC     OBJ           LINE    SOURCE
 037B    92E6           893             MOV ACC.6, C
 037D    A2E1           894             MOV C, ACC.1
 037F    92E5           895             MOV ACC.5, C
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    15
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    15
                      
 0381    92E4           896             MOV ACC.4, C
 0383    A2E3           897             MOV C, ACC.3
@@ -898,7 +898,7 @@ LOC     OBJ           LINE    SOURCE
 03D8    E529           950     MOV A , 41 
 03DA    782E           951     MOV R0 , # 46 
 03DC    F6             952         MOV @R0, A
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    16
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    16
                      
 03DD    22             953         RET
 ------                 954     CODE
@@ -957,7 +957,7 @@ LOC     OBJ           LINE    SOURCE
 043A    75F002        1007             MOV B, #002H
 043D    A4            1008             MUL AB ; Multiplico por 2 para ir para a pe�a correta
 043E    2401          1009             ADD A, #001H ;Soma 1 j� que o primeiro valor contem a quantidade de rota��es da pe�a
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    17
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    17
                      
 0440    F9            1010             MOV R1, A
                       1011             ;Coloca em id 0 e 1 qual a pe�a selecionada
@@ -1016,7 +1016,7 @@ LOC     OBJ           LINE    SOURCE
 0484    0B            1064         INC R3
 0485    0B            1065         INC R3
 0486    0B            1066         INC R3 ; Grid + 4
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    18
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    18
                      
                       1067         FMG_LOOP_LINHA_SUPERIOR: 
 0487    EB            1068             MOV A, R3; Move o conte�do de R1 para o acumulador
@@ -1075,7 +1075,7 @@ LOC     OBJ           LINE    SOURCE
 04DB    92E7          1121             MOV ACC.7, C
 04DD    A2E5          1122             MOV C, ACC.5
 04DF    92E5          1123             MOV ACC.5, C
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    19
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    19
                      
 04E1    92E4          1124             MOV ACC.4, C
                       1125             
@@ -1134,7 +1134,7 @@ LOC     OBJ           LINE    SOURCE
 0530    22            1178         RET
 ------                1179     CODE
                       1180     FMG_DRAW_BORDER: 
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    20
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    20
                      
 0531    C0D0          1181         PUSH PSW
 0533    D2D4          1182         SETB RS1
@@ -1193,7 +1193,7 @@ LOC     OBJ           LINE    SOURCE
 0579    F8            1235             MOV R0, A
 057A    E533          1236     MOV A , 51 
 057C    F9            1237             MOV R1, A
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    21
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    21
                      
 057D    58            1238             ANL A, R0
 057E    99            1239             SUBB A, R1
@@ -1252,7 +1252,7 @@ LOC     OBJ           LINE    SOURCE
                       1292         FMG_VALIDATE_COLLISION: 
 05C3    900000   F    1293             MOV DPTR, #FMG_VALIDATE_COLLISION_SWITCH
 05C6    E52F          1294     MOV A , 47 
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    22
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    22
                      
 05C8    75F003        1295             MOV B, #003H
 05CB    A4            1296             MUL AB
@@ -1311,7 +1311,7 @@ LOC     OBJ           LINE    SOURCE
 060B    E7            1349                     MOV A, @R1 ; Captura o elemento que est� em R1
 060C    5B            1350                     ANL A, R3 ; Captura quais as linhas que est�o completas
 060D    FB            1351                     MOV R3, A
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    23
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    23
                      
 060E    09            1352                     INC R1
                       1353                     
@@ -1370,7 +1370,7 @@ LOC     OBJ           LINE    SOURCE
 064F    F9            1406             MOV R1, A ;Endere�o da linha superior
 0650    7407          1407             MOV A, #007H
 0652    C3            1408             CLR C
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    24
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    24
                      
 0653    9D            1409             SUBB A, R5 ;Gerar m�scara superior
 0654    FA            1410             MOV R2, A
@@ -1429,7 +1429,7 @@ LOC     OBJ           LINE    SOURCE
 0691    C3            1463                 CLR C
 0692    E7            1464                 MOV A, @R1
 0693    13            1465                 RRC A
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    25
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    25
                      
 0694    F7            1466                 MOV @R1, A
 0695    020000   F    1467                 JMP FMG_REMOVE_SPECIFIC_LINE_END
@@ -1488,7 +1488,7 @@ LOC     OBJ           LINE    SOURCE
                       1520         FMG_CREATE_SUPERIOR_MASK_END: 
 06D4    22            1521         RET
                       1522         
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    26
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    26
                      
 ------                1523     CODE
                       1524         FMG_CREATE_INFERIOR_MASK: 
@@ -1547,7 +1547,7 @@ LOC     OBJ           LINE    SOURCE
 0705    120000   F    1577         LCALL FMG_GET_REGION
                       1578         ;R6 e R7 contem a informa��o sobre a regi�o, 
                       1579         ;s� fazer o XOR e sei se a posi��o est� ocupada (movimento inv�lido), ou n�o;
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    27
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    27
                      
 0708    EA            1580         MOV A, R2
 0709    6E            1581         XRL A, R6 ; Xor entre R2 e R6
@@ -1606,7 +1606,7 @@ LOC     OBJ           LINE    SOURCE
 0744    75F012        1634                 MOV B, #012H ; Byte = 18 * A + R4
 0747    A4            1635                 MUL AB
 0748    2C            1636                 ADD A, R4
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    28
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    28
                      
 0749    F8            1637                 MOV R0, A 
 074A    7440          1638     MOV A , # 64 
@@ -1665,7 +1665,7 @@ LOC     OBJ           LINE    SOURCE
 0784    33            1691                         RLC A
 0785    FF            1692                         MOV R7, A ; Carry contem o bit a ser introduzido no sistema
                       1693                         
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    29
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    29
                      
 0786    E6            1694                         MOV A, @R0
                       1695                         FMG_SET_REGION_SMALL_ROTATE_BACK_R7: 
@@ -1724,7 +1724,7 @@ LOC     OBJ           LINE    SOURCE
 07D0    020000   F    1748             JMP FMG_UPDATE_SCORE_END
                       1749         FMG_UPDATE_SCORE_SWITCH_LINES_3: 
 07D3    7805          1750             MOV R0, #005H;
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    30
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    30
                      
 07D5    020000   F    1751             JMP FMG_UPDATE_SCORE_END
                       1752         FMG_UPDATE_SCORE_SWITCH_LINES_4: 
@@ -1783,7 +1783,7 @@ LOC     OBJ           LINE    SOURCE
 0828    2A            1805         ADD A, R2
 0829    FA            1806         MOV R2, A ;Dezenas
 082A    75F00A        1807         MOV B, #00AH
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    31
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    31
                      
 082D    84            1808         DIV AB
 082E    2B            1809         ADD A, R3
@@ -1842,7 +1842,7 @@ LOC     OBJ           LINE    SOURCE
 0874    793C          1862     MOV R1 , # 03CH 
 0876    7A00          1863     MOV R2 , # 000H 
 0878    120000   F    1864         LCALL LCD_XY
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    32
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    32
                      
                       1865         
 087B    75F003        1866         MOV B, #003H
@@ -1901,7 +1901,7 @@ LOC     OBJ           LINE    SOURCE
 08C8    EC            1919         MOV A, R4
 08C9    93            1920         MOVC A, @A+DPTR
 08CA    F8            1921     MOV R0 , A 
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    33
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    33
                      
 08CB    120000   F    1922         LCALL LCD_DRAW
 08CE    0C            1923         INC R4
@@ -1960,7 +1960,7 @@ LOC     OBJ           LINE    SOURCE
 ------                1976     CODE
                       1977         FMG_DRAW_END: 
 0914    C0D0          1978         PUSH PSW
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    34
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    34
                      
                       1979         
 0916    120000   F    1980         LCALL LCD_CLEAR
@@ -2019,7 +2019,7 @@ LOC     OBJ           LINE    SOURCE
 0968    7C05          2033         MOV R4, #005H
                       2034         FMG_DRAW_END_E3_TOP: 
 096A    780F          2035     MOV R0 , # 00FH 
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    35
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    35
                      
 096C    120000   F    2036             LCALL LCD_DRAW
 096F    DCF9          2037             DJNZ R4, FMG_DRAW_END_E3_TOP
@@ -2078,7 +2078,7 @@ LOC     OBJ           LINE    SOURCE
 09C0    7C05          2090         MOV R4, #005H
                       2091         FMG_DRAW_END_E3_BOTTOM: 
 09C2    78F0          2092     MOV R0 , # 0F0H 
-MACRO ASSEMBLER MAIN                             12/09/14  07:28:56 PAGE    36
+MACRO ASSEMBLER MAIN                             12/14/14  16:44:16 PAGE    36
                      
 09C4    120000   F    2093             LCALL LCD_DRAW
 09C7    DCF9          2094             DJNZ R4, FMG_DRAW_END_E3_BOTTOM
@@ -2116,7 +2116,7 @@ LOC     OBJ           LINE    SOURCE
 09E4    120000   F    2126         LCALL LCD_XY
 09E7    120000   F    2127         LCALL FMG_TETRIS_MAIN
                       2128     END
-MACRO ASSEMBLER MAIN                                       12/09/14 07:28:56 PAGE     0
+MACRO ASSEMBLER MAIN                                       12/14/14 16:44:16 PAGE     0
 
 
 SYMBOL TABLE LISTING
@@ -2227,12 +2227,12 @@ FMG_TIMER_0_RIGHT.  C ADDR   0597H   R  SEG=?PR?MAIN            1250 1257#
 FMG_SELECT_PIECE_I  C ADDR   0422H   R  SEG=?PR?MAIN            965 990# 
 FMG_DRAW_NEXT_PIE~  C ADDR   034DH   R  SEG=?PR?MAIN            864# 910 
 FMG_UPDATE_STATE_~  C ADDR   020BH   R  SEG=?PR?MAIN            553# 
-MACRO ASSEMBLER MAIN                                       12/09/14 07:28:56 PAGE     1
+MACRO ASSEMBLER MAIN                                       12/14/14 16:44:16 PAGE     1
 
 
 DOS MACRO ASSEMBLER MA51 V06.16.13.326
-OBJECT MODULE PLACED IN C:\PROJECTS\MICROCONTROLADORES\SRC\MAIN.OBJ
-ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\PROJECTS\MICROCONTROLADORES\SRC\MAIN.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
+OBJECT MODULE PLACED IN C:\USERS\GEARLLES\DOCUMENTS\GIT\MICROCONTROLADORES\MICROCONTROLADORES\SRC\MAIN.OBJ
+ASSEMBLER INVOKED BY: QUIET GENERATEDEPFILE EP SYNTAX(ASM51) PR XR PL(60) PW(80) DB OJ(C:\USERS\GEARLLES\DOCUMENTS\GIT\MICROCONTROLADORES\MICROCONTROLADORES\SRC\MAIN.OBJ) PIN(C:\RAISONANCE\RIDE\INC;C:\RAISONANCE\RIDE\INC\51) 
 
 LOC     OBJ           LINE    SOURCE
 FMG_DRAW_SCREEN. .  C ADDR   0470H   R  SEG=?PR?MAIN            438 487 1051# 
@@ -2345,7 +2345,7 @@ FMG_GET_REGION_LO~  C ADDR   02A5H   R  SEG=?PR?MAIN            734# 811
 LCD_CLK. . . . . .  B ADDR   00B0H.1 A                          158# 227 234 
 RAND16 . . . . . .  C ADDR   0011H   R  SEG=?PR?MAIN            130# 
 RCLK . . . . . . .  B ADDR   00C8H.5 A                          100# 
-MACRO ASSEMBLER MAIN                                       12/09/14 07:28:56 PAGE     2
+MACRO ASSEMBLER MAIN                                       12/14/14 16:44:16 PAGE     2
 
 TF2. . . . . . . .  B ADDR   00C8H.7 A                          98# 
 RB8. . . . . . . .  B ADDR   0098H.2 A                          85# 
@@ -2411,7 +2411,7 @@ FMG_PIECE_ID_H . .  N NUMB   0025h                              334# 934 998
 SM2. . . . . . . .  B ADDR   0098H.5 A                          82# 
 TL2. . . . . . . .  D ADDR   00CCH   A                          34# 
 FMG_DRAW_END_E_TOP  C ADDR   0958H   R  SEG=?PR?MAIN            2024# 2027 
-MACRO ASSEMBLER MAIN                                       12/09/14 07:28:56 PAGE     3
+MACRO ASSEMBLER MAIN                                       12/14/14 16:44:16 PAGE     3
 
 FMG_UPDATE_SCORE_~  C ADDR   07CEH   R  SEG=?PR?MAIN            1737 1746# 
 FMG_REMOVE_SPECIF~  C ADDR   0637H   R  SEG=?PR?MAIN            1375 1389# 
@@ -2484,7 +2484,7 @@ FMG_GET_REGION_LO~  C ADDR   02FCH   R  SEG=?PR?MAIN            804 808#
 FMG_UPDATE_STATE_~  C ADDR   0230H   R  SEG=?PR?MAIN            579 585# 
 FMG_WAIT_ETERNAL .  C ADDR   0181H   R  SEG=?PR?MAIN            454# 504 
 FMG_CLEAR_MEMORY .  C ADDR   044BH   R  SEG=?PR?MAIN            436 1020# 
-MACRO ASSEMBLER MAIN                                       12/09/14 07:28:56 PAGE     4
+MACRO ASSEMBLER MAIN                                       12/14/14 16:44:16 PAGE     4
 
 FMG_TETRIS_MAIN. .  C ADDR   0144H   R  SEG=?PR?MAIN            410# 2127 
 FMG_CONTROL_OLD. .  N NUMB   0031h                              352# 514 523 1266 
@@ -2579,7 +2579,7 @@ FMG_REMOVE_SPECIF~  C ADDR   06B8H   R  SEG=?PR?MAIN            1493 1496#
 FMG_VALIDATE_COLL~  C ADDR   05CDH   R  SEG=?PR?MAIN            1293 1298# 
 FMG_TIMER_0_END. .  C ADDR   05ACH   R  SEG=?PR?MAIN            1252 1256 1259 1262 
                                                                 1268 1270# 
-MACRO ASSEMBLER MAIN                                       12/09/14 07:28:56 PAGE     5
+MACRO ASSEMBLER MAIN                                       12/14/14 16:44:16 PAGE     5
 
 FMG_DRAW_BORDER_L~  C ADDR   0540H   R  SEG=?PR?MAIN            1190# 1201 
 FMG_CLEAR_MEMORY_~  C ADDR   045AH   R  SEG=?PR?MAIN            1033# 1036 
