@@ -1,13 +1,14 @@
 $include(REG52.inc)
 $include(Random.asm)
+$include(LCD.asm)
 
-SNAKE_MAX_SIZE SET 0x05
+SNAKE_MAX_SIZE SET 0x02
 SNAKE_MAX_SIZE_ADDRESS SET 0x50
 
-SNAKE_SCREEN_WIDTH SET 0x09
+SNAKE_SCREEN_WIDTH SET 0x04
 SNAKE_SCREEN_WIDTH_ADDRESS SET 0x51
 
-SNAKE_SCREEN_HEIGHT SET 0x09
+SNAKE_SCREEN_HEIGHT SET 0x04
 SNAKE_SCREEN_HEIGHT_ADDRESS SET 0x52
 
 SNAKE_X_ARRAY_START_ADDRESS SET 0xA0
@@ -21,18 +22,18 @@ SNAKE_SIZE_ADDRESS SET 0x55
 SNAKE_PRE_SCREEN_Y_START_ADDRESS SET 0xB4
 
 code at 0
-    MOV SP, #064h
+    MOV SP, #078h
     ljmp SNAKE_MAIN
 
 SNAKE_MAIN:
     LCALL SNAKE_CLEAR_MEMORY ; limpa a região de memória da Snake
     LCALL SNAKE_INIT ; configura o estado inicial da Snake
     SNAKE_MAIN_LOOP:
-        ;LCALL LCD_CLEAR ; limpa a tela
+        LCALL SNAKE_CONVERT_MEMORY ; lê a memória da Snake e converte para informação pré-tela
+        LCALL LCD_CLEAR ; limpa a tela
         LCALL SNAKE_DRAW_SCREEN ; lê e região de memória que armazena as informações da Snake e imprime na tela
         LCALL SNAKE_READ_BUTTONS ; lê os botões e atualiza a memória
         LCALL SNAKE_UPDATE ; atualiza a região de memória da Snake
-        LCALL SNAKE_CONVERT_MEMORY ; lê a memória da Snake e converte para informação pré-tela
         SJMP SNAKE_MAIN_LOOP
     RET
 
@@ -96,6 +97,36 @@ SNAKE_INIT:
     
 code
 SNAKE_DRAW_SCREEN:
+    MOV lcd_X, #000H
+    MOV lcd_Y, #000H
+    LCALL LCD_XY
+    
+    MOV R7, #008H ; contador inicial
+    MOV R6, #SNAKE_PRE_SCREEN_Y_START_ADDRESS
+    MOV R0, #000H
+    SNAKE_START_BUILD_BYTE:
+        MOV A, R0
+        RR A
+        MOV R0, A
+        
+        MOV A, R6
+        MOV R1, A
+        MOV A, @R1
+        RR A
+        
+        ORL A, R0
+        MOV R0, A
+        
+        MOV A, R6
+        ADD A, #SNAKE_SCREEN_WIDTH
+        MOV R6, A
+        DJNZ R7, SNAKE_START_BUILD_BYTE
+        
+    ; R0 tá com o byte a ser impresso
+    MOV A, R0
+    MOV lcd_bus, A
+    LCALL LCD_DRAW
+    
     RET
 
 code
@@ -187,7 +218,7 @@ SNAKE_READ_BUTTONS:
              MOV SNAKE_ADD_X_ADDRESS, #0FFH
              
     CHECK_DOWN:
-        JB P1.4, CHECK_UP
+        JB P1.1, CHECK_UP
         CLR    A
         MOV    SNAKE_ADD_Y_ADDRESS,A
         CJNE   A,#0FFH,NOT_EQUAL_CHECK_DOWN
@@ -202,7 +233,7 @@ SNAKE_READ_BUTTONS:
             MOV    SNAKE_ADD_Y_ADDRESS,#0FFH
         
     CHECK_UP:
-        JB     P1.5, CHECK_BUTTONS_END
+        JB     P1.0, CHECK_BUTTONS_END
         CLR    A
         MOV    SNAKE_ADD_X_ADDRESS,A
         MOV    A,SNAKE_ADD_Y_ADDRESS
