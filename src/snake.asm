@@ -2,13 +2,13 @@ $include(REG52.inc)
 $include(Random.asm)
 $include(LCD.asm)
 
-SNAKE_MAX_SIZE SET 0x02
+SNAKE_MAX_SIZE SET 0x09
 SNAKE_MAX_SIZE_ADDRESS SET 0x50
 
-SNAKE_SCREEN_WIDTH SET 0x04
+SNAKE_SCREEN_WIDTH SET 0x54
 SNAKE_SCREEN_WIDTH_ADDRESS SET 0x51
 
-SNAKE_SCREEN_HEIGHT SET 0x04
+SNAKE_SCREEN_HEIGHT SET 0x30
 SNAKE_SCREEN_HEIGHT_ADDRESS SET 0x52
 
 SNAKE_X_ARRAY_START_ADDRESS SET 0xA0
@@ -19,7 +19,10 @@ SNAKE_ADD_Y_ADDRESS SET 0x54
 
 SNAKE_SIZE_ADDRESS SET 0x55
 
-SNAKE_PRE_SCREEN_Y_START_ADDRESS SET 0xB4
+x_temp SET 0x56
+y_temp SET 0x57
+
+SNAKE_PRE_SCREEN_Y_START_ADDRESS SET 0x00
 
 code at 0
     MOV SP, #078h
@@ -30,8 +33,8 @@ SNAKE_MAIN:
     LCALL SNAKE_INIT ; configura o estado inicial da Snake
     SNAKE_MAIN_LOOP:
         LCALL SNAKE_CONVERT_MEMORY ; lê a memória da Snake e converte para informação pré-tela
-        LCALL LCD_CLEAR ; limpa a tela
-        LCALL SNAKE_DRAW_SCREEN ; lê e região de memória que armazena as informações da Snake e imprime na tela
+        ;LCALL LCD_CLEAR ; limpa a tela
+        ;LCALL SNAKE_DRAW_SCREEN ; lê e região de memória que armazena as informações da Snake e imprime na tela
         LCALL SNAKE_READ_BUTTONS ; lê os botões e atualiza a memória
         LCALL SNAKE_UPDATE ; atualiza a região de memória da Snake
         SJMP SNAKE_MAIN_LOOP
@@ -71,8 +74,7 @@ SNAKE_INIT:
     MOV R0, #SNAKE_SIZE_ADDRESS
     MOV @R0, #02h
 
-    LCALL RAND8 ; gera um número aleatório no acumulador TODO
-    MOV A, #005h
+    LCALL RAND8 ; gera um número aleatório no acumulador
     MOV R0, #SNAKE_X_ARRAY_START_ADDRESS
     MOV @R0, A ; seta posição X inicial da comida ; x[0] = rand
     INC R0
@@ -80,8 +82,7 @@ SNAKE_INIT:
     INC R0
     MOV @R0 #01h ; x[2] = 1
     
-    LCALL RAND8 ; gera um número aleatório no acumulador TODO
-    MOV A, #005h
+    LCALL RAND8 ; gera um número aleatório no acumulador
     MOV R0, #SNAKE_Y_ARRAY_START_ADDRESS
     MOV @R0, A ; seta posição Y inicial da comida ; y[0] = rand
     INC R0
@@ -105,18 +106,22 @@ SNAKE_DRAW_SCREEN:
     MOV R6, #SNAKE_PRE_SCREEN_Y_START_ADDRESS
     MOV R0, #000H
     SNAKE_START_BUILD_BYTE:
+        ; R0 guarda a resposta final, dá um rotate de cara
         MOV A, R0
         RR A
         MOV R0, A
         
+        ; R6 guarda a nova posição, dá um rotate nela (pra mandar 000..1 para 100..0, eg)
         MOV A, R6
         MOV R1, A
         MOV A, @R1
         RR A
         
+        ; faz um ou de r0 com r6
         ORL A, R0
         MOV R0, A
         
+        ; busca outro byte
         MOV A, R6
         ADD A, #SNAKE_SCREEN_WIDTH
         MOV R6, A
@@ -249,94 +254,158 @@ SNAKE_READ_BUTTONS:
 code
 SNAKE_CONVERT_MEMORY:
     ; limpa a memoria antes de popular (sempre populo todos pixels)
-    MOV R5, #000H
+    MOV    R5,#000H
     SNAKE_CONVERT_MEMORY_LOOP_CLEAN_MEMORY_I:
-        MOV R6, #00H
+        MOV    A,R5
+        CJNE   A,#SNAKE_SCREEN_HEIGHT,SNAKE_CONVERT_MEMORY_LOOP_SHIFT_I
+        SNAKE_CONVERT_MEMORY_LOOP_SHIFT_I:
+        JNC    SNAKE_CONVERT_MEMORY_LOOP_CLEAN_END_I
+
+        MOV    R6,#000H
         SNAKE_CONVERT_MEMORY_LOOP_CLEAN_MEMORY_J:
-            MOV A, R5
-            MOV B, #SNAKE_SCREEN_HEIGHT
-            MUL AB
-            ADD A,#SNAKE_PRE_SCREEN_Y_START_ADDRESS
-            MOV R0, A
-            MOV A, R6
-            ADD A, R0
-            MOV R0, A
-            MOV @R0, #000H
+            MOV    A,R6
+            CJNE   A,#SNAKE_SCREEN_WIDTH,SNAKE_CONVERT_MEMORY_LOOP_SHIFT_J
+            SNAKE_CONVERT_MEMORY_LOOP_SHIFT_J:
+            JNC    SNAKE_CONVERT_MEMORY_LOOP_CLEAN_END_J
+
+            MOV    A,R5
+            MOV    B,#054H
+            MUL    AB
+            ADD    A,#LOW (SNAKE_PRE_SCREEN_Y_START_ADDRESS)
+            MOV    DPL,A
+            MOV    A,B
+            ADDC   A,#HIGH (SNAKE_PRE_SCREEN_Y_START_ADDRESS)
+            MOV    DPH,A
+            MOV    A,R6
+            ADD    A,DPL
+            MOV    DPL,A
+            CLR    A
+            ADDC   A,DPH
+            MOV    DPH,A
+            CLR    A
+            MOVX   @DPTR,A
+
+            INC    R6
+            SJMP   SNAKE_CONVERT_MEMORY_LOOP_CLEAN_MEMORY_J
+        SNAKE_CONVERT_MEMORY_LOOP_CLEAN_END_J:
+
+        INC    R5
+        SJMP   SNAKE_CONVERT_MEMORY_LOOP_CLEAN_MEMORY_I
+    SNAKE_CONVERT_MEMORY_LOOP_CLEAN_END_I:
             
-            INC R6
-            MOV A, R6
-            CJNE A, #SNAKE_SCREEN_HEIGHT, SNAKE_CONVERT_MEMORY_LOOP_CLEAN_MEMORY_J
-        INC R5
-        MOV A, R5
-        CJNE A, #SNAKE_SCREEN_WIDTH, SNAKE_CONVERT_MEMORY_LOOP_CLEAN_MEMORY_I
-            
+        ; faz a conversão
+        MOV    R4,#001H
+        SNAKE_CONVERT_MEMORY_LOOP:
+              MOV    A,#SNAKE_MAX_SIZE
+              ADD    A,#001H
+              MOV    R0,A
+              CLR    A
+              RLC    A
+              MOV    R3,AR0
+              MOV    B,A
+              CPL    B.7
+              MOV    A,#080H
+              CJNE   A,B,SNAKE_CONVERT_MEMORY_SHIFT
+              MOV    A,R4
 
-    MOV    R6,#001H
-    SNAKE_CONVERT_MEMORY_LOOP:
-        MOV    A,R6
-        CJNE   A, #SNAKE_MAX_SIZE + 01H, SNAKE_CONVERT_MEMORY_LOOP_CONTENT
-    LJMP SNAKE_CONVERT_MEMORY_LOOP_EXIT
-    
-    SNAKE_CONVERT_MEMORY_LOOP_CONTENT:
-        ADD    A,#SNAKE_X_ARRAY_START_ADDRESS
-        MOV    R0,A
-        MOV    A,@R0
-        ADD    A,ACC
-        MOV    R5,A
 
-        MOV    A,R6
-        ADD    A,#SNAKE_Y_ARRAY_START_ADDRESS
-        MOV    R0,A
-        MOV    A,@R0
-        ADD    A,ACC
-        MOV    R7,A
+              CJNE   A,AR3,SNAKE_CONVERT_MEMORY_SHIFT
+              SNAKE_CONVERT_MEMORY_SHIFT:
+              JC     $ + 5
+              LJMP   SNAKE_CONVERT_MEMORY_LOOP_END
 
-        MOV    A,R5
-        MOV    B,#SNAKE_SCREEN_WIDTH
-        MUL    AB
-        ADD    A,#SNAKE_PRE_SCREEN_Y_START_ADDRESS
-        MOV    R0,A
-        MOV    A,R7
-        ADD    A,R0
-        MOV    R0,A
-        MOV    @R0,#001H
+              MOV    A,R4
+              ADD    A,#SNAKE_X_ARRAY_START_ADDRESS
+              MOV    R0,A
+              MOV    A,@R0
+              ADD    A,ACC
+              MOV    x_temp,A
 
-        MOV    A,R5
-        MOV    B,#SNAKE_SCREEN_WIDTH
-        MUL    AB
-        ADD    A, #SNAKE_PRE_SCREEN_Y_START_ADDRESS
-        ADD    A, #SNAKE_SCREEN_WIDTH
-        MOV    R0,A
-        MOV    A,R7
-        ADD    A,R0
-        MOV    R0,A
-        MOV    @R0,#001H
+              MOV    A,R4
+              ADD    A,#SNAKE_Y_ARRAY_START_ADDRESS
+              MOV    R0,A
+              MOV    A,@R0
+              ADD    A,ACC
 
-        MOV    A,R5
-        MOV    B,#SNAKE_SCREEN_WIDTH
-        MUL    AB
-        ADD    A,#SNAKE_PRE_SCREEN_Y_START_ADDRESS+01H
-        MOV    R0,A
-        MOV    A,R7
-        ADD    A,R0
-        MOV    R0,A
-        MOV    @R0,#001H
+              MOV    R3,A
 
-        MOV    A,R5
-        MOV    B,#SNAKE_SCREEN_WIDTH
-        MUL    AB
-        ADD    A, #SNAKE_PRE_SCREEN_Y_START_ADDRESS
-        ADD    A, #SNAKE_SCREEN_WIDTH
-        ADD    A, #001h
-        MOV    R0,A
-        MOV    A,R7
-        ADD    A,R0
-        MOV    R0,A
-        MOV    @R0,#001H
+              MOV    y_temp,A
 
-        INC    R6
-        SJMP   SNAKE_CONVERT_MEMORY_LOOP
-    SNAKE_CONVERT_MEMORY_LOOP_EXIT:
-RET
+              MOV    A,x_temp
+              MOV    B,#054H
+              MUL    AB
+              ADD    A,#LOW (SNAKE_PRE_SCREEN_Y_START_ADDRESS)
+              MOV    DPL,A
+              MOV    A,B
+              ADDC   A,#HIGH (SNAKE_PRE_SCREEN_Y_START_ADDRESS)
+              MOV    DPH,A
+              MOV    A,R3
+              ADD    A,DPL
+              MOV    DPL,A
+              CLR    A
+              ADDC   A,DPH
+              MOV    DPH,A
+              MOV    A,#001H
+              MOVX   @DPTR,A
+
+              MOV    A,x_temp
+              MOV    B,#054H
+              MUL    AB
+              ADD    A,#LOW (SNAKE_PRE_SCREEN_Y_START_ADDRESS + 054H)
+              MOV    DPL,A
+              MOV    A,B
+              ADDC   A,#HIGH (SNAKE_PRE_SCREEN_Y_START_ADDRESS + 054H)
+              MOV    DPH,A
+              MOV    A,R3
+              ADD    A,DPL
+              MOV    DPL,A
+              CLR    A
+              ADDC   A,DPH
+              MOV    DPH,A
+              MOV    A,#001H
+              MOVX   @DPTR,A
+
+              MOV    A,x_temp
+              MOV    B,#054H
+
+               
+              MUL    AB
+              ADD    A,#LOW (SNAKE_PRE_SCREEN_Y_START_ADDRESS + 01H)
+              MOV    DPL,A
+              MOV    A,B
+              ADDC   A,#HIGH (SNAKE_PRE_SCREEN_Y_START_ADDRESS + 01H)
+              MOV    DPH,A
+              MOV    A,R3
+              ADD    A,DPL
+              MOV    DPL,A
+              CLR    A
+              ADDC   A,DPH
+              MOV    DPH,A
+              MOV    A,#001H
+              MOVX   @DPTR,A
+
+              MOV    A,x_temp
+              MOV    B,#054H
+              MUL    AB
+              ADD    A,#LOW (SNAKE_PRE_SCREEN_Y_START_ADDRESS + 055H)
+              MOV    DPL,A
+              MOV    A,B
+              ADDC   A,#HIGH (SNAKE_PRE_SCREEN_Y_START_ADDRESS + 055H)
+              MOV    DPH,A
+              MOV    A,R3
+              ADD    A,DPL
+              MOV    DPL,A
+              CLR    A
+              ADDC   A,DPH
+              MOV    DPH,A
+              MOV    A,#001H
+              MOVX   @DPTR,A
+
+              INC    R4
+              LJMP   SNAKE_CONVERT_MEMORY_LOOP
+        SNAKE_CONVERT_MEMORY_LOOP_END:
+        RET     
+
+
     
 END
