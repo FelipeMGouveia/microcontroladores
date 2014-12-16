@@ -1,7 +1,7 @@
-microcontroladores
+Microcontroladores
 ==================
 
-Projeto para a disciplina de microcontroladores 2014.2
+Projeto para a disciplina de Microcontroladores 2014.2 da Universidade de Pernambuco.
 
 LCD
 ---
@@ -37,4 +37,15 @@ Para a utilização do gerador de 8bits é necessário chamar a rotina RAND8 e o
 (registrados A/ACC). O gerador de 16 bits é chamado pela rotina RAND16, e tem o seu resultado armazenano no acumulador
 (registrador A/ACC) para os bits menos significativos e no registrabor auxiliar B para os bits mais significativos.
 Os geradores de número aleatórios estão localizados nas posições de memória 020h para o de 8bits e 021h, 022h para o de 16 bits.
+
+Botões
+------
+No esquemático do circuito, os botões estão organizados da seguinte forma:
+* Botão cima (B1) - P1.0
+* Botão baixo (B2) - P1.1
+* Botão esquerda (B3) - P1.2
+* Botão direita (B4) - P1.3
+* Botão genérico (B5) - P1.4
+
+Eles operam em nível lógico 0, ou seja, pressionados são 0, não pressionados são 1.
 
